@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
+
 
 @Entity
 @Table(name = "users")
@@ -23,6 +23,7 @@ import java.util.stream.Collector;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
+    @Builder.Default
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks = new ArrayList<>();
 
@@ -43,6 +44,7 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Builder.Default
     @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> assignedTasks = new ArrayList<>();
 
