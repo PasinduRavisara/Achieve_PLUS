@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an axios instance without default headers for auth requests
 export const authAxios = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -10,7 +10,7 @@ export const authAxios = axios.create({
 
 // Create another instance for authenticated requests
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
   headers: {
     'Content-Type': 'application/json'
   }

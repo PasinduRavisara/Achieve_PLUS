@@ -24,9 +24,11 @@ public class AchievePlusBeApplication {
             System.out.println("   Please Create a .env file in the root directory: " + System.getProperty("user.dir"));
             System.out.println("   ");
             System.out.println("   Required contents:");
-            System.out.println("   DB_USERNAME=your_username");
-            System.out.println("   DB_PASSWORD=your_password");
-            System.out.println("   JWT_SECRET=your_secret");
+            System.out.println("   DB_URL=jdbc:mysql://<db_host>:<db_port>/<db_name>");
+            System.out.println("   DB_USERNAME=<db_user>");
+            System.out.println("   DB_PASSWORD=<db_password>");
+            System.out.println("   JWT_SECRET=<your_jwt_secret>");
+            System.out.println("   FRONTEND_URL=<frontend_url>");
             System.out.println("=========================================================================");
             System.out.println("\n");
             System.exit(1);
