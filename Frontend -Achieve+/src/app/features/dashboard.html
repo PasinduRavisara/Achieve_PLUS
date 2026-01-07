@@ -1,0 +1,94 @@
+<div class="dashboard-header">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-subtitle">Welcome back, John!</p>
+    </div>
+    <app-streak-tracker [streakCount]="5"></app-streak-tracker>
+  </div>
+</div>
+
+<div class="bento-grid">
+  <!-- Main Stats -->
+  <div class="bento-item col-span-2 row-span-2">
+    <app-glass-card [interactive]="true">
+      <h3 class="card-title">Weekly Progress</h3>
+      <div class="stat-big">85%</div>
+      <p class="stat-label">Tasks Completed</p>
+      <!-- Placeholder for chart -->
+      <div class="chart-placeholder" appTooltip="Weekly Performance Chart">
+        <div class="bar" style="height: 40%"></div>
+        <div class="bar" style="height: 60%"></div>
+        <div class="bar" style="height: 50%"></div>
+        <div class="bar" style="height: 85%"></div>
+        <div class="bar" style="height: 70%"></div>
+      </div>
+    </app-glass-card>
+  </div>
+
+  <!-- Quick Action 1 -->
+  <div class="bento-item col-span-1">
+    <app-glass-card [interactive]="true">
+      <div class="quick-stat">
+        <span class="icon-lg">⚡</span>
+        <span class="stat-value">12</span>
+        <span class="stat-name">Pending</span>
+      </div>
+    </app-glass-card>
+  </div>
+
+  <!-- Quick Action 2 -->
+  <div class="bento-item col-span-1">
+    <app-glass-card [interactive]="true">
+      <div class="quick-stat">
+        <span class="icon-lg">🏆</span>
+        <span class="stat-value">#3</span>
+        <span class="stat-name">Rank</span>
+      </div>
+    </app-glass-card>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="bento-item col-span-2 row-span-1">
+    <app-glass-card>
+      <h3 class="card-title">Recent Activity</h3>
+      <ul class="activity-list">
+        <li>
+          <span class="dot success"></span>
+          <span>Completed "SEO Audit"</span>
+          <span class="time">2m ago</span>
+        </li>
+        <li>
+          <span class="dot warning"></span>
+          <span>Started "Content Plan"</span>
+          <span class="time">1h ago</span>
+        </li>
+      </ul>
+    </app-glass-card>
+  </div>
+  
+    <!-- Team Pulse -->
+  <div class="bento-item col-span-4">
+    <app-glass-card>
+      <div class="pulse-header">
+        <h3 class="card-title">Team Pulse 🚀</h3>
+        <span class="live-badge">LIVE</span>
+      </div>
+      <div class="pulse-feed">
+        <div class="pulse-item">
+          <span class="avatar-xs">AS</span>
+          <span><strong>Sarah</strong> closed 3 tickets</span>
+        </div>
+        <div class="pulse-item">
+          <span class="avatar-xs">MK</span>
+          <span><strong>Mike</strong> reached Level 5</span>
+        </div>
+        <div class="pulse-item">
+          <span class="avatar-xs">JD</span>
+          <span><strong>You</strong> are on fire!</span>
+        </div>
+      </div>
+    </app-glass-card>
+  </div>
+
+</div>

@@ -1,0 +1,148 @@
+:host {
+    display: block;
+    height: 100%;
+    padding: 1rem;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  }
+  
+  /* Brand */
+  .brand-section {
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    border-radius: 8px;
+    box-shadow: 0 0 15px hsla(var(--primary-hue), 80%, 60%, 0.4);
+  }
+  
+  .brand-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+    color: var(--color-text-main);
+  }
+  
+  .plus {
+    color: var(--color-accent);
+  }
+  
+  /* Menu */
+  .menu-section {
+    margin-bottom: 2rem;
+  }
+  
+  .menu-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-dim);
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+    font-weight: 600;
+  }
+  
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: all 0.2s var(--ease-smooth);
+    margin-bottom: 0.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-main);
+    transform: translateX(4px);
+  }
+  
+  .nav-item.active {
+    background: linear-gradient(90deg, hsla(var(--primary-hue), 80%, 60%, 0.15), transparent);
+    color: var(--color-primary);
+    border-left: 3px solid var(--color-primary);
+  }
+  
+  .nav-item .icon {
+    font-size: 1.1rem;
+    filter: grayscale(1);
+    transition: filter 0.2s;
+  }
+  
+  .nav-item:hover .icon,
+  .nav-item.active .icon {
+    filter: grayscale(0);
+  }
+  
+  /* User Profile at bottom */
+  .user-profile-mini {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .user-profile-mini:hover {
+    background: rgba(255, 255, 255, 0.07);
+  }
+  
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-info .name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-main);
+  }
+  
+  .user-info .role {
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+  }

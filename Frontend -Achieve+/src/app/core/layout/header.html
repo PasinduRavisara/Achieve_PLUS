@@ -1,0 +1,19 @@
+<header class="top-header glass-panel">
+  <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Type to search... (Cmd+K)" class="search-input" />
+      <div class="shortcut-hint">⌘K</div>
+  </div>
+
+  <div class="header-actions">
+      <button class="action-btn icon-btn" (click)="toggleTheme()">
+          <span class="icon" *ngIf="isDarkMode()">☀️</span>
+          <span class="icon" *ngIf="!isDarkMode()">🌙</span>
+      </button>
+      
+      <button class="action-btn icon-btn">
+          <span class="icon">🔔</span>
+          <div class="notification-dot"></div>
+      </button>
+  </div>
+</header>
