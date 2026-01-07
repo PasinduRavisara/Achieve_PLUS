@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { GlassCardComponent } from '../shared/components/glass-card';
-import { TooltipDirective } from '../shared/directives/tooltip';
-import { StreakTrackerComponent } from './streak-tracker';
+import { GlassCardComponent } from '../../shared/components/glass-card';
+import { TooltipDirective } from '../../shared/directives/tooltip';
+import { StreakTrackerComponent } from '../../features/streak-tracker';
 
 @Component({
   selector: 'app-dashboard',
