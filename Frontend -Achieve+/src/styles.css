@@ -4,14 +4,14 @@
 :root {
   /* -- Palette: HSL for easy opacity manipulation -- */
   
-  /* Primary Brand (Indigo/Violet/Blue/Purple Gradient vibes) */
-  --primary-hue: 250;
+  /* Primary Brand (Light Blue) */
+  --primary-hue: 210;
   --primary-sat: 95%;
-  --primary-light: 65%;
+  --primary-light: 60%;
   --color-primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
   
-  /* Secondary/Accent */
-  --accent-hue: 320; 
+  /* Secondary/Accent (Cyan/Teal) */
+  --accent-hue: 190; 
   --accent-sat: 90%;
   --accent-light: 60%;
   --color-accent: hsl(var(--accent-hue), var(--accent-sat), var(--accent-light));
