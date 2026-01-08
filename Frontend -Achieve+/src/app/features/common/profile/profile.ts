@@ -30,4 +30,8 @@ export class Profile {
     this.isEditing = false;
     // Logic to save profile would go here
   }
+
+  logout() {
+    this.authService.logout();
+  }
 }

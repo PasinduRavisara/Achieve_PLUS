@@ -24,6 +24,7 @@
 
       <div class="action-buttons">
         <button *ngIf="!isEditing" (click)="toggleEdit()" class="btn-primary">Edit Profile</button>
+        <button *ngIf="!isEditing" (click)="logout()" class="btn-danger-outline">Logout</button>
         <button *ngIf="isEditing" (click)="saveProfile()" class="btn-success">Save Changes</button>
         <button *ngIf="isEditing" (click)="toggleEdit()" class="btn-secondary">Cancel</button>
       </div>

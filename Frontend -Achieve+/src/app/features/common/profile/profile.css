@@ -143,3 +143,19 @@ h2 {
 .btn-primary:hover, .btn-success:hover, .btn-secondary:hover {
   transform: translateY(-2px);
 }
+
+.btn-danger-outline {
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #ff5555;
+  color: #ff5555;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-danger-outline:hover {
+  background: rgba(255, 85, 85, 0.1);
+  transform: translateY(-2px);
+}

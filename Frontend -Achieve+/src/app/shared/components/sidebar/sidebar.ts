@@ -14,6 +14,13 @@ export class Sidebar {
   @Input() role: 'admin' | 'employee' = 'employee';
   
   authService = inject(AuthService);
+  
+  // Use mock avatars for now based on role until real profile data is fully piped
+  get userAvatar() {
+    return this.role === 'admin' 
+      ? 'https://api.dicebear.com/7.x/avataaars/svg?seed=AdminUser' 
+      : 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix';
+  }
 
   get menuItems() {
     if (this.role === 'admin') {
