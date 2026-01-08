@@ -1,0 +1,107 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* -- Palette: HSL for easy opacity manipulation -- */
+  
+  /* Primary Brand (Light Blue) */
+  --primary-hue: 210;
+  --primary-sat: 95%;
+  --primary-light: 60%;
+  --color-primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-light));
+  
+  /* Secondary/Accent (Cyan/Teal) */
+  --accent-hue: 190; 
+  --accent-sat: 90%;
+  --accent-light: 60%;
+  --color-accent: hsl(var(--accent-hue), var(--accent-sat), var(--accent-light));
+
+  /* Success/Error/Warning */
+  --success-hue: 150; --color-success: hsl(var(--success-hue), 80%, 45%);
+  --warning-hue: 35;  --color-warning: hsl(var(--warning-hue), 90%, 55%);
+  --danger-hue: 0;    --color-danger:  hsl(var(--danger-hue), 85%, 60%);
+
+  /* -- Dark Mode 2.0 Base (Default) -- */
+  --bg-hue: 230;
+  --bg-sat: 25%;
+  --bg-light: 8%; /* Very dark deep blue */
+  
+  --color-bg-base: hsl(var(--bg-hue), var(--bg-sat), var(--bg-light));
+  --color-bg-surface: hsl(var(--bg-hue), var(--bg-sat), 12%); /* Slightly lighter */
+  --color-bg-sample: hsl(var(--bg-hue), var(--bg-sat), 16%);
+
+  /* Text Colors */
+  --color-text-main: hsl(var(--bg-hue), 10%, 95%);
+  --color-text-muted: hsl(var(--bg-hue), 10%, 65%);
+  --color-text-dim: hsl(var(--bg-hue), 10%, 45%);
+
+  /* Glassmorphism Tokens */
+  --glass-bg: hsla(var(--bg-hue), var(--bg-sat), 15%, 0.4);
+  --glass-border: hsla(255, 255%, 255%, 0.08);
+  --glass-blur: 16px;
+  --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  /* Animation */
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  background-image: 
+    radial-gradient(circle at 15% 50%, hsla(var(--primary-hue), 60%, 20%, 0.15), transparent 25%),
+    radial-gradient(circle at 85% 30%, hsla(var(--accent-hue), 60%, 20%, 0.15), transparent 25%);
+  min-height: 100vh;
+  margin: 0; /* Important reset */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Include these utility classes in your components */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+/* Button & Input Utilities (Basic) */
+.btn-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text-main);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+}
+.btn-glass:hover {
+    background: hsla(var(--bg-hue), var(--bg-sat), 25%, 0.6);
+}
+.btn-primary {
+    background: var(--color-primary);
+    color: var(--color-bg-base);
+    font-weight: 600;
+    border: none;
+}
+input.glass-input {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text-main);
+    padding: 0.5rem;
+    border-radius: 8px;
+    width: 100%;
+}

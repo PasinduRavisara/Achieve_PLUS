@@ -1,0 +1,58 @@
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.subtitle { color: var(--color-text-muted); }
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.badge-card {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex; /* Ensure glass-card content flexes if needed, or target child */
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem !important;
+}
+
+.badge-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+}
+
+.badge-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.badge-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.badge-date {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  margin-top: auto;
+}
+
+/* Rarity Styles */
+.badge-card[data-rarity="legendary"] .badge-icon {
+  filter: drop-shadow(0 0 15px var(--color-warning));
+}
+
+.badge-card[data-rarity="legendary"] {
+  border: 1px solid hsla(var(--warning-hue), 80%, 50%, 0.3);
+}
+
+.badge-card[data-rarity="rare"] .badge-icon {
+  filter: drop-shadow(0 0 10px var(--color-accent));
+}

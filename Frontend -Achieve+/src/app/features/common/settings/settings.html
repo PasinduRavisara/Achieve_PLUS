@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h2>Settings</h2>
+</div>
+
+<div class="settings-grid">
+  <app-glass-card>
+    <h3>Preferences</h3>
+    
+    <div class="setting-item">
+      <div>
+        <h4>Notifications</h4>
+        <p class="text-muted">Receive alerts for new tasks</p>
+      </div>
+      <button class="toggle-btn" [class.active]="notifications" (click)="toggle('notifications')">
+        <div class="knob"></div>
+      </button>
+    </div>
+
+    <div class="setting-item">
+      <div>
+        <h4>Sound Effects</h4>
+        <p class="text-muted">Play sounds on interactions</p>
+      </div>
+      <button class="toggle-btn" [class.active]="sound" (click)="toggle('sound')">
+        <div class="knob"></div>
+      </button>
+    </div>
+  </app-glass-card>
+
+  <app-glass-card>
+    <h3>Security</h3>
+    <div class="setting-item">
+        <button class="btn-glass w-100">Change Password</button>
+    </div>
+  </app-glass-card>
+</div>

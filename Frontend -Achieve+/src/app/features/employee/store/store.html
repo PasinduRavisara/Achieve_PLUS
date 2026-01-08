@@ -1,0 +1,25 @@
+<div class="store-header">
+  <div>
+    <h2>Reward Store</h2>
+    <p class="subtitle">Redeem your points.</p>
+  </div>
+  <div class="points-display">
+    {{ userPoints }} <span class="pts">PTS</span>
+  </div>
+</div>
+
+<div class="bento-grid">
+  @for (item of products; track item.id) {
+    <app-glass-card class="product-card col-span-1">
+      <div class="product-image">{{ item.image }}</div>
+      <div class="product-info">
+        <h3>{{ item.title }}</h3>
+        <p class="category">{{ item.category }}</p>
+      </div>
+      <div class="product-actions">
+        <span class="price">{{ item.price }} pts</span>
+        <button class="btn-primary" [disabled]="userPoints < item.price">Buy</button>
+      </div>
+    </app-glass-card>
+  }
+</div>

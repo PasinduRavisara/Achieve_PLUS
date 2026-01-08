@@ -1,0 +1,34 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.big-metric {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-top: 0.5rem;
+}
+
+.trend {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    color: var(--color-text-muted);
+}
+
+.trend.positive { color: var(--color-success); }
+.trend.negative { color: var(--color-danger); }
+
+/* Override chart text colors for dark mode */
+::ng-deep .ngx-charts text {
+  fill: var(--color-text-muted) !important;
+}

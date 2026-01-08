@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h2>Employee Directory</h2>
+  <div class="actions">
+    <input type="text" class="glass-input search-input" placeholder="Search employees...">
+    <button class="btn-primary">Add Employee</button>
+  </div>
+</div>
+
+<app-glass-card>
+  <table class="glass-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Last Active</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (emp of employees; track emp.id) {
+        <tr>
+          <td>
+            <div class="user-cell">
+              <div class="avatar-sm">{{ emp.name.charAt(0) }}</div>
+              <div class="user-info">
+                <span class="user-name">{{ emp.name }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ emp.role }}</td>
+          <td class="text-muted">{{ emp.email }}</td>
+          <td>
+            <span class="status-dot" [class.online]="emp.status === 'Active'"></span>
+            {{ emp.status }}
+          </td>
+          <td class="text-dim">{{ emp.lastActive }}</td>
+          <td>
+            <button class="btn-icon">⋮</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</app-glass-card>

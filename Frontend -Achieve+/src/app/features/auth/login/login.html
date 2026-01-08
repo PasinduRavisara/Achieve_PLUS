@@ -1,0 +1,25 @@
+<div class="login-container">
+  <div class="login-content">
+    <div class="brand-logo">Achieve+</div>
+    <app-glass-card>
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Please sign in to continue</p>
+      
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="glass-input" placeholder="user@example.com">
+      </div>
+      
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="glass-input" placeholder="••••••••">
+      </div>
+
+      <div class="actions">
+        <!-- Mock login buttons for demo purposes -->
+        <button class="btn-primary w-100" (click)="login('employee')">Login as Employee</button>
+        <button class="btn-glass w-100 mt-2" (click)="login('admin')">Login as Admin</button>
+      </div>
+    </app-glass-card>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+.page-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+}
+
+.leaderboard-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Podium */
+.podium {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  height: 250px;
+}
+
+.podium-place {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.first { order: 2; transform: translateY(-20px); }
+.second { order: 1; }
+.third { order: 3; }
+
+.avatar-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text-main);
+}
+
+.avatar-circle.big {
+  width: 80px;
+  height: 80px;
+  border-color: var(--color-warning); /* Gold */
+  box-shadow: 0 0 20px hsla(var(--warning-hue), 80%, 50%, 0.3);
+}
+
+.crown {
+  font-size: 2rem;
+  position: absolute;
+  top: -40px;
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.rank-badge {
+  background: var(--color-primary);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 0.8rem;
+  position: absolute;
+  bottom: 45px; /* Adjust based on layout */
+}
+
+.name {
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.points {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+/* Table */
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.glass-table th {
+  text-align: left;
+  padding: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.glass-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: var(--color-text-main);
+}
+
+.glass-table tr:last-child td {
+  border-bottom: none;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.points-cell {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.highlight {
+  background: rgba(255,255,255,0.03);
+}

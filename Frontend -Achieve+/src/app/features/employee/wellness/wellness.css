@@ -1,0 +1,53 @@
+.mood-tracker {
+  text-align: center;
+  padding: 3rem !important;
+}
+
+.mood-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.mood-btn {
+  font-size: 3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+  opacity: 0.6;
+}
+
+.mood-btn:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+.mood-btn.selected {
+  opacity: 1;
+  transform: scale(1.3);
+  filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
+}
+
+.mood-response {
+  color: var(--color-success);
+  font-weight: 500;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.mt-4 { margin-top: 2rem; margin-bottom: 1rem; }
+
+.tips-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.tip-card h4 {
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

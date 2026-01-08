@@ -1,0 +1,57 @@
+<div class="page-header">
+  <h2>User Profile</h2>
+</div>
+
+<div class="profile-layout">
+  <!-- Profile Card -->
+  <app-glass-card class="profile-card">
+    <div class="profile-header">
+      <div class="avatar-xl">{{ user()?.name?.charAt(0) }}</div>
+      <div class="profile-info">
+        <h3>{{ user()?.name }}</h3>
+        <p class="role">{{ user()?.role }}</p>
+      </div>
+      <button class="btn-glass edit-btn" (click)="toggleEdit()">
+        {{ isEditing ? 'Save' : 'Edit' }}
+      </button>
+    </div>
+
+    <div class="profile-details">
+      <div class="form-group">
+        <label>Email</label>
+        @if (isEditing) {
+          <input type="email" class="glass-input" value="user@achieve.plus">
+        } @else {
+          <p class="value">user@achieve.plus</p>
+        }
+      </div>
+      
+      <div class="form-group">
+        <label>Department</label>
+        <p class="value">Engineering</p>
+      </div>
+
+      <div class="form-group">
+        <label>Join Date</label>
+        <p class="value">Jan 12, 2023</p>
+      </div>
+    </div>
+  </app-glass-card>
+
+  <!-- Stats Side -->
+  <app-glass-card class="stats-card">
+    <h4>Career Stats</h4>
+    <div class="stat-row">
+      <span>Total Points</span>
+      <span class="stat-val">2,450</span>
+    </div>
+    <div class="stat-row">
+      <span>Tasks Done</span>
+      <span class="stat-val">142</span>
+    </div>
+    <div class="stat-row">
+      <span>Badges</span>
+      <span class="stat-val">8</span>
+    </div>
+  </app-glass-card>
+</div>

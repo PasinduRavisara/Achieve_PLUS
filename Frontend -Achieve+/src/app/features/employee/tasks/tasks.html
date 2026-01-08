@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h2>My Tasks</h2>
+  <div class="tabs">
+    <button class="tab" [class.active]="filter() === 'todo'" (click)="setFilter('todo')">To Do</button>
+    <button class="tab" [class.active]="filter() === 'inprogress'" (click)="setFilter('inprogress')">In Progress</button>
+    <button class="tab" [class.active]="filter() === 'done'" (click)="setFilter('done')">Done</button>
+  </div>
+</div>
+
+<div class="task-list">
+  @for (task of filteredTasks; track task.id) {
+    <app-glass-card class="task-item">
+      <div class="task-content">
+        <div class="task-main">
+          <h3>{{ task.title }}</h3>
+          <span class="badge" [class.points]="true">+{{ task.points }} pts</span>
+        </div>
+        <div class="task-meta">
+          <span class="due-date">📅 {{ task.due }}</span>
+          <span class="status-indicator" [attr.data-status]="task.status">{{ task.status }}</span>
+        </div>
+      </div>
+      <div class="task-actions">
+        <!-- Mock Actions -->
+        @if (task.status === 'todo') {
+          <button class="btn-glass btn-sm">Start</button>
+        }
+        @if (task.status === 'inprogress') {
+          <button class="btn-primary btn-sm">Complete</button>
+        }
+      </div>
+    </app-glass-card>
+  }
+  @empty {
+    <div class="empty-state">
+      <p>No tasks in this category.</p>
+    </div>
+  }
+</div>

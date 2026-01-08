@@ -1,0 +1,81 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.search-input {
+    min-width: 250px;
+}
+
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.glass-table th {
+  text-align: left;
+  padding: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.glass-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  vertical-align: middle;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar-sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-light), var(--color-primary));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.user-name {
+    font-weight: 500;
+}
+
+.text-muted { color: var(--color-text-muted); }
+.text-dim { color: var(--color-text-dim); font-size: 0.9rem; }
+
+.status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+    background: var(--color-text-muted);
+}
+
+.status-dot.online {
+    background: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+}
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 1.2rem;
+}

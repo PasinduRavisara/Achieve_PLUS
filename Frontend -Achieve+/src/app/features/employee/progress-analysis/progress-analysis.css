@@ -1,0 +1,38 @@
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.chart-container-pie {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.big-metric {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 1rem;
+}
+
+.big-metric .small {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+/* Override chart text colors for dark mode */
+::ng-deep .ngx-charts text {
+  fill: var(--color-text-muted) !important;
+}
