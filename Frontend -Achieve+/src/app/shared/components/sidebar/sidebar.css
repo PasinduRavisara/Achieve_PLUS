@@ -102,48 +102,93 @@ a.active {
   flex: 1;
 }
 
-.nav-item.icon-only {
-  width: auto;
-  padding: 0.8rem;
-  justify-content: center;
-}
-
-.nav-item.profile-btn {
-  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-  border: 1px solid rgba(255,255,255,0.1);
-  color: white;
-  font-weight: 600;
+/* Profile Capsule */
+.profile-capsule {
   display: flex;
   align-items: center;
-  gap: 10px;
+  background: rgba(255,255,255,0.05); /* Match screenshot dark */
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
 }
 
-.nav-item.profile-btn:hover {
-  background: linear-gradient(135deg, var(--primary), #00c3ff);
-  border-color: transparent;
-  color: black;
-  box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+.profile-capsule:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.profile-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.8rem;
+  color: white;
+  text-decoration: none;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.profile-link:hover {
+  background: rgba(255,255,255,0.05);
+  transform: none; /* Override default */
+}
+
+.profile-text {
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .mini-avatar {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid #ffd700; /* Gold border for pop */
 }
 
-.nav-item.settings-btn {
+/* Mini Logout Button */
+.mini-logout-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-left: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.2s;
+}
+
+.mini-logout-btn:hover {
+  background: rgba(255, 0, 85, 0.2);
+  color: #ff5555;
+}
+
+/* Settings Box */
+.settings-box {
+  width: 50px; /* Fixed width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
   color: var(--text-muted);
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: all 0.3s;
 }
 
-.nav-item.settings-btn:hover {
-  background: rgba(255,255,255,0.2);
+.settings-box:hover {
+  background: rgba(255,255,255,0.1);
   color: white;
   transform: rotate(90deg);
+  border-color: white;
 }
 
-.nav-item.icon-only i {
+.settings-box i {
   margin-right: 0;
 }

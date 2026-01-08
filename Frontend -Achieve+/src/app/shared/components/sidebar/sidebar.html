@@ -18,11 +18,19 @@
 
   <div class="sidebar-footer">
     <div class="footer-row">
-      <a [routerLink]="role === 'admin' ? '/admin/profile' : '/dashboard/profile'" routerLinkActive="active" class="nav-item profile-btn flex-grow" title="Profile">
-        <img [src]="userAvatar" class="mini-avatar">
-        <span>Profile</span>
-      </a>
-      <a [routerLink]="role === 'admin' ? '/admin/settings' : '/dashboard/settings'" routerLinkActive="active" class="nav-item settings-btn icon-only" title="Settings">
+      <!-- Profile & Logout Container -->
+      <div class="profile-capsule flex-grow">
+        <a [routerLink]="role === 'admin' ? '/admin/profile' : '/dashboard/profile'" class="profile-link">
+          <img [src]="userAvatar" class="mini-avatar">
+          <span class="profile-text">Profile</span>
+        </a>
+        <button (click)="logout()" class="mini-logout-btn" title="Logout">
+          <i class="bi bi-box-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- Settings Button -->
+      <a [routerLink]="role === 'admin' ? '/admin/settings' : '/dashboard/settings'" routerLinkActive="active" class="settings-box">
         <i class="bi bi-gear-fill"></i>
       </a>
     </div>
