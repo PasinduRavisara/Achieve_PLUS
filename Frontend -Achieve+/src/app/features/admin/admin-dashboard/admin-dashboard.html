@@ -1,31 +1,100 @@
-<div class="dashboard-header">
-  <div>
-    <h2>Admin Dashboard</h2>
-    <p class="subtitle">Overview of system performance</p>
+<!-- Welcome Banner -->
+<div class="welcome-banner glass-card mb-4">
+  <div class="banner-content">
+    <h1>Good Afternoon, Admin</h1>
+    <p>Manage your team and boost productivity with AchievePlus</p>
   </div>
-  <p class="date">{{ today | date:'mediumDate' }}</p>
+  <i class="bi bi-people-fill banner-icon"></i>
 </div>
 
-<div class="stats-grid">
-  <div class="glass-card stat-card">
-    <div class="stat-icon primary"><i class="bi bi-people-fill"></i></div>
+<!-- Stats Row -->
+<div class="stats-grid mb-4">
+  <div class="glass-card stat-card" *ngFor="let stat of stats">
     <div class="stat-info">
-      <h3>124</h3>
-      <p>Total Employees</p>
+      <span class="stat-label">{{ stat.label }}</span>
+      <h2 class="stat-value">{{ stat.value }}</h2>
+      <span class="stat-trend badge">{{ stat.trend }}</span>
+    </div>
+    <div class="stat-icon-circle">
+      <i [class]="'bi ' + stat.icon"></i>
     </div>
   </div>
-  <div class="glass-card stat-card">
-    <div class="stat-icon secondary"><i class="bi bi-check-circle-fill"></i></div>
-    <div class="stat-info">
-      <h3>1,402</h3>
-      <p>Tasks Completed</p>
+</div>
+
+<!-- Quick Links Row -->
+<div class="quick-links-grid mb-4">
+  <a [routerLink]="link.route" class="glass-card quick-link-card" *ngFor="let link of quickLinks" [style.border-top-color]="link.color">
+    <div class="quick-icon" [style.background]="link.color + '20'" [style.color]="link.color">
+      <i [class]="'bi ' + link.icon"></i>
+    </div>
+    <h3>{{ link.title }}</h3>
+    <p>{{ link.desc }}</p>
+  </a>
+</div>
+
+<!-- Bottom Section -->
+<div class="dashboard-bottom-grid">
+  <!-- Task Overview -->
+  <div class="glass-card task-overview">
+    <div class="card-header flex-between mb-4">
+      <h3>Task Status Overview</h3>
+      <button class="btn-view-all" routerLink="/admin/tasks">View All Tasks</button>
+    </div>
+
+    <div class="overview-content">
+      <div class="total-progress mb-4">
+        <span class="label">Total Progress</span>
+        <div class="big-number">{{ taskOverview.total }} <span class="sub-text">/ tasks total</span></div>
+      </div>
+
+      <div class="progress-bars">
+        <div class="p-bar-group">
+          <div class="flex-between mb-1">
+             <span class="p-label"><i class="bi bi-arrow-repeat text-primary"></i> In Progress</span>
+             <span>{{ taskOverview.inProgress }}</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill primary" style="width: 40%"></div></div>
+        </div>
+
+        <div class="p-bar-group">
+          <div class="flex-between mb-1">
+             <span class="p-label"><i class="bi bi-check-circle-fill text-success"></i> Completed</span>
+             <span>{{ taskOverview.completed }}</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill success" style="width: 70%"></div></div>
+        </div>
+
+        <div class="p-bar-group">
+          <div class="flex-between mb-1">
+             <span class="p-label"><i class="bi bi-clock-fill text-warning"></i> Pending</span>
+             <span>{{ taskOverview.pending }}</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill warning" style="width: 15%"></div></div>
+        </div>
+      </div>
     </div>
   </div>
-   <div class="glass-card stat-card">
-    <div class="stat-icon accent"><i class="bi bi-gift-fill"></i></div>
-    <div class="stat-info">
-      <h3>45</h3>
-      <p>Rewards Claimed</p>
+
+  <!-- Reminders -->
+  <div class="glass-card reminders-card">
+    <div class="card-header flex-between mb-3">
+      <h3><i class="bi bi-sticky-fill text-warning"></i> Reminders</h3>
+      <button class="btn-add" (click)="addReminder()">+ New</button>
     </div>
+
+    <div class="reminders-list" *ngIf="reminders.length > 0; else noReminders">
+      <div class="reminder-item glass-panel" *ngFor="let rem of reminders">
+        <p>{{ rem.text }}</p>
+        <small>{{ rem.date | date:'shortTime' }}</small>
+      </div>
+    </div>
+
+    <ng-template #noReminders>
+      <div class="empty-state">
+        <i class="bi bi-journal-text empty-icon"></i>
+        <p>No reminders yet.</p>
+        <small class="text-muted">Add a new reminder to stay on top of your tasks.</small>
+      </div>
+    </ng-template>
   </div>
 </div>
