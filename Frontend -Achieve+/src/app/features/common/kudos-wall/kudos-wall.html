@@ -9,16 +9,16 @@
 
   <!-- Compose Area -->
   <div class="compose-area glass-card" *ngIf="showCompose">
-    <h3>Data Appreciation</h3>
+    <h3 class="gradient-text"><i class="bi bi-stars"></i> Send Appreciation</h3>
     <div class="form-group">
-      <input type="text" [(ngModel)]="newKudos.to" placeholder="Who do you want to thank?" class="glass-input">
+      <input type="text" [(ngModel)]="newKudos.to" placeholder="Who are you thanking? (@name)" class="glass-input">
     </div>
     <div class="form-group">
-      <textarea [(ngModel)]="newKudos.message" placeholder="Write your message..." rows="3" class="glass-input"></textarea>
+      <textarea [(ngModel)]="newKudos.message" placeholder="Write a heartwarming message..." rows="3" class="glass-input"></textarea>
     </div>
     <div class="form-actions">
       <button class="btn-cancel" (click)="toggleCompose()">Cancel</button>
-      <button class="btn-submit" (click)="submitKudos()">Post</button>
+      <button class="btn-submit" (click)="submitKudos()">Post Kudos</button>
     </div>
   </div>
 

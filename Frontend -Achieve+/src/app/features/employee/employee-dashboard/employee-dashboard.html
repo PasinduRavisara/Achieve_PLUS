@@ -1,51 +1,106 @@
-<div class="dashboard-header">
-  <div>
-    <h2>Welcome back, Employee!</h2>
-    <p class="subtitle">Keep up the great work!</p>
+<!-- Welcome Banner -->
+<div class="welcome-banner glass-card mb-4">
+  <div class="banner-content">
+    <div class="banner-header">
+      <div class="date-info">
+        <i class="bi bi-calendar-event"></i> {{ today | date:'fullDate' }}
+      </div>
+      <div class="time-info">
+        <i class="bi bi-clock"></i> {{ currentTime | date:'shortTime' }}
+      </div>
+    </div>
+    <h1>Welcome To Achieve+, Employee</h1>
+    <p>Your personal dashboard to track progress and achievements</p>
   </div>
-  <p class="date">{{ today | date:'mediumDate' }}</p>
+  <div class="banner-illustration">
+     <!-- Abstract floaty shape or illustration placeholder -->
+     <i class="bi bi-rocket-takeoff-fill rocket-icon"></i>
+  </div>
 </div>
 
-<div class="grid-container">
-  <div class="glass-card full-width">
-    <h3><i class="bi bi-bar-chart-line-fill primary-text"></i> Weekly Progress</h3>
-    <div class="placeholder-chart">
-       <!-- Visual placeholder for chart -->
-       <div class="bar" style="height: 60%"></div>
-       <div class="bar" style="height: 80%"></div>
-       <div class="bar" style="height: 40%"></div>
-       <div class="bar" style="height: 90%"></div>
-       <div class="bar highlight" style="height: 75%"></div>
+<!-- Quick Stats Row -->
+<div class="stats-grid mb-4">
+  <div class="glass-card stat-card">
+    <div class="stat-icon-box blue-bg">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <div class="stat-details">
+      <span class="label">Tasks Completed</span>
+      <h2 class="value">{{ stats.completed }}</h2>
     </div>
   </div>
 
-  <div class="glass-card">
-    <h3><i class="bi bi-list-check secondary-text"></i> Pending Tasks</h3>
-    <ul class="task-list">
-      <li>
-        <span class="task-title">Complete Design Review</span>
-        <span class="badge high">High</span>
-      </li>
-      <li>
-        <span class="task-title">Update Documentation</span>
-        <span class="badge medium">Medium</span>
-      </li>
-      <li>
-        <span class="task-title">Team Meeting</span>
-        <span class="badge low">Low</span>
-      </li>
-    </ul>
+  <div class="glass-card stat-card">
+    <div class="stat-icon-box yellow-bg">
+      <i class="bi bi-award-fill"></i>
+    </div>
+    <div class="stat-details">
+      <span class="label">Badges Earned</span>
+      <h2 class="value">{{ stats.badges }}</h2>
+    </div>
   </div>
 
-  <div class="glass-card">
-    <h3><i class="bi bi-trophy-fill accent-text"></i> Recent Achievements</h3>
-     <div class="achievement">
-       <div class="icon-circle"><i class="bi bi-lightning-charge-fill"></i></div>
-       <div>
-         <h4>Fast Solver</h4>
-         <p>Completed 5 tasks in 1 day</p>
-       </div>
-     </div>
+  <div class="glass-card stat-card">
+    <div class="stat-icon-box green-bg">
+      <i class="bi bi-trophy-fill"></i>
+    </div>
+    <div class="stat-details">
+      <span class="label">Current Rank</span>
+      <h2 class="value">#{{ stats.rank }}</h2>
+    </div>
+  </div>
+</div>
+
+<!-- Split Section: Deadlines & Recent -->
+<div class="split-grid mb-4">
+  <!-- Upcoming Deadlines -->
+  <div class="glass-card list-card">
+    <div class="card-header mb-3">
+      <div class="icon-circle blue-light"><i class="bi bi-calendar-week"></i></div>
+      <h3>Upcoming Deadlines</h3>
+    </div>
+    
+    <div class="empty-state" *ngIf="upcomingDeadlines.length === 0">
+      <i class="bi bi-calendar-x empty-icon"></i>
+      <p>No upcoming deadlines!</p>
+    </div>
+  </div>
+
+  <!-- Recently Completed -->
+  <div class="glass-card list-card">
+    <div class="card-header mb-3">
+      <div class="icon-circle green-light"><i class="bi bi-check2-circle"></i></div>
+      <h3>Recently Completed Tasks</h3>
+    </div>
+
+    <div class="empty-state" *ngIf="recentTasks.length === 0">
+      <i class="bi bi-check-circle empty-icon"></i>
+      <p>No completed tasks yet!</p>
+    </div>
+  </div>
+</div>
+
+<!-- Performance Overview -->
+<div class="glass-card performance-section">
+  <h3 class="mb-4">Performance Overview</h3>
+  <div class="perf-grid">
+    <div class="perf-card">
+      <div class="perf-icon blue-light"><i class="bi bi-list-task"></i></div>
+      <span class="perf-label">Weekly Tasks</span>
+      <span class="perf-value blue-text">{{ performance.weekly }}</span>
+    </div>
+
+    <div class="perf-card">
+      <div class="perf-icon yellow-light"><i class="bi bi-trophy"></i></div>
+      <span class="perf-label">Achievement Rate</span>
+      <span class="perf-value yellow-text">{{ performance.rate }}%</span>
+    </div>
+
+    <div class="perf-card">
+      <div class="perf-icon green-light"><i class="bi bi-star"></i></div>
+      <span class="perf-label">Points Goal</span>
+      <span class="perf-value green-text">{{ performance.goal }}</span>
+    </div>
   </div>
 </div>
 

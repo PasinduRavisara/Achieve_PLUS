@@ -10,10 +10,30 @@ import { CommonModule } from '@angular/common';
 })
 export class EmployeeDashboard {
   today = new Date();
+  currentTime = new Date();
   showDailyBonus = false;
+  
+  // Mock Stats
+  stats = {
+    completed: 12,
+    badges: 3,
+    rank: 12
+  };
+
+  performance = {
+    weekly: 5,
+    rate: 85,
+    goal: 1200
+  };
+
+  upcomingDeadlines: any[] = [];
+  recentTasks: any[] = [];
 
   ngOnInit() {
     this.checkDailyBonus();
+    setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
   }
 
   checkDailyBonus() {
@@ -21,7 +41,6 @@ export class EmployeeDashboard {
     const todayStr = new Date().toDateString();
 
     if (lastLogin !== todayStr) {
-      // Simulate delay for effect
       setTimeout(() => {
         this.showDailyBonus = true;
       }, 1000);
@@ -31,7 +50,6 @@ export class EmployeeDashboard {
   claimBonus() {
     localStorage.setItem('achieve_last_login', new Date().toDateString());
     this.showDailyBonus = false;
-    // Sound effect could go here
     alert("claimed +50 XP!");
   }
 }
