@@ -28,6 +28,7 @@ import { Signup } from './features/auth/signup/signup';
 import { Profile } from './features/common/profile/profile';
 import { Settings } from './features/common/settings/settings';
 import { Leaderboard } from './features/common/leaderboard/leaderboard';
+import { KudosWall } from './features/common/kudos-wall/kudos-wall';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -46,6 +47,7 @@ export const routes: Routes = [
       { path: 'progress-analysis', component: AdminProgressAnalysis },
       { path: 'reward-store', component: AdminRewardStore },
       { path: 'employees', component: AdminEmployeesDetails },
+      { path: 'community', component: KudosWall },
       { path: 'profile', component: Profile },
       { path: 'settings', component: Settings },
       { path: 'leaderboard', component: Leaderboard },
@@ -66,6 +68,7 @@ export const routes: Routes = [
       { path: 'rewards', component: RewardsAchievements },
       { path: 'store', component: RewardStore },
       { path: 'wellness', component: EmployeeWellness },
+      { path: 'community', component: KudosWall },
       { path: 'profile', component: Profile },
       { path: 'settings', component: Settings },
       { path: 'leaderboard', component: Leaderboard },

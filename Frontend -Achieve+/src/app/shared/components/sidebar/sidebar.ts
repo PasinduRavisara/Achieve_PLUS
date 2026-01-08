@@ -24,6 +24,7 @@ export class Sidebar {
         { label: 'Reward Store', icon: 'bi-shop', route: '/admin/reward-store' },
         { label: 'Employees', icon: 'bi-people-fill', route: '/admin/employees' },
         { label: 'Leaderboard', icon: 'bi-trophy-fill', route: '/admin/leaderboard' },
+        { label: 'Community', icon: 'bi-chat-heart-fill', route: '/admin/community' },
       ];
     } else {
       return [
@@ -34,6 +35,7 @@ export class Sidebar {
         { label: 'Store', icon: 'bi-bag-fill', route: '/dashboard/store' },
         { label: 'Wellness', icon: 'bi-heart-pulse-fill', route: '/dashboard/wellness' },
         { label: 'Leaderboard', icon: 'bi-trophy-fill', route: '/dashboard/leaderboard' },
+        { label: 'Community', icon: 'bi-chat-heart-fill', route: '/dashboard/community' },
       ];
     }
   }

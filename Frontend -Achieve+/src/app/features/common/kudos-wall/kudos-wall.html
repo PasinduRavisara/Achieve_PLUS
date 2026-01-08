@@ -1,0 +1,52 @@
+<div class="kudos-container">
+  <div class="header-section text-center mb-5">
+    <h1>Community Kudos</h1>
+    <p class="subtitle">Celebration & Appreciation</p>
+    <button class="btn-compose" (click)="toggleCompose()">
+      <i class="bi bi-pencil-fill"></i> Send Kudos
+    </button>
+  </div>
+
+  <!-- Compose Area -->
+  <div class="compose-area glass-card" *ngIf="showCompose">
+    <h3>Data Appreciation</h3>
+    <div class="form-group">
+      <input type="text" [(ngModel)]="newKudos.to" placeholder="Who do you want to thank?" class="glass-input">
+    </div>
+    <div class="form-group">
+      <textarea [(ngModel)]="newKudos.message" placeholder="Write your message..." rows="3" class="glass-input"></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="toggleCompose()">Cancel</button>
+      <button class="btn-submit" (click)="submitKudos()">Post</button>
+    </div>
+  </div>
+
+  <!-- Feed -->
+  <div class="kudos-feed">
+    <div class="kudos-card glass-panel" *ngFor="let post of kudosList">
+      <div class="card-header">
+        <img [src]="post.avatar" class="avatar">
+        <div class="meta">
+          <span class="author">{{ post.from }}</span>
+          <span class="action">thanked</span>
+          <span class="recipient">{{ post.to }}</span>
+          <span class="date">{{ post.date }}</span>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <p>"{{ post.message }}"</p>
+        <div class="tags">
+          <span class="tag" *ngFor="let tag of post.tags">{{ tag }}</span>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn-like" (click)="like(post)">
+          <i class="bi bi-heart-fill"></i> {{ post.likes }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

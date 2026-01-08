@@ -1,0 +1,122 @@
+.focus-widget {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.toggle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: none;
+  font-size: 1.5rem;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(0, 242, 255, 0.4);
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-btn:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+.timer-content {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 250px;
+  background: rgba(30,30,40,0.95);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.timer-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  margin-bottom: 0.5rem;
+}
+
+.modes {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.05);
+  padding: 4px;
+  border-radius: 20px;
+}
+
+.modes button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 4px 12px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.modes button.active {
+  background: var(--primary);
+  color: black;
+  font-weight: bold;
+}
+
+.timer-display {
+  font-size: 3.5rem;
+  font-weight: 200;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  margin: 1rem 0;
+  color: white;
+  text-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-control {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.btn-control:hover {
+  transform: scale(1.1);
+}
+
+.btn-control.secondary {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}

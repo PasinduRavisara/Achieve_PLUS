@@ -48,3 +48,19 @@
      </div>
   </div>
 </div>
+
+<!-- Daily Bonus Modal -->
+<div class="modal-overlay" *ngIf="showDailyBonus">
+  <div class="modal-card">
+    <div class="glow-bg"></div>
+    <div class="content">
+      <i class="bi bi-gift-fill gift-icon"></i>
+      <h2>Daily Bonus!</h2>
+      <p>You're on a <strong>3-day streak</strong> 🔥</p>
+      <div class="reward-amount">
+        <span>+50</span> XP
+      </div>
+      <button class="btn-claim" (click)="claimBonus()">Claim</button>
+    </div>
+  </div>
+</div>

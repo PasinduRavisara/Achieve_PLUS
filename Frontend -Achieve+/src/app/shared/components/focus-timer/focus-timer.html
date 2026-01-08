@@ -1,0 +1,28 @@
+<div class="focus-widget" [class.open]="isOpen">
+  <button class="toggle-btn" (click)="toggleWidget()">
+    <i class="bi bi-stopwatch-fill"></i>
+  </button>
+
+  <div class="timer-content" *ngIf="isOpen">
+    <div class="timer-header">
+      <h4>Focus Mode</h4>
+      <div class="modes">
+        <button [class.active]="mode === 'focus'" (click)="setMode('focus')">Focus</button>
+        <button [class.active]="mode === 'break'" (click)="setMode('break')">Break</button>
+      </div>
+    </div>
+    
+    <div class="timer-display">
+      {{ formattedTime }}
+    </div>
+
+    <div class="timer-controls">
+      <button class="btn-control" (click)="toggleTimer()">
+        <i [class]="'bi ' + (isRunning ? 'bi-pause-fill' : 'bi-play-fill')"></i>
+      </button>
+      <button class="btn-control secondary" (click)="reset()">
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </div>
+</div>
