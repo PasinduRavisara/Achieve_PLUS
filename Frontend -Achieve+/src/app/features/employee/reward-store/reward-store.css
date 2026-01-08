@@ -1,0 +1,92 @@
+.store-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.points-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.reward-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  transition: transform 0.3s;
+}
+
+.reward-card:hover {
+  transform: translateY(-10px);
+}
+
+.reward-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.reward-icon i {
+  font-size: 2.5rem;
+  color: var(--secondary);
+}
+
+.reward-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.cost {
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.redeem-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  background: linear-gradient(90deg, var(--secondary), #8a2be2);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.redeem-btn:disabled {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.redeem-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 5px 15px rgba(189, 0, 255, 0.3);
+}

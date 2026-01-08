@@ -1,0 +1,31 @@
+<div class="wellness-container">
+  <div class="header text-center mb-5">
+    <h1>Wellness Corner</h1>
+    <p class="subtitle">Take a moment for yourself</p>
+  </div>
+
+  <div class="mood-tracker glass-card text-center mb-5">
+    <h3>How are you feeling today?</h3>
+    <div class="mood-grid">
+      <button class="mood-btn glass-panel" *ngFor="let mood of moods" (click)="logMood(mood)">
+        <i [class]="'bi ' + mood.icon" [style.color]="mood.color"></i>
+        <span>{{ mood.label }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="breathing-exercise glass-card text-center">
+    <h3>Breathing Exercise</h3>
+    <p class="subtitle">4-7-8 Technique</p>
+    
+    <div class="circle-container">
+      <div class="breathing-circle" [class.animate]="isBreathing">
+        <span class="breathing-text">{{ breathingText }}</span>
+      </div>
+    </div>
+    
+    <button class="btn-start" (click)="toggleBreathing()">
+      {{ isBreathing ? 'Stop' : 'Start' }}
+    </button>
+  </div>
+</div>

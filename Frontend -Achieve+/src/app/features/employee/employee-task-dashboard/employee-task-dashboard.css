@@ -1,0 +1,87 @@
+.employee-tasks-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.task-card {
+  padding: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.08);
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-done { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+.status-inprogress { background: rgba(0, 242, 255, 0.2); color: var(--primary); }
+.status-todo { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
+
+.due-date {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.description {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.priority {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.priority.high {
+  color: var(--accent);
+}
+
+.btn-action {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-action:hover {
+  background: var(--primary);
+  color: black;
+}

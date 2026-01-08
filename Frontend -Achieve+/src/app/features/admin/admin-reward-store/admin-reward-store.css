@@ -1,0 +1,110 @@
+.store-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-create {
+  background: var(--primary);
+  color: black;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.reward-card {
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s;
+}
+
+.icon-btn:hover { color: white; }
+.icon-btn.delete:hover { color: #ff5555; }
+
+.reward-icon {
+  font-size: 2.5rem;
+  color: var(--secondary);
+  margin-bottom: 1rem;
+}
+
+.reward-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.stock.low {
+  color: #ff5555;
+  font-weight: bold;
+}
+
+.stock-controls {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.btn-control {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-control:hover {
+  background: var(--primary);
+  color: black;
+  border-color: var(--primary);
+}

@@ -1,0 +1,124 @@
+.employees-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-create {
+  background: var(--primary);
+  color: black;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-create:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.employees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employees-table th, .employees-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+}
+
+.employees-table th {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.employees-table tr {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.2s;
+}
+
+.employees-table tr:last-child {
+  border-bottom: none;
+}
+
+.employees-table tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.employee-cell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.emp-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.id {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-active { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
+.status-busy { background: rgba(255, 0, 85, 0.15); color: var(--accent); }
+.status-away { background: rgba(255, 165, 0, 0.15); color: orange; }
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.icon-btn.edit { color: var(--text-muted); }
+.icon-btn.edit:hover { background: rgba(255,255,255,0.1); color: white; }
+
+.icon-btn.delete { color: #ff5555; }
+.icon-btn.delete:hover { background: rgba(255, 85, 85, 0.1); }

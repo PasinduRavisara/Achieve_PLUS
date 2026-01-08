@@ -1,0 +1,30 @@
+<div class="auth-container">
+  <div class="auth-card glass-panel">
+    <div class="header">
+      <h1 class="logo-text">Achieve<span class="plus">+</span></h1>
+      <p class="subtitle">Welcome back! Please login to your account.</p>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Enter your email" required class="glass-input">
+      </div>
+      
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" required class="glass-input">
+      </div>
+
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+
+    <div class="demo-buttons">
+      <p>Quick Demo Login:</p>
+      <button (click)="loginAs('employee')" class="demo-btn">Employee</button>
+      <button (click)="loginAs('admin')" class="demo-btn admin">Admin</button>
+    </div>
+    
+    <p class="footer-text">Don't have an account? <a routerLink="/signup">Sign up</a></p>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="progress-container">
+  <div class="header mb-4">
+    <h1>Your Progress</h1>
+    <p class="subtitle">See how far you've come</p>
+  </div>
+
+  <div class="stats-overview mb-4">
+    <div class="stat-card glass-card">
+      <div class="stat-icon"><i class="bi bi-check-circle-fill"></i></div>
+      <div class="stat-text">
+        <h3>{{ tasksCompleted }}</h3>
+        <p>Tasks Completed</p>
+      </div>
+    </div>
+    <div class="stat-card glass-card">
+      <div class="stat-icon"><i class="bi bi-star-fill text-warning"></i></div>
+      <div class="stat-text">
+        <h3>{{ totalPoints }}</h3>
+        <p>Total XP</p>
+      </div>
+    </div>
+    <div class="stat-card glass-card">
+      <div class="stat-icon"><i class="bi bi-trophy-fill text-accent"></i></div>
+      <div class="stat-text">
+        <h3>#{{ rank }}</h3>
+        <p>Rank</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section glass-card">
+    <h3><i class="bi bi-activity"></i> Weekly Activity</h3>
+    <div class="line-chart-container">
+      <div class="css-line-chart">
+        <!-- Connecting lines would be hard in pure HTML/CSS without SVG, so we use bars for simplicity but styled thin -->
+        <div class="chart-bar" *ngFor="let val of weeklyTasks; let i = index" [style.height]="(val * 10) + '%'">
+          <span class="tooltip">{{ val }} Tasks</span>
+          <span class="label">{{ ['Mon','Tue','Wed','Thu','Fri','Sat'][i] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

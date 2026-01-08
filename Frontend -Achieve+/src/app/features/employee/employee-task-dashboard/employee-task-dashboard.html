@@ -1,0 +1,25 @@
+<div class="employee-tasks-container">
+  <div class="header mb-4">
+    <h1>My Tasks</h1>
+    <p class="subtitle">Tasks assigned to you</p>
+  </div>
+
+  <div class="tasks-grid">
+    <div class="glass-card task-card" *ngFor="let task of tasks">
+      <div class="card-header-row">
+        <span class="status-badge" [ngClass]="getStatusClass(task.status)">{{ task.status }}</span>
+        <span class="due-date"><i class="bi bi-calendar-event"></i> {{ task.due }}</span>
+      </div>
+      
+      <h3>{{ task.title }}</h3>
+      <p class="description">{{ task.description }}</p>
+      
+      <div class="card-footer">
+        <span class="priority" [class.high]="task.priority === 'High'">
+          <i class="bi bi-flag-fill"></i> {{ task.priority }} Priority
+        </span>
+        <button class="btn-action">View Details</button>
+      </div>
+    </div>
+  </div>
+</div>

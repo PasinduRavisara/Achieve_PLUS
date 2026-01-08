@@ -1,0 +1,68 @@
+<div class="settings-container">
+  <div class="header mb-4">
+    <h1>Settings</h1>
+    <p class="subtitle">Manage your application preferences</p>
+  </div>
+
+  <div class="settings-grid">
+    <!-- Notifications -->
+    <div class="glass-card">
+      <div class="card-header">
+        <h3><i class="bi bi-bell-fill"></i> Notifications</h3>
+      </div>
+      <div class="setting-item">
+        <label>Push Notifications</label>
+        <div class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="settings.notifications" id="notif">
+          <label for="notif"></label>
+        </div>
+      </div>
+      <div class="setting-item">
+        <label>Email Alerts</label>
+        <div class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="settings.emailAlerts" id="email">
+          <label for="email"></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appearance & Sound -->
+    <div class="glass-card">
+      <div class="card-header">
+        <h3><i class="bi bi-palette-fill"></i> Appearance & Sound</h3>
+      </div>
+      <div class="setting-item">
+        <label>Dark Mode</label>
+        <div class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="settings.darkMode" id="dark" disabled>
+           <!-- Disabled because theme is dark only currently -->
+          <label for="dark"></label>
+        </div>
+      </div>
+       <div class="setting-item">
+        <label>Sound Effects</label>
+        <div class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="settings.soundEffects" id="sound">
+          <label for="sound"></label>
+        </div>
+      </div>
+    </div>
+
+     <!-- Privacy -->
+    <div class="glass-card">
+      <div class="card-header">
+        <h3><i class="bi bi-shield-lock-fill"></i> Privacy</h3>
+      </div>
+      <div class="setting-item">
+        <label>Make Profile Public</label>
+        <div class="toggle-switch">
+          <input type="checkbox" [(ngModel)]="settings.publicProfile" id="public">
+          <label for="public"></label>
+        </div>
+      </div>
+       <div class="setting-action">
+          <button class="btn-danger-outline">Change Password</button>
+       </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+.achievements-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.featured-card {
+  position: relative;
+  overflow: hidden;
+  padding: 3rem;
+  background: linear-gradient(135deg, rgba(30, 30, 40, 0.8), rgba(30, 30, 40, 0.6));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.glow-effect {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%);
+  animation: rotate 20s linear infinite;
+  pointer-events: none;
+}
+
+.featured-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.featured-icon {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #FFD700, #FDB931);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: black;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+.featured-info h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #fff, #FFD700);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.date-badge {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  color: #FFD700;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.achievement-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.achievement-card:hover:not(.locked) {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.badge-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-muted);
+  position: relative;
+}
+
+.badge-icon.unlocked {
+  background: linear-gradient(135deg, var(--primary), #00c3ff);
+  color: black;
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+}
+
+.locked {
+  opacity: 0.6;
+}
+
+.lock-overlay {
+  position: absolute;
+  font-size: 1rem;
+  bottom: -5px;
+  right: -5px;
+  background: var(--bg-card);
+  padding: 4px;
+  border-radius: 50%;
+}
+
+h4 {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}

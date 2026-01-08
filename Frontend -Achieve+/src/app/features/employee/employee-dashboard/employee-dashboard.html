@@ -1,0 +1,50 @@
+<div class="dashboard-header">
+  <div>
+    <h2>Welcome back, Employee!</h2>
+    <p class="subtitle">Keep up the great work!</p>
+  </div>
+  <p class="date">{{ today | date:'mediumDate' }}</p>
+</div>
+
+<div class="grid-container">
+  <div class="glass-card full-width">
+    <h3><i class="bi bi-bar-chart-line-fill primary-text"></i> Weekly Progress</h3>
+    <div class="placeholder-chart">
+       <!-- Visual placeholder for chart -->
+       <div class="bar" style="height: 60%"></div>
+       <div class="bar" style="height: 80%"></div>
+       <div class="bar" style="height: 40%"></div>
+       <div class="bar" style="height: 90%"></div>
+       <div class="bar highlight" style="height: 75%"></div>
+    </div>
+  </div>
+
+  <div class="glass-card">
+    <h3><i class="bi bi-list-check secondary-text"></i> Pending Tasks</h3>
+    <ul class="task-list">
+      <li>
+        <span class="task-title">Complete Design Review</span>
+        <span class="badge high">High</span>
+      </li>
+      <li>
+        <span class="task-title">Update Documentation</span>
+        <span class="badge medium">Medium</span>
+      </li>
+      <li>
+        <span class="task-title">Team Meeting</span>
+        <span class="badge low">Low</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="glass-card">
+    <h3><i class="bi bi-trophy-fill accent-text"></i> Recent Achievements</h3>
+     <div class="achievement">
+       <div class="icon-circle"><i class="bi bi-lightning-charge-fill"></i></div>
+       <div>
+         <h4>Fast Solver</h4>
+         <p>Completed 5 tasks in 1 day</p>
+       </div>
+     </div>
+  </div>
+</div>

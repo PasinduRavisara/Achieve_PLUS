@@ -1,0 +1,8 @@
+<div class="glass-card" [ngClass]="customClass">
+  <div class="card-header" *ngIf="title">
+    <h3><i *ngIf="icon" [class]="'bi ' + icon"></i> {{ title }}</h3>
+  </div>
+  <div class="card-content">
+    <ng-content></ng-content>
+  </div>
+</div>

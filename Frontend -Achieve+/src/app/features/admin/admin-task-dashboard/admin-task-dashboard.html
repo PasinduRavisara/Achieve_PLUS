@@ -1,0 +1,38 @@
+<div class="task-dashboard-container">
+  <div class="header mb-4 flex-between">
+    <div>
+      <h1>Task Management</h1>
+      <p class="subtitle">Drag and drop tasks to manage workflow</p>
+    </div>
+    <button class="btn-create"><i class="bi bi-plus-lg"></i> Create Task</button>
+  </div>
+
+  <div class="kanban-board">
+    <div class="kanban-column glass-panel" *ngFor="let column of columns">
+      <div class="column-header">
+        <h3>{{ column.name }}</h3>
+        <span class="count-badge">{{ column.tasks.length }}</span>
+      </div>
+      
+      <div class="column-body">
+        <div class="task-card glass-card" *ngFor="let task of column.tasks">
+           <div class="task-header">
+             <span class="task-id">#{{ task.id }}</span>
+             <button class="more-btn"><i class="bi bi-three-dots"></i></button>
+           </div>
+           <h4 class="task-title">{{ task.title }}</h4>
+           
+           <div class="task-footer">
+             <div class="assignee">
+               <div class="avatar">{{ task.assignee.charAt(0) }}</div>
+               <span>{{ task.assignee }}</span>
+             </div>
+             <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
+               {{ task.priority }}
+             </span>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

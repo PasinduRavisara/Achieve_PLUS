@@ -1,0 +1,33 @@
+<div class="achievements-container">
+  <div class="header mb-4">
+    <h1>Your Achievements</h1>
+    <p class="subtitle">Badges and awards you've earned</p>
+  </div>
+
+  <!-- Featured Achievement -->
+  <div class="featured-card glass-panel mb-5">
+    <div class="glow-effect"></div>
+    <div class="featured-content">
+      <div class="featured-icon">
+        <i [class]="'bi ' + featuredAchievement.icon"></i>
+      </div>
+      <div class="featured-info">
+        <h2>{{ featuredAchievement.title }}</h2>
+        <p>{{ featuredAchievement.description }}</p>
+        <span class="date-badge">{{ featuredAchievement.date }}</span>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="section-title mb-3">All Badges</h3>
+  <div class="achievements-grid">
+    <div class="glass-card achievement-card" *ngFor="let badge of achievements" [class.locked]="!badge.unlocked">
+      <div class="badge-icon" [ngClass]="{'unlocked': badge.unlocked}">
+        <i [class]="'bi ' + badge.icon"></i>
+        <i class="bi bi-lock-fill lock-overlay" *ngIf="!badge.unlocked"></i>
+      </div>
+      <h4>{{ badge.title }}</h4>
+      <p>{{ badge.description }}</p>
+    </div>
+  </div>
+</div>

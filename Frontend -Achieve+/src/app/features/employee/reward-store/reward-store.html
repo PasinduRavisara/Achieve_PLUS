@@ -1,0 +1,27 @@
+<div class="store-container">
+  <div class="header-section">
+    <div>
+      <h1>Reward Store</h1>
+      <p class="subtitle">Redeem your hard-earned points</p>
+    </div>
+    <div class="points-display glass-panel">
+      <i class="bi bi-coin text-warning"></i>
+      <span>{{ userPoints }} PTS</span>
+    </div>
+  </div>
+
+  <div class="rewards-grid">
+    <div class="glass-card reward-card" *ngFor="let item of rewards">
+      <div class="reward-icon">
+        <i [class]="'bi ' + item.icon"></i>
+      </div>
+      <div class="reward-info">
+        <h3>{{ item.name }}</h3>
+        <p class="cost">{{ item.cost }} Points</p>
+      </div>
+      <button class="redeem-btn" [disabled]="userPoints < item.cost" (click)="redeem(item)">
+        Redeem
+      </button>
+    </div>
+  </div>
+</div>

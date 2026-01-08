@@ -1,0 +1,101 @@
+.wellness-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.mood-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.mood-btn {
+  border: none;
+  background: rgba(255,255,255,0.05); /* Base glass panel background */
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  color: var(--text-main);
+}
+
+.mood-btn:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.1);
+}
+
+.mood-btn i {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+/* Breathing exercise */
+.breathing-exercise {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle-container {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.breathing-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--primary), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  transition: all 4s ease-in-out;
+}
+
+.breathing-circle.animate {
+  animation: breathe 12s infinite ease-in-out;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 0.8; }
+  40% { transform: scale(1.8); opacity: 0.4; } /* Inhale (4s) */
+  60% { transform: scale(1.8); opacity: 0.4; } /* Hold (7s -> handled by timing approx) */
+  100% { transform: scale(1); opacity: 0.8; } /* Exhale (8s) */
+}
+
+/* Corrected timing for exact 4-7-8 is harder in CSS only without keyframe adjusting, 
+   but this simulates basic inhale/exhale rhythm for visual feedback. */
+
+.breathing-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.btn-start {
+  padding: 0.8rem 2.5rem;
+  border-radius: 30px;
+  border: none;
+  background: white;
+  color: black;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-start:hover {
+  transform: scale(1.05);
+}

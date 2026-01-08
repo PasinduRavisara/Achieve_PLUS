@@ -1,0 +1,36 @@
+<div class="store-container">
+  <div class="header mb-4 flex-between">
+    <div>
+      <h1>Reward Store Management</h1>
+      <p class="subtitle">Manage inventory and reward items</p>
+    </div>
+    <button class="btn-create"><i class="bi bi-plus-lg"></i> Add Reward</button>
+  </div>
+
+  <div class="rewards-grid">
+    <div class="glass-card reward-card" *ngFor="let item of rewards">
+      <div class="card-header-row mb-3">
+        <button class="icon-btn edit"><i class="bi bi-pencil-fill"></i></button>
+        <button class="icon-btn delete"><i class="bi bi-trash-fill"></i></button>
+      </div>
+
+      <div class="reward-icon">
+        <i [class]="'bi ' + item.icon"></i>
+      </div>
+      
+      <div class="reward-info">
+        <h3>{{ item.name }}</h3>
+        <div class="details">
+          <span class="cost">{{ item.cost }} XP</span>
+          <span class="stock" [class.low]="item.stock < 5">Stock: {{ item.stock }}</span>
+        </div>
+      </div>
+
+      <div class="stock-controls">
+        <button class="btn-control" (click)="updateStock(item, -1)"><i class="bi bi-dash"></i></button>
+        <span>Stock</span>
+        <button class="btn-control" (click)="updateStock(item, 1)"><i class="bi bi-plus"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

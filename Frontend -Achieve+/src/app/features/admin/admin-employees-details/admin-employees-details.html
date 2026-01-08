@@ -1,0 +1,45 @@
+<div class="employees-container">
+  <div class="header mb-4 flex-between">
+    <div>
+      <h1>Employees</h1>
+      <p class="subtitle">Manage system users</p>
+    </div>
+    <button class="btn-create"><i class="bi bi-person-plus-fill"></i> Add Employee</button>
+  </div>
+
+  <div class="glass-card p-0 overflow-hidden">
+    <table class="employees-table">
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Department</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of employees">
+          <td>
+            <div class="employee-cell">
+              <img [src]="emp.avatar" class="avatar">
+              <div class="emp-info">
+                <span class="name">{{ emp.name }}</span>
+                <span class="id">ID: {{ emp.id }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ emp.department }}</td>
+          <td>{{ emp.role }}</td>
+          <td><span class="status-badge" [ngClass]="getStatusClass(emp.status)">{{ emp.status }}</span></td>
+          <td>
+            <div class="actions">
+              <button class="icon-btn edit"><i class="bi bi-pencil-fill"></i></button>
+              <button class="icon-btn delete"><i class="bi bi-trash-fill"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

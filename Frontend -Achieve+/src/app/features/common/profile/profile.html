@@ -1,0 +1,32 @@
+<div class="profile-container">
+  <div class="glass-card profile-card">
+    <div class="profile-header text-center">
+      <div class="avatar-container">
+        <img [src]="user.avatar" alt="Profile Avatar" class="profile-avatar">
+        <button class="edit-avatar-btn"><i class="bi bi-camera-fill"></i></button>
+      </div>
+      <h2 *ngIf="!isEditing">{{ user.name }}</h2>
+      <input *ngIf="isEditing" [(ngModel)]="user.name" class="glass-input text-center">
+      <p class="role-badge" [ngClass]="user.role">{{ user.role | titlecase }}</p>
+    </div>
+
+    <div class="profile-body">
+      <div class="info-group">
+        <label>Email</label>
+        <div class="info-value">{{ user.email }}</div>
+      </div>
+
+      <div class="info-group">
+        <label>Bio</label>
+        <p *ngIf="!isEditing" class="bio-text">{{ user.bio }}</p>
+        <textarea *ngIf="isEditing" [(ngModel)]="user.bio" rows="4" class="glass-input"></textarea>
+      </div>
+
+      <div class="action-buttons">
+        <button *ngIf="!isEditing" (click)="toggleEdit()" class="btn-primary">Edit Profile</button>
+        <button *ngIf="isEditing" (click)="saveProfile()" class="btn-success">Save Changes</button>
+        <button *ngIf="isEditing" (click)="toggleEdit()" class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

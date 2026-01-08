@@ -1,0 +1,33 @@
+<aside class="sidebar glass-panel">
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-text">Achieve<span class="plus">+</span></span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul>
+      <li *ngFor="let item of menuItems">
+        <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/admin/dashboard'}">
+          <i [class]="'bi ' + item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <a [routerLink]="role === 'admin' ? '/admin/profile' : '/dashboard/profile'" routerLinkActive="active" class="nav-item">
+      <i class="bi bi-person-circle"></i>
+      <span>Profile</span>
+    </a>
+    <a [routerLink]="role === 'admin' ? '/admin/settings' : '/dashboard/settings'" routerLinkActive="active" class="nav-item">
+      <i class="bi bi-gear-fill"></i>
+      <span>Settings</span>
+    </a>
+    <button (click)="logout()" class="logout-btn">
+      <i class="bi bi-box-arrow-right"></i>
+      <span>Logout</span>
+    </button>
+  </div>
+</aside>

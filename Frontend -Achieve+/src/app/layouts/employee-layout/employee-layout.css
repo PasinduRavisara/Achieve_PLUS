@@ -1,0 +1,23 @@
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.page-content {
+  flex: 1;
+  margin-left: 280px; /* Sidebar width */
+  padding: 2rem;
+  width: calc(100% - 280px);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .page-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    padding-bottom: 5rem; /* Space for mobile nav */
+  }
+}

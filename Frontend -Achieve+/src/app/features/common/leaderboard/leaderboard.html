@@ -1,0 +1,74 @@
+<div class="leaderboard-container">
+  <div class="header-section text-center">
+    <h1><i class="bi bi-trophy-fill text-warning"></i> Leaderboard</h1>
+    <p class="subtitle">Top performers of the month</p>
+  </div>
+
+  <div class="podium-section">
+    <!-- 2nd Place -->
+    <div class="podium second">
+      <div class="avatar-wrapper">
+        <img [src]="topPlayers[1].avatar" alt="2nd Place">
+        <div class="rank-badge silver">2</div>
+      </div>
+      <div class="podium-stand glass-panel">
+        <div class="player-info">
+          <h3>{{ topPlayers[1].name }}</h3>
+          <p class="points">{{ topPlayers[1].points | number }} XP</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1st Place -->
+    <div class="podium first">
+      <div class="crown"><i class="bi bi-crown-fill"></i></div>
+      <div class="avatar-wrapper">
+        <img [src]="topPlayers[0].avatar" alt="1st Place">
+        <div class="rank-badge gold">1</div>
+      </div>
+      <div class="podium-stand glass-panel">
+        <div class="player-info">
+          <h3>{{ topPlayers[0].name }}</h3>
+          <p class="points">{{ topPlayers[0].points | number }} XP</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3rd Place -->
+    <div class="podium third">
+      <div class="avatar-wrapper">
+        <img [src]="topPlayers[2].avatar" alt="3rd Place">
+        <div class="rank-badge bronze">3</div>
+      </div>
+      <div class="podium-stand glass-panel">
+        <div class="player-info">
+          <h3>{{ topPlayers[2].name }}</h3>
+          <p class="points">{{ topPlayers[2].points | number }} XP</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-section glass-panel">
+    <div class="list-header">
+      <span>Rank</span>
+      <span>Player</span>
+      <span>Trend</span>
+      <span>Points</span>
+    </div>
+    
+    <div class="list-item" *ngFor="let player of otherPlayers">
+      <div class="rank">#{{ player.rank }}</div>
+      <div class="player">
+        <img [src]="player.avatar" class="small-avatar">
+        <span>{{ player.name }}</span>
+      </div>
+      <div class="trend">
+        <i class="bi bi-arrow-up-short text-success" *ngIf="player.trend === 'up'"></i>
+        <i class="bi bi-arrow-down-short text-danger" *ngIf="player.trend === 'down'"></i>
+        <i class="bi bi-dash text-muted" *ngIf="player.trend === 'same'"></i>
+      </div>
+      <div class="points">{{ player.points | number }} XP</div>
+    </div>
+  </div>
+</div>

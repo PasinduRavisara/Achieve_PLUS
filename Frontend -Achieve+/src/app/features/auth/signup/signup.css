@@ -1,0 +1,134 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-container::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, rgba(0, 242, 255, 0.05), transparent 60%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #fff, #00f2ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.plus {
+  color: #00f2ff;
+}
+
+.header p {
+  color: var(--text-muted);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper i {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-muted);
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.8rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+}
+
+.btn-login {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--primary);
+  color: black;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

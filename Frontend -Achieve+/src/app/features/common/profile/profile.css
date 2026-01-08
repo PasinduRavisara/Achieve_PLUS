@@ -1,0 +1,145 @@
+.profile-container {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.profile-card {
+  padding: 3rem;
+  background: rgba(30, 30, 40, 0.4); /* Slightly darker for contrast */
+}
+
+.profile-header {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+}
+
+.edit-avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-avatar-btn:hover {
+  background: var(--primary);
+  color: black;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.role-badge {
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.role-badge.admin {
+  background: rgba(189, 0, 255, 0.2);
+  color: var(--secondary);
+  border: 1px solid rgba(189, 0, 255, 0.4);
+}
+
+.role-badge.employee {
+  background: rgba(0, 242, 255, 0.2);
+  color: var(--primary);
+  border: 1px solid rgba(0, 242, 255, 0.4);
+}
+
+.profile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-group label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-value, .bio-text {
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.glass-input {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.action-buttons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-primary, .btn-success, .btn-secondary {
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: black;
+}
+
+.btn-success {
+  background: #00ff88;
+  color: black;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.btn-primary:hover, .btn-success:hover, .btn-secondary:hover {
+  transform: translateY(-2px);
+}
