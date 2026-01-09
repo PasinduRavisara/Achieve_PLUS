@@ -1,42 +1,49 @@
 <div class="employees-container">
-  <div class="header mb-4 flex-between">
-    <div>
-      <h1>Employees</h1>
-      <p class="subtitle">Manage system users</p>
+  <!-- Banner Header -->
+  <div class="header-banner glass-panel mb-4">
+    <div class="header-content">
+      <h1>Employee Management</h1>
+      <p class="subtitle">View team members</p>
     </div>
-    <button class="btn-create"><i class="bi bi-person-plus-fill"></i> Add Employee</button>
+    <div class="header-illustration">
+       <!-- Placeholder for illustration or decorative icon -->
+       <i class="bi bi-people-fill illustration-icon"></i>
+    </div>
   </div>
 
-  <div class="glass-card p-0 overflow-hidden">
+  <!-- Employee Table -->
+  <div class="table-card glass-panel p-0 overflow-hidden">
+    <div class="table-header p-3 flex-between">
+      <div class="table-title">All Employees</div>
+      <!-- Add Search/Filter if needed -->
+    </div>
     <table class="employees-table">
       <thead>
         <tr>
-          <th>Employee</th>
-          <th>Department</th>
-          <th>Role</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th>NAME</th>
+          <th>EMAIL</th>
+          <th>ROLE</th>
+          <th>JOIN DATE</th>
+          <th>STATUS</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let emp of employees">
           <td>
             <div class="employee-cell">
-              <img [src]="emp.avatar" class="avatar">
-              <div class="emp-info">
-                <span class="name">{{ emp.name }}</span>
-                <span class="id">ID: {{ emp.id }}</span>
-              </div>
+              <!-- <img [src]="emp.avatar" class="avatar"> --><!-- Screenshot didn't clearly show avatar in table, but it's good UX. Screenshot showed just text 'Ravisara' in first col. I will keep avatar for better aesthetic. -->
+              <span class="name">{{ emp.name }}</span>
             </div>
           </td>
-          <td>{{ emp.department }}</td>
-          <td>{{ emp.role }}</td>
-          <td><span class="status-badge" [ngClass]="getStatusClass(emp.status)">{{ emp.status }}</span></td>
+          <td class="text-muted">{{ emp.email }}</td>
           <td>
-            <div class="actions">
-              <button class="icon-btn edit"><i class="bi bi-pencil-fill"></i></button>
-              <button class="icon-btn delete"><i class="bi bi-trash-fill"></i></button>
-            </div>
+            <span class="role-badge">{{ emp.role }}</span>
+          </td>
+          <td class="text-muted">{{ emp.joinDate }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(emp.status)">
+              {{ emp.status }}
+            </span>
           </td>
         </tr>
       </tbody>

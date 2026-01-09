@@ -1,36 +1,46 @@
 <div class="store-container">
+  <!-- Header -->
   <div class="header mb-4 flex-between">
     <div>
-      <h1>Reward Store Management</h1>
-      <p class="subtitle">Manage inventory and reward items</p>
+      <h1>Manage Rewards</h1>
+      <!-- <p class="subtitle">Manage inventory and reward items</p> -->
     </div>
-    <button class="btn-create"><i class="bi bi-plus-lg"></i> Add Reward</button>
+    <button class="btn-create"><i class="bi bi-plus-lg"></i> Add New Reward</button>
   </div>
 
-  <div class="rewards-grid">
-    <div class="glass-card reward-card" *ngFor="let item of rewards">
-      <div class="card-header-row mb-3">
-        <button class="icon-btn edit"><i class="bi bi-pencil-fill"></i></button>
-        <button class="icon-btn delete"><i class="bi bi-trash-fill"></i></button>
-      </div>
-
-      <div class="reward-icon">
-        <i [class]="'bi ' + item.icon"></i>
-      </div>
-      
-      <div class="reward-info">
-        <h3>{{ item.name }}</h3>
-        <div class="details">
-          <span class="cost">{{ item.cost }} XP</span>
-          <span class="stock" [class.low]="item.stock < 5">Stock: {{ item.stock }}</span>
-        </div>
-      </div>
-
-      <div class="stock-controls">
-        <button class="btn-control" (click)="updateStock(item, -1)"><i class="bi bi-dash"></i></button>
-        <span>Stock</span>
-        <button class="btn-control" (click)="updateStock(item, 1)"><i class="bi bi-plus"></i></button>
-      </div>
+  <!-- Rewards Table -->
+  <div class="table-card glass-panel p-0 overflow-hidden">
+    <table class="rewards-table">
+      <thead>
+        <tr>
+          <th>NAME</th>
+          <th>DESCRIPTION</th>
+          <th>POINTS COST</th>
+          <th>QUANTITY</th>
+          <th>IMAGE URL</th>
+          <th>ACTIONS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of rewards">
+          <td><span class="fw-bold">{{ item.name }}</span></td>
+          <td class="text-muted">{{ item.description }}</td>
+          <td><span class="cost-badge">{{ item.cost }} XP</span></td>
+          <td>{{ item.quantity }}</td>
+          <td class="text-muted text-sm truncate">{{ item.imageUrl }}</td>
+          <td>
+            <div class="actions">
+              <button class="icon-btn edit"><i class="bi bi-pencil-square"></i></button>
+              <button class="icon-btn delete" (click)="deleteReward(item.id)"><i class="bi bi-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="rewards.length === 0">
+      <p>No rewards found.</p>
     </div>
   </div>
 </div>

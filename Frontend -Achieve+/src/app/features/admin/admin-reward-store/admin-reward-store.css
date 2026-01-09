@@ -1,5 +1,5 @@
 .store-container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -9,9 +9,20 @@
   align-items: center;
 }
 
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0d6efd; /* Blue title */
+  background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
 .btn-create {
-  background: var(--primary);
-  color: black;
+  background: #0d6efd;
+  color: white;
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
@@ -20,91 +31,91 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.rewards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+.btn-create:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
 }
 
-.reward-card {
-  padding: 1.5rem;
-  text-align: center;
+/* Table Card */
+.table-card {
+  background: white; /* Light bg in screenshot */
+  /* Dark mode override */
+  background: rgba(30, 30, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.rewards-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rewards-table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0,0,0,0.1);
+}
+
+.rewards-table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+  color: white;
+}
+
+.rewards-table tr:last-child td {
+  border-bottom: none;
+}
+
+.rewards-table tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Columns */
+.fw-bold { font-weight: 600; }
+.text-muted { color: var(--text-muted); font-size: 0.9rem; }
+.text-sm { font-size: 0.8rem; }
+.truncate { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.cost-badge {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.actions {
   display: flex;
-  flex-direction: column;
-}
-
-.card-header-row {
-  display: flex;
-  justify-content: flex-end;
   gap: 0.5rem;
 }
 
 .icon-btn {
   background: transparent;
   border: none;
-  color: var(--text-muted);
   cursor: pointer;
-  padding: 5px;
-  transition: color 0.2s;
-}
-
-.icon-btn:hover { color: white; }
-.icon-btn.delete:hover { color: #ff5555; }
-
-.reward-icon {
-  font-size: 2.5rem;
-  color: var(--secondary);
-  margin-bottom: 1rem;
-}
-
-.reward-info h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.details {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-}
-
-.stock.low {
-  color: #ff5555;
-  font-weight: bold;
-}
-
-.stock-controls {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.05);
   padding: 0.5rem;
-  border-radius: 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  color: var(--text-muted);
 }
 
-.btn-control {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: transparent;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+.icon-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+.icon-btn.edit { color: #0dcaf0; }
+.icon-btn.delete { color: #ff5555; }
 
-.btn-control:hover {
-  background: var(--primary);
-  color: black;
-  border-color: var(--primary);
-}
+/* Utilities */
+.p-0 { padding: 0 !important; }
+.p-3 { padding: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.overflow-hidden { overflow: hidden; }

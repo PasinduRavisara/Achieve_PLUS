@@ -10,19 +10,16 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminEmployeesDetails {
   employees = [
-    { id: 1, name: 'John Doe', department: 'Engineering', role: 'Senior Dev', status: 'Active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' },
-    { id: 2, name: 'Jane Smith', department: 'Marketing', role: 'Manager', status: 'Active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane' },
-    { id: 3, name: 'Mike Ross', department: 'Legal', role: 'Associate', status: 'Away', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike' },
-    { id: 4, name: 'Rachel Zane', department: 'Legal', role: 'Paralegal', status: 'Active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rachel' },
-    { id: 5, name: 'Harvey Specter', department: 'Management', role: 'Partner', status: 'Busy', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Harvey' },
-    { id: 6, name: 'Louis Litt', department: 'Management', role: 'Partner', status: 'Active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Louis' },
+    { id: 1, name: 'Ravisara', email: 'ravisara@gmail.com', role: 'Employee', joinDate: '1/9/2026', status: 'active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ravisara' },
+    { id: 2, name: 'John Doe', email: 'john@achieve.plus', role: 'Senior Dev', joinDate: '12/11/2025', status: 'active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' },
+    { id: 3, name: 'Jane Smith', email: 'jane@achieve.plus', role: 'Manager', joinDate: '5/10/2025', status: 'active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane' },
+    { id: 4, name: 'Mike Ross', email: 'mike@achieve.plus', role: 'Employee', joinDate: '15/9/2025', status: 'inactive', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike' },
   ];
 
   getStatusClass(status: string) {
     switch (status) {
-      case 'Active': return 'status-active';
-      case 'Busy': return 'status-busy';
-      case 'Away': return 'status-away';
+      case 'active': return 'status-active';
+      case 'inactive': return 'status-inactive';
       default: return '';
     }
   }

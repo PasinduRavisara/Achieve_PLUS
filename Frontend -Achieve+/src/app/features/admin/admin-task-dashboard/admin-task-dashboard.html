@@ -1,37 +1,119 @@
 <div class="task-dashboard-container">
-  <div class="header mb-4 flex-between">
+  <!-- Page Header -->
+  <div class="page-header mb-4">
     <div>
       <h1>Task Management</h1>
-      <p class="subtitle">Drag and drop tasks to manage workflow</p>
+      <p class="subtitle">Manage and monitor task progress</p>
     </div>
-    <button class="btn-create"><i class="bi bi-plus-lg"></i> Create Task</button>
+    <!-- Search is in top-bar -->
   </div>
 
-  <div class="kanban-board">
-    <div class="kanban-column glass-panel" *ngFor="let column of columns">
-      <div class="column-header">
-        <h3>{{ column.name }}</h3>
-        <span class="count-badge">{{ column.tasks.length }}</span>
+  <!-- Stats Grid -->
+  <div class="stats-grid mb-4">
+    <!-- Pending -->
+    <div class="stat-card glass-panel flex-between">
+      <div>
+        <span class="stat-label">Pending</span>
+        <h2 class="stat-value">{{ pendingCount }}</h2>
       </div>
-      
-      <div class="column-body">
-        <div class="task-card glass-card" *ngFor="let task of column.tasks">
-           <div class="task-header">
-             <span class="task-id">#{{ task.id }}</span>
-             <button class="more-btn"><i class="bi bi-three-dots"></i></button>
+      <div class="stat-icon-box icon-pending">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+    </div>
+
+    <!-- In Progress -->
+    <div class="stat-card glass-panel flex-between">
+      <div>
+        <span class="stat-label">In Progress</span>
+        <h2 class="stat-value">{{ inProgressCount }}</h2>
+      </div>
+      <div class="stat-icon-box icon-progress">
+        <i class="bi bi-arrow-repeat"></i>
+      </div>
+    </div>
+
+    <!-- Completed -->
+    <div class="stat-card glass-panel flex-between">
+      <div>
+        <span class="stat-label">Completed</span>
+        <h2 class="stat-value">{{ completedCount }}</h2>
+      </div>
+      <div class="stat-icon-box icon-completed">
+        <i class="bi bi-check-circle"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Tasks Section -->
+  <div class="all-tasks-section glass-panel">
+    <div class="section-header flex-between mb-4">
+      <div>
+        <h2>All Tasks</h2>
+        <span class="text-muted">{{ tasks.length }} total tasks</span>
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-primary glow-effect">
+          <i class="bi bi-plus-lg"></i> Create Task
+        </button>
+        <button class="btn btn-outline" (click)="refreshTasks()">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="tabs-bar mb-3">
+      <button class="tab-btn" [class.active]="activeTab === 'all'" (click)="setTab('all')">
+        <i class="bi bi-list"></i> All <span class="badge-pill">{{ tasks.length }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'pending'" (click)="setTab('pending')">
+        <i class="bi bi-hourglass"></i> Pending <span class="badge-pill badge-warning">{{ pendingCount }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'inprogress'" (click)="setTab('inprogress')">
+        <i class="bi bi-play-circle"></i> In Progress <span class="badge-pill badge-info">{{ inProgressCount }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'completed'" (click)="setTab('completed')">
+        <i class="bi bi-check2-circle"></i> Completed <span class="badge-pill badge-success">{{ completedCount }}</span>
+      </button>
+    </div>
+
+    <!-- Task List -->
+    <div class="task-list-container">
+      <div class="task-list-header">
+        <div class="col-title">Task Name</div>
+        <div class="col-assignee">Assignee</div>
+        <div class="col-priority">Priority</div>
+        <div class="col-status">Status</div>
+        <div class="col-actions">Actions</div>
+      </div>
+
+      <div class="task-list-body">
+         <div class="task-row" *ngFor="let task of filteredTasks">
+           <div class="col-title">
+             <span class="task-id">#{{ task.id }}</span> {{ task.title }}
            </div>
-           <h4 class="task-title">{{ task.title }}</h4>
-           
-           <div class="task-footer">
-             <div class="assignee">
-               <div class="avatar">{{ task.assignee.charAt(0) }}</div>
-               <span>{{ task.assignee }}</span>
-             </div>
-             <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">
-               {{ task.priority }}
+           <div class="col-assignee">
+             <div class="avatar-sm">{{ task.assignee.charAt(0) }}</div> {{ task.assignee }}
+           </div>
+           <div class="col-priority">
+             <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">{{ task.priority }}</span>
+           </div>
+           <div class="col-status">
+             <span class="status-indicator" [ngClass]="getStatusClass(task.status)">
+               <i class="bi bi-circle-fill"></i> {{ task.status | titlecase }}
              </span>
            </div>
-        </div>
+           <div class="col-actions">
+             <button class="action-btn"><i class="bi bi-pencil"></i></button>
+             <button class="action-btn text-danger"><i class="bi bi-trash"></i></button>
+           </div>
+         </div>
+
+         <!-- Empty State -->
+         <div class="empty-state" *ngIf="filteredTasks.length === 0">
+           <i class="bi bi-inbox fs-1"></i>
+           <p class="mt-2 text-muted">No tasks available in this category.</p>
+         </div>
       </div>
     </div>
   </div>

@@ -1,39 +1,67 @@
 .employees-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.flex-between {
+/* Header Banner */
+.header-banner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.btn-create {
-  background: var(--primary);
-  color: black;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.btn-create:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 242, 255, 0.3);
-}
-
-.p-0 {
-  padding: 0 !important;
-}
-
-.overflow-hidden {
+  padding: 2rem 2.5rem;
+  background: white; /* Screenshot shows white/light bg for banner */
+  border-radius: 16px;
+  position: relative;
   overflow: hidden;
+  /* Dark mode override for our theme */
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.header-content h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #0d6efd; /* Blue title as in screenshot */
+  background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.header-illustration {
+  font-size: 5rem;
+  color: rgba(13, 110, 253, 0.2);
+  transform: rotate(-10deg);
+}
+
+/* Table Card */
+.table-card {
+  background: white; /* Light bg in screenshot */
+  /* Dark mode override */
+  background: rgba(30, 30, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+}
+
+.table-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .employees-table {
@@ -41,55 +69,55 @@
   border-collapse: collapse;
 }
 
-.employees-table th, .employees-table td {
+.employees-table th {
   padding: 1rem 1.5rem;
   text-align: left;
-}
-
-.employees-table th {
-  background: rgba(255,255,255,0.05);
+  font-size: 0.8rem;
+  font-weight: 700;
   color: var(--text-muted);
-  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0,0,0,0.1);
 }
 
-.employees-table tr {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: background 0.2s;
+.employees-table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
 }
 
-.employees-table tr:last-child {
+.employees-table tr:last-child td {
   border-bottom: none;
 }
 
 .employees-table tr:hover {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .employee-cell {
   display: flex;
   align-items: center;
-  gap: 1rem;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.1);
-}
-
-.emp-info {
-  display: flex;
-  flex-direction: column;
+  gap: 10px;
 }
 
 .name {
   font-weight: 600;
 }
 
-.id {
-  font-size: 0.75rem;
+.text-muted {
   color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Badges */
+.role-badge {
+  background: #0dcaf0;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .status-badge {
@@ -97,28 +125,23 @@
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
+  text-transform: capitalize;
 }
 
-.status-active { background: rgba(0, 255, 136, 0.15); color: #00ff88; }
-.status-busy { background: rgba(255, 0, 85, 0.15); color: var(--accent); }
-.status-away { background: rgba(255, 165, 0, 0.15); color: orange; }
-
-.actions {
-  display: flex;
-  gap: 0.5rem;
+.status-active {
+  background: #198754;
+  color: white;
 }
 
-.icon-btn {
+.status-inactive {
   background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  transition: background 0.2s;
+  border: 1px solid #198754;
+  color: #198754; /* Screenshot shows plain green text or button for status? Actually it shows a green filled button 'active'. */
 }
 
-.icon-btn.edit { color: var(--text-muted); }
-.icon-btn.edit:hover { background: rgba(255,255,255,0.1); color: white; }
-
-.icon-btn.delete { color: #ff5555; }
-.icon-btn.delete:hover { background: rgba(255, 85, 85, 0.1); }
+/* Utilities */
+.p-0 { padding: 0 !important; }
+.p-3 { padding: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.overflow-hidden { overflow: hidden; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }

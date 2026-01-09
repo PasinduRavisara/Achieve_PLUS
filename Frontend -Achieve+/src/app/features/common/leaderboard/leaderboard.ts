@@ -18,7 +18,7 @@ interface LeaderboardEntry {
 })
 export class Leaderboard {
   topPlayers: LeaderboardEntry[] = [
-    { rank: 1, name: 'Sarah Connor', points: 12500, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah', trend: 'up' },
+    { rank: 1, name: 'Ravisara', points: 15400, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ravisara', trend: 'up' },
     { rank: 2, name: 'John Doe', points: 11200, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John', trend: 'same' },
     { rank: 3, name: 'Jane Smith', points: 10800, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane', trend: 'up' },
   ];

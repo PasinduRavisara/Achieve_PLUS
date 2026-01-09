@@ -1,65 +1,128 @@
-<div class="analysis-container">
-  <div class="header mb-4">
-    <h1>Progress Analysis</h1>
-    <p class="subtitle">Company-wide performance metrics</p>
+<div class="analysis-dashboard">
+  <!-- Header & Filters -->
+  <div class="analysis-header flex-between mb-4">
+    <div>
+      <h1>Team Progress Analysis</h1>
+      <p class="subtitle">Comprehensive analytics on task completion and employee performance</p>
+    </div>
+    
+    <div class="filters flex-gap">
+      <select class="custom-select">
+        <option>Last Month</option>
+        <option>Last Week</option>
+        <option>Today</option>
+      </select>
+      
+      <select class="custom-select">
+        <option>All Employees</option>
+        <option>Pasindu</option>
+        <option>Ravisara</option>
+      </select>
+
+      <button class="btn-refresh" (click)="refresh()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
   </div>
 
-  <div class="grid-container">
-    <!-- Main Productivity Chart -->
-    <div class="glass-card full-width">
-      <h3><i class="bi bi-graph-up text-primary"></i> Overall Productivity</h3>
-      <div class="chart-container">
-        <div class="css-chart">
-           <div class="data-point" style="height: 40%"><span>Mon</span></div>
-           <div class="data-point" style="height: 65%"><span>Tue</span></div>
-           <div class="data-point" style="height: 50%"><span>Wed</span></div>
-           <div class="data-point" style="height: 85%"><span>Thu</span></div>
-           <div class="data-point" style="height: 70%"><span>Fri</span></div>
-           <div class="data-point" style="height: 90%"><span>Sat</span></div>
-           <div class="data-point" style="height: 60%"><span>Sun</span></div>
+  <!-- Stats Grid -->
+  <div class="stats-grid mb-4">
+    <div class="stat-card glass-panel">
+      <div class="icon-box bg-blue-light"><i class="bi bi-list-task text-blue"></i></div>
+      <div class="stat-content">
+        <h2 class="stat-num">{{ stats.totalTasks }}</h2>
+        <span class="stat-label">Total Tasks</span>
+        <span class="stat-trend text-blue">0% completion rate</span>
+      </div>
+    </div>
+
+    <div class="stat-card glass-panel">
+      <div class="icon-box bg-green-light"><i class="bi bi-check-circle text-green"></i></div>
+      <div class="stat-content">
+        <h2 class="stat-num">{{ stats.completedTasks }}</h2>
+        <span class="stat-label">Completed Tasks</span>
+        <span class="stat-trend text-green">0% points earned</span>
+      </div>
+    </div>
+
+    <div class="stat-card glass-panel">
+      <div class="icon-box bg-yellow-light"><i class="bi bi-trophy text-yellow"></i></div>
+      <div class="stat-content">
+        <h2 class="stat-num">{{ stats.pointsEarned | number }}</h2>
+        <span class="stat-label">Points Earned</span>
+        <span class="stat-trend text-yellow">From completed tasks</span>
+      </div>
+    </div>
+
+    <div class="stat-card glass-panel">
+      <div class="icon-box bg-red-light"><i class="bi bi-exclamation-triangle text-red"></i></div>
+      <div class="stat-content">
+        <h2 class="stat-num">{{ stats.overdueTasks }}</h2>
+        <span class="stat-label">Current Overdue Tasks</span>
+        <span class="stat-trend text-red">Requires attention</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-row">
+    <!-- Task Status Distribution (Pie Chart) -->
+    <div class="chart-card glass-panel col-4">
+      <h3>Task Status Distribution</h3>
+      <div class="pie-chart-container">
+        <!-- CSS Conic Gradient Chart -->
+        <div class="pie-chart">
+           <div class="center-hole"></div>
+        </div>
+        <div class="chart-legend">
+           <div class="legend-item"><span class="dot bg-green"></span> Completed</div>
+           <div class="legend-item"><span class="dot bg-blue"></span> In Progress</div>
+           <div class="legend-item"><span class="dot bg-yellow"></span> Pending</div>
+        </div>
+        <div class="no-data-overlay" *ngIf="stats.totalTasks === 0">
+           No data available
         </div>
       </div>
     </div>
 
-    <!-- Department Performance -->
-    <div class="glass-card">
-      <h3><i class="bi bi-pie-chart-fill text-secondary"></i> Department Breakdown</h3>
-      <div class="skills-container">
-        <div class="skill-bar">
-          <div class="skill-info">
-            <span>Engineering</span>
-            <span>92%</span>
-          </div>
-          <div class="progress-bar"><div class="fill" style="width: 92%"></div></div>
-        </div>
-        <div class="skill-bar">
-          <div class="skill-info">
-            <span>Marketing</span>
-            <span>85%</span>
-          </div>
-          <div class="progress-bar"><div class="fill" style="width: 85%; background: var(--secondary)"></div></div>
-        </div>
-        <div class="skill-bar">
-          <div class="skill-info">
-            <span>Sales</span>
-            <span>78%</span>
-          </div>
-          <div class="progress-bar"><div class="fill" style="width: 78%; background: var(--accent)"></div></div>
-        </div>
-      </div>
-    </div>
+    <!-- Task Completion Timeline (Line Chart) -->
+    <div class="chart-card glass-panel col-8">
+      <h3>Task Completion Timeline</h3>
+      <div class="line-chart-container">
+        <!-- SVG Line Chart Mockup -->
+        <svg viewBox="0 0 500 200" class="line-chart-svg">
+          <!-- Grid Lines -->
+          <line x1="50" y1="180" x2="480" y2="180" class="grid-line" />
+          <line x1="50" y1="140" x2="480" y2="140" class="grid-line" />
+          <line x1="50" y1="100" x2="480" y2="100" class="grid-line" />
+          <line x1="50" y1="60" x2="480" y2="60" class="grid-line" />
+          
+          <!-- Y Axis Labels -->
+          <text x="30" y="180" class="chart-label">0</text>
+          <text x="30" y="140" class="chart-label">1</text>
+          <text x="30" y="100" class="chart-label">2</text>
+          <text x="30" y="60" class="chart-label">3</text>
+          <text x="30" y="20" class="chart-label">4</text>
 
-    <!-- Engagement Stats -->
-    <div class="glass-card">
-      <h3><i class="bi bi-people-fill text-accent"></i> Employee Engagement</h3>
-      <div class="stats-row">
-        <div class="stat-circle">
-          <span class="value">95%</span>
-          <span class="label">Login Rate</span>
-        </div>
-        <div class="stat-circle">
-          <span class="value">88%</span>
-          <span class="label">Task Comp.</span>
+          <!-- Mock Data Line (Yellow - Pending? Or Green - Completed?) -->
+          <!-- Drawing a flat line for now as per screenshot 0/0/0 or updated dynamic data -->
+           <path d="M50 180 L120 180 L190 180 L260 180 L330 180 L400 180 L470 180" 
+                 fill="none" stroke="#ffcc00" stroke-width="2" class="chart-line" />
+          
+          <!-- X Axis Labels -->
+          <text x="50" y="195" class="chart-label">Dec 9</text>
+          <text x="120" y="195" class="chart-label">Dec 12</text>
+          <text x="190" y="195" class="chart-label">Dec 15</text>
+          <text x="260" y="195" class="chart-label">Dec 18</text>
+          <text x="330" y="195" class="chart-label">Dec 21</text>
+          <text x="400" y="195" class="chart-label">Dec 24</text>
+          <text x="470" y="195" class="chart-label">Jan 9</text>
+        </svg>
+
+        <div class="chart-legend-row">
+           <div class="legend-item"><span class="dash-line text-green">--</span> Completed</div>
+           <div class="legend-item"><span class="dash-line text-blue">--</span> In Progress</div>
+           <div class="legend-item"><span class="dash-line text-yellow">--</span> Pending</div>
         </div>
       </div>
     </div>

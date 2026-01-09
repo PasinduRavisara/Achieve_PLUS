@@ -9,6 +9,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './admin-progress-analysis.css',
 })
 export class AdminProgressAnalysis {
-  // In a real app, this would use a chart library like ng2-charts or echarts
-  // For now, we will use CSS-based visualizations for the "flashy" effect
+  timeframe = 'Last Month';
+  employeeFilter = 'All Employees';
+
+  stats = {
+    totalTasks: 124,
+    completedTasks: 98,
+    pointsEarned: 15400,
+    overdueTasks: 12
+  };
+
+  // Mock data for timelines (last 7 points)
+  timelineData = [10, 25, 18, 30, 45, 35, 50];
+
+  refresh() {
+    console.log('Refreshing analysis...');
+  }
 }
