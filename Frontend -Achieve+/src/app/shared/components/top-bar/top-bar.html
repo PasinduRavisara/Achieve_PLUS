@@ -1,0 +1,59 @@
+<div class="top-bar glass-panel">
+  <div class="left-section">
+    <h2 class="page-title">{{ currentRouteName }}</h2>
+  </div>
+
+  <div class="center-section">
+    <div class="search-bar" *ngIf="showSearch">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" placeholder="Search anything..." class="search-input">
+    </div>
+  </div>
+
+  <div class="right-section">
+    <!-- User Profile (New) -->
+    <div class="user-profile" (click)="toggleProfileMenu()">
+      <img [src]="userAvatar" class="nav-avatar">
+      <div class="user-info">
+        <span class="user-name">{{ user?.name }}</span>
+        <span class="user-role">{{ user?.role | titlecase }}</span>
+      </div>
+      <i class="bi bi-caret-down-fill dropdown-arrow"></i>
+
+      <!-- Profile Dropdown -->
+      <div class="profile-dropdown glass-card" *ngIf="showProfileMenu">
+        <a [routerLink]="user?.role === 'admin' ? '/admin/profile' : '/dashboard/profile'" class="menu-item">
+          <i class="bi bi-person-circle"></i> View Profile
+        </a>
+        
+        <!-- Notifications in Menu -->
+        <div class="menu-item" (click)="$event.stopPropagation(); toggleNotifications()">
+           <div class="flex-between w-100">
+             <span><i class="bi bi-bell"></i> Notifications</span>
+             <span class="badge-inline" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+           </div>
+        </div>
+        
+        <!-- Nested Notifications List -->
+        <div class="nested-notifications" *ngIf="showNotifications" (click)="$event.stopPropagation()">
+           <div class="notif-item-small" *ngFor="let n of notifications">
+              <div class="dot-small" *ngIf="!n.read"></div>
+              <span>{{ n.text }}</span>
+           </div>
+           <div class="empty-notif" *ngIf="notifications.length === 0">No notifications</div>
+        </div>
+
+        <a class="menu-item">
+          <i class="bi bi-question-circle"></i> Help & Support
+        </a>
+        <a [routerLink]="user?.role === 'admin' ? '/admin/settings' : '/dashboard/settings'" class="menu-item">
+          <i class="bi bi-gear-wide-connected"></i> Settings
+        </a>
+        <div class="menu-divider"></div>
+        <button (click)="logout()" class="menu-item logout">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
