@@ -1,33 +1,54 @@
-<div class="achievements-container">
+<div class="rewards-container">
+  <!-- Header -->
   <div class="header mb-4">
-    <h1>Your Achievements</h1>
-    <p class="subtitle">Badges and awards you've earned</p>
+    <h1>Rewards & Achievements</h1>
+    <p class="subtitle">Track your earned badges and accomplishments</p>
   </div>
 
-  <!-- Featured Achievement -->
-  <div class="featured-card glass-panel mb-5">
-    <div class="glow-effect"></div>
-    <div class="featured-content">
-      <div class="featured-icon">
-        <i [class]="'bi ' + featuredAchievement.icon"></i>
+  <!-- Stats Grid -->
+  <div class="stats-grid mb-4">
+    <!-- Total Badges -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-yellow-light"><i class="bi bi-trophy-fill text-yellow"></i></div>
+      <div class="stat-info">
+        <h3>Total Badges</h3>
+        <p class="stat-value">{{ stats.badges }}</p>
       </div>
-      <div class="featured-info">
-        <h2>{{ featuredAchievement.title }}</h2>
-        <p>{{ featuredAchievement.description }}</p>
-        <span class="date-badge">{{ featuredAchievement.date }}</span>
+    </div>
+
+    <!-- Points Earned -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-orange-light"><i class="bi bi-star-fill text-orange"></i></div>
+      <div class="stat-info">
+        <h3>Points Earned</h3>
+        <p class="stat-value">{{ stats.points }}</p>
+      </div>
+    </div>
+
+    <!-- Current Streak -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-blue-light"><i class="bi bi-award-fill text-blue"></i></div>
+      <div class="stat-info">
+        <h3>Current Streak</h3>
+        <p class="stat-value">{{ stats.streak }} days</p>
       </div>
     </div>
   </div>
 
-  <h3 class="section-title mb-3">All Badges</h3>
-  <div class="achievements-grid">
-    <div class="glass-card achievement-card" *ngFor="let badge of achievements" [class.locked]="!badge.unlocked">
-      <div class="badge-icon" [ngClass]="{'unlocked': badge.unlocked}">
-        <i [class]="'bi ' + badge.icon"></i>
-        <i class="bi bi-lock-fill lock-overlay" *ngIf="!badge.unlocked"></i>
+  <!-- Achievements List -->
+  <div class="achievements-section glass-panel">
+    <h2 class="section-title">Your Achievements</h2>
+    
+    <div class="empty-state" *ngIf="achievements.length === 0">
+      <div class="empty-icon">
+        <i class="bi bi-trophy"></i>
       </div>
-      <h4>{{ badge.title }}</h4>
-      <p>{{ badge.description }}</p>
+      <h3>No Achievements Yet</h3>
+      <p>Complete tasks before their due date to earn badges!</p>
+    </div>
+
+    <div class="achievements-grid" *ngIf="achievements.length > 0">
+      <!-- List Items would go here -->
     </div>
   </div>
 </div>

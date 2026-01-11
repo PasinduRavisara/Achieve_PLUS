@@ -1,43 +1,99 @@
 <div class="progress-container">
-  <div class="header mb-4">
-    <h1>Your Progress</h1>
-    <p class="subtitle">See how far you've come</p>
-  </div>
-
-  <div class="stats-overview mb-4">
-    <div class="stat-card glass-card">
-      <div class="stat-icon"><i class="bi bi-check-circle-fill"></i></div>
-      <div class="stat-text">
-        <h3>{{ tasksCompleted }}</h3>
-        <p>Tasks Completed</p>
-      </div>
+  <!-- Header -->
+  <div class="header mb-4 flex-between">
+    <div>
+      <h1>Progress Analysis</h1>
+      <p class="subtitle">Track your performance and achievements</p>
     </div>
-    <div class="stat-card glass-card">
-      <div class="stat-icon"><i class="bi bi-star-fill text-warning"></i></div>
-      <div class="stat-text">
-        <h3>{{ totalPoints }}</h3>
-        <p>Total XP</p>
-      </div>
-    </div>
-    <div class="stat-card glass-card">
-      <div class="stat-icon"><i class="bi bi-trophy-fill text-accent"></i></div>
-      <div class="stat-text">
-        <h3>#{{ rank }}</h3>
-        <p>Rank</p>
-      </div>
+    
+    <div class="filters-toolbar glass-panel p-2">
+      <input type="date" class="date-input" placeholder="Start Date">
+      <input type="date" class="date-input" placeholder="End Date">
+      <button class="btn-primary" (click)="refresh()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
     </div>
   </div>
 
-  <div class="chart-section glass-card">
-    <h3><i class="bi bi-activity"></i> Weekly Activity</h3>
-    <div class="line-chart-container">
-      <div class="css-line-chart">
-        <!-- Connecting lines would be hard in pure HTML/CSS without SVG, so we use bars for simplicity but styled thin -->
-        <div class="chart-bar" *ngFor="let val of weeklyTasks; let i = index" [style.height]="(val * 10) + '%'">
-          <span class="tooltip">{{ val }} Tasks</span>
-          <span class="label">{{ ['Mon','Tue','Wed','Thu','Fri','Sat'][i] }}</span>
+  <!-- Stats Row -->
+  <div class="stats-grid mb-4">
+    <!-- Completed -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-green-light"><i class="bi bi-check-circle text-green"></i></div>
+      <div class="stat-info">
+        <h3>Tasks Completed</h3>
+        <p class="stat-value">{{ stats.completed }}</p>
+        <span class="stat-sub">0% completion rate</span>
+      </div>
+    </div>
+
+    <!-- In Progress -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-blue-light"><i class="bi bi-arrow-repeat text-blue"></i></div>
+      <div class="stat-info">
+        <h3>Tasks In Progress</h3>
+        <p class="stat-value">{{ stats.inProgress }}</p>
+        <span class="stat-sub btn-pill">Active Tasks</span>
+      </div>
+    </div>
+
+    <!-- Overdue -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-red-light"><i class="bi bi-exclamation-triangle text-red"></i></div>
+      <div class="stat-info">
+        <h3>Overdue Tasks</h3>
+        <p class="stat-value">{{ stats.overdue }}</p>
+        <span class="stat-sub badge-red">Needs Attention</span>
+      </div>
+    </div>
+
+    <!-- Points -->
+    <div class="stat-card glass-panel">
+      <div class="stat-icon bg-teal-light"><i class="bi bi-trophy text-teal"></i></div>
+      <div class="stat-info">
+        <h3>Points Earned</h3>
+        <p class="stat-value">{{ stats.points }}</p>
+        <span class="stat-sub badge-teal"><i class="bi bi-star-fill"></i> Points</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid">
+    <!-- Completion Rate -->
+    <div class="chart-card glass-panel">
+      <h3>Task Completion Rate</h3>
+      <div class="chart-content center-content">
+        <div class="doughnut-chart" [style.--p]="completionRate">
+          <div class="center-text">
+            <span class="big-num">{{ completionRate }}%</span>
+            <span class="label">Completion Rate</span>
+          </div>
+        </div>
+        <div class="chart-legend mt-3">
+          <span>0 Completed</span> • <span>0 In Progress</span> • <span>0 Pending</span>
         </div>
       </div>
     </div>
+
+    <!-- Trend -->
+    <div class="chart-card glass-panel">
+      <h3>Task Completion Trend</h3>
+      <div class="chart-content center-content">
+         <div class="empty-chart-state">
+           <p class="text-muted">No data available for selected time range</p>
+         </div>
+         <!-- If we had data, we'd render lines here -->
+      </div>
+    </div>
   </div>
+    
+  <!-- Bottom Section: Points Progress (Placeholder/Empty as per screenshot) -->
+  <div class="chart-card glass-panel mt-4">
+    <h3>Points Progress</h3>
+     <div class="chart-content center-content" style="height: 200px;">
+       <p class="text-muted">No data available for selected time range</p>
+     </div>
+  </div>
+
 </div>

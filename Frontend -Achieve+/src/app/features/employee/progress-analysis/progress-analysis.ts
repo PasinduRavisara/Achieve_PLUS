@@ -9,8 +9,20 @@ import { CommonModule } from '@angular/common';
   styleUrl: './progress-analysis.css',
 })
 export class ProgressAnalysis {
-  weeklyTasks = [6, 8, 7, 10, 5, 2]; // Mon-Sat
-  totalPoints = 3450;
-  tasksCompleted = 42;
-  rank = 12;
+  // Stats for Cards
+  stats = {
+    completed: 12,
+    inProgress: 5,
+    overdue: 2,
+    points: 2450
+  };
+
+  completionRate = 70; // Percentage for Doughnut
+
+  // Chart Data
+  weeklyActivity = [2, 5, 3, 8, 6, 4, 7]; // Mon-Sun
+
+  refresh() {
+    console.log('Refreshing analytics...');
+  }
 }

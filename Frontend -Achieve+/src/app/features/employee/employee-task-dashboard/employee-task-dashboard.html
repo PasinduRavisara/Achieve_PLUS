@@ -1,25 +1,71 @@
-<div class="employee-tasks-container">
+<div class="employee-tasks-dashboard">
+  <!-- Page Header -->
   <div class="header mb-4">
     <h1>My Tasks</h1>
-    <p class="subtitle">Tasks assigned to you</p>
+    <p class="subtitle">Manage and track your assigned tasks</p>
   </div>
 
-  <div class="tasks-grid">
-    <div class="glass-card task-card" *ngFor="let task of tasks">
-      <div class="card-header-row">
-        <span class="status-badge" [ngClass]="getStatusClass(task.status)">{{ task.status }}</span>
-        <span class="due-date"><i class="bi bi-calendar-event"></i> {{ task.due }}</span>
+  <!-- Main Content Card -->
+  <div class="main-card glass-panel">
+    
+    <!-- Card Header -->
+    <div class="card-header flex-between mb-4">
+      <div class="card-title-group">
+        <h2>All Tasks</h2>
+        <span class="task-count">{{ stats.all }} total tasks</span>
       </div>
-      
-      <h3>{{ task.title }}</h3>
-      <p class="description">{{ task.description }}</p>
-      
-      <div class="card-footer">
-        <span class="priority" [class.high]="task.priority === 'High'">
-          <i class="bi bi-flag-fill"></i> {{ task.priority }} Priority
-        </span>
-        <button class="btn-action">View Details</button>
+      <button class="btn-refresh" (click)="refresh()">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+
+    <!-- Filter Tabs / Stats Bar -->
+    <div class="tabs-bar mb-4">
+      <button class="tab-btn" [class.active]="activeTab === 'All'" (click)="setTab('All')">
+        <i class="bi bi-list-task"></i> All <span class="badge">{{ stats.all }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'Pending'" (click)="setTab('Pending')">
+        <i class="bi bi-clock"></i> Pending <span class="badge bg-yellow text-dark">{{ stats.pending }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'In Progress'" (click)="setTab('In Progress')">
+        <i class="bi bi-arrow-repeat"></i> In Progress <span class="badge bg-blue">{{ stats.inProgress }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'Completed'" (click)="setTab('Completed')">
+        <i class="bi bi-check-circle"></i> Completed <span class="badge bg-green">{{ stats.completed }}</span>
+      </button>
+    </div>
+
+    <!-- Task List -->
+    <div class="task-list" *ngIf="filteredTasks.length > 0; else emptyState">
+      <div class="task-item" *ngFor="let task of filteredTasks">
+        <div class="task-status-stripe" [ngClass]="getStatusClass(task.status)"></div>
+        <div class="task-content">
+          <div class="task-main">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description }}</p>
+          </div>
+          <div class="task-meta">
+            <span class="meta-tag"><i class="bi bi-calendar-event"></i> {{ task.due }}</span>
+            <span class="meta-tag priority" [class.high]="task.priority === 'High'">{{ task.priority }} Priority</span>
+            <span class="status-pill" [ngClass]="getStatusClass(task.status)">{{ task.status }}</span>
+          </div>
+        </div>
+        <div class="task-actions">
+           <button class="btn-icon"><i class="bi bi-three-dots-vertical"></i></button>
+        </div>
       </div>
     </div>
+
+    <!-- Empty State -->
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <div class="empty-icon">
+          <i class="bi bi-inbox"></i>
+        </div>
+        <h3>No tasks available</h3>
+        <p>No tasks assigned yet</p>
+      </div>
+    </ng-template>
+
   </div>
 </div>
