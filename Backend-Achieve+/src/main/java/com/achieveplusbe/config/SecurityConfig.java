@@ -65,8 +65,8 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Use environment variable for allowed origins
-        configuration.setAllowedOrigins(Collections.singletonList(frontendUrl));
+        // Allow both React (5173) and Angular (4200) frontends
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:4200"));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
