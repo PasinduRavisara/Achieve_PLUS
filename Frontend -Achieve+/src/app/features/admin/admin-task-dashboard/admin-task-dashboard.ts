@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskService, TaskDTO } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-admin-task-dashboard',
@@ -10,30 +11,37 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminTaskDashboard {
   activeTab = 'all';
-  
-  tasks: Task[] = [
-    { id: 1, title: 'Design Homepage', assignee: 'John Doe', priority: 'high', status: 'pending' },
-    { id: 2, title: 'Setup Database', assignee: 'Mike Ross', priority: 'medium', status: 'inprogress' },
-    { id: 3, title: 'Implement Auth', assignee: 'Jane Smith', priority: 'high', status: 'completed' },
-    { id: 4, title: 'API Documentation', assignee: 'Rachel Zane', priority: 'low', status: 'pending' },
-    { id: 5, title: 'Initial Project Setup', assignee: 'Harvey Specter', priority: 'high', status: 'completed' }
-  ];
+  tasks: TaskDTO[] = [];
+
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit() {
+    this.refreshTasks();
+  }
 
   get filteredTasks() {
     if (this.activeTab === 'all') return this.tasks;
-    return this.tasks.filter(t => t.status === this.activeTab);
+    // Backend returns "Pending", "In Progress", "Completed" usually
+    // Mapping tabs to status
+    const statusMap: Record<string, string> = {
+      'pending': 'Pending',
+      'inprogress': 'In Progress',
+      'completed': 'Completed'
+    };
+    return this.tasks.filter(t => t.status === statusMap[this.activeTab] || t.status === this.activeTab);
   }
 
-  get pendingCount() { return this.tasks.filter(t => t.status === 'pending').length; }
-  get inProgressCount() { return this.tasks.filter(t => t.status === 'inprogress').length; }
-  get completedCount() { return this.tasks.filter(t => t.status === 'completed').length; }
+  get pendingCount() { return this.tasks.filter(t => t.status === 'Pending').length; }
+  get inProgressCount() { return this.tasks.filter(t => t.status === 'In Progress').length; }
+  get completedCount() { return this.tasks.filter(t => t.status === 'Completed').length; }
 
   setTab(tab: string) {
     this.activeTab = tab;
   }
 
-  getPriorityClass(priority: string): string {
-    switch(priority) {
+  getPriorityClass(priority: string | undefined): string {
+    if (!priority) return '';
+    switch(priority.toLowerCase()) {
       case 'high': return 'badge-high';
       case 'medium': return 'badge-medium';
       case 'low': return 'badge-low';
@@ -43,23 +51,17 @@ export class AdminTaskDashboard {
 
   getStatusClass(status: string): string {
     switch(status) {
-      case 'pending': return 'status-pending';
-      case 'inprogress': return 'status-inprogress';
-      case 'completed': return 'status-completed';
+      case 'Pending': return 'status-pending';
+      case 'In Progress': return 'status-inprogress';
+      case 'Completed': return 'status-completed';
       default: return '';
     }
   }
 
   refreshTasks() {
-    // Mock refresh
-    console.log('Refreshing tasks...');
+    this.taskService.getAllTasks().subscribe({
+      next: (data) => this.tasks = data,
+      error: (err) => console.error('Failed to load admin tasks', err)
+    });
   }
-}
-
-interface Task {
-  id: number;
-  title: string;
-  assignee: string;
-  priority: 'high' | 'medium' | 'low';
-  status: 'pending' | 'inprogress' | 'completed';
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-employee-task-dashboard',
@@ -10,12 +11,13 @@ import { CommonModule } from '@angular/common';
 })
 export class EmployeeTaskDashboard {
   activeTab = 'All';
+  tasks: any[] = []; // Changed to any[] to match service DTO flexible
 
-  tasks = [
-    { id: 1, title: 'Complete onboarding documentation', description: 'Read and sign all HR documents.', status: 'Pending', priority: 'High', due: '2026-01-15' },
-    { id: 2, title: 'Review project guidelines', description: 'Understand coding standards and workflow.', status: 'In Progress', priority: 'Medium', due: '2026-01-20' },
-    { id: 3, title: 'Set up development environment', description: 'Install VS Code, Node.js, and dependencies.', status: 'Completed', priority: 'High', due: '2026-01-10' },
-  ];
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit() {
+    this.refresh();
+  }
 
   get filteredTasks() {
     if (this.activeTab === 'All') return this.tasks;
@@ -36,7 +38,12 @@ export class EmployeeTaskDashboard {
   }
 
   refresh() {
-    // Simulating refresh
+    this.taskService.getMyTasks().subscribe({
+      next: (data) => {
+        this.tasks = data;
+      },
+      error: (err) => console.error('Failed to load tasks', err)
+    });
   }
 
   getStatusClass(status: string) {

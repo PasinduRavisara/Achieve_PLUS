@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rewards")
+@RequestMapping("/rewards")
 @CrossOrigin(origins = "${app.cors.allowed-origins}")
 public class RewardController {
 

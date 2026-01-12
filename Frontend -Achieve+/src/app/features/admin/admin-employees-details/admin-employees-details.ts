@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UserService, UserDTO } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-admin-employees-details',
@@ -9,12 +10,30 @@ import { CommonModule } from '@angular/common';
   styleUrl: './admin-employees-details.css',
 })
 export class AdminEmployeesDetails {
-  employees = [
-    { id: 1, name: 'Ravisara', email: 'ravisara@gmail.com', role: 'Employee', joinDate: '1/9/2026', status: 'active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ravisara' },
-    { id: 2, name: 'John Doe', email: 'john@achieve.plus', role: 'Senior Dev', joinDate: '12/11/2025', status: 'active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John' },
-    { id: 3, name: 'Jane Smith', email: 'jane@achieve.plus', role: 'Manager', joinDate: '5/10/2025', status: 'active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane' },
-    { id: 4, name: 'Mike Ross', email: 'mike@achieve.plus', role: 'Employee', joinDate: '15/9/2025', status: 'inactive', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike' },
-  ];
+  employees: any[] = [];
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.refreshEmployees();
+  }
+
+  refreshEmployees() {
+    this.userService.getAllUsers().subscribe({
+      next: (users) => {
+        this.employees = users.map(u => ({
+          id: u.id,
+          name: u.fullName,
+          email: u.email,
+          role: u.role,
+          joinDate: '2026-01-01', // Default as backend missing field
+          status: 'active', // Default
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.fullName}`
+        }));
+      },
+      error: (err) => console.error('Failed to load employees', err)
+    });
+  }
 
   getStatusClass(status: string) {
     switch (status) {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-progress-analysis',
@@ -11,18 +12,38 @@ import { CommonModule } from '@angular/common';
 export class ProgressAnalysis {
   // Stats for Cards
   stats = {
-    completed: 12,
-    inProgress: 5,
-    overdue: 2,
-    points: 2450
+    completed: 0,
+    inProgress: 0,
+    overdue: 0,
+    points: 0
   };
 
-  completionRate = 70; // Percentage for Doughnut
+  completionRate = 0; // Percentage for Doughnut
 
   // Chart Data
-  weeklyActivity = [2, 5, 3, 8, 6, 4, 7]; // Mon-Sun
+  weeklyActivity = [0, 0, 0, 0, 0, 0, 0]; // Default
+
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit() {
+    this.refresh();
+  }
 
   refresh() {
-    console.log('Refreshing analytics...');
+    this.taskService.getMyStats().subscribe({
+      next: (data) => {
+        // Assume backend returns map matching these keys or map manually
+        if (data) {
+           this.stats.completed = data.completed || 0;
+           this.stats.inProgress = data.inProgress || 0;
+           this.stats.overdue = data.overdue || 0;
+           this.stats.points = data.points || 0;
+           
+           const total = this.stats.completed + this.stats.inProgress + this.stats.overdue;
+           this.completionRate = total > 0 ? Math.round((this.stats.completed / total) * 100) : 0;
+        }
+      },
+      error: (err) => console.error('Failed to load stats', err)
+    });
   }
 }

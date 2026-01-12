@@ -17,14 +17,14 @@ export class Login {
   authService = inject(AuthService);
 
   onLogin() {
-    if (this.email.toLowerCase().includes('admin')) {
-      this.authService.login('admin');
-    } else {
-      this.authService.login('employee');
-    }
+    this.authService.login(this.email, this.password).subscribe({
+      error: (err) => {
+        console.error('Login failed', err);
+        alert('Login failed. Please check credentials.');
+      }
+    });
   }
 
-  loginAs(role: 'admin' | 'employee') {
-    this.authService.login(role);
-  }
+  // Removed mocked loginAs method to enforce real data usage
+
 }

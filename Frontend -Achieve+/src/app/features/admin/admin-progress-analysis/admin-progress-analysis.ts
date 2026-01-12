@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-admin-progress-analysis',
@@ -13,16 +14,35 @@ export class AdminProgressAnalysis {
   employeeFilter = 'All Employees';
 
   stats = {
-    totalTasks: 124,
-    completedTasks: 98,
-    pointsEarned: 15400,
-    overdueTasks: 12
+    totalTasks: 0,
+    completedTasks: 0,
+    pointsEarned: 0,
+    overdueTasks: 0
   };
 
-  // Mock data for timelines (last 7 points)
-  timelineData = [10, 25, 18, 30, 45, 35, 50];
+  timelineData = [0, 0, 0, 0, 0, 0, 0];
+
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit() {
+    this.refresh();
+  }
 
   refresh() {
-    console.log('Refreshing analysis...');
+    this.taskService.getAdminStats().subscribe({
+      next: (data) => {
+        if (data) {
+          this.stats.totalTasks = data.totalTasks || 0;
+          this.stats.completedTasks = data.completedTasks || 0;
+          this.stats.pointsEarned = data.totalPoints || 0;
+          this.stats.overdueTasks = data.overdueTasks || 0;
+          // If backend provides timeline (weekly activity?)
+          if (data.timeline) {
+            this.timelineData = data.timeline;
+          }
+        }
+      },
+      error: (err) => console.error('Failed to load admin stats', err)
+    });
   }
 }

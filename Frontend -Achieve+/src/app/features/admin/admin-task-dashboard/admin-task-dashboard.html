@@ -93,7 +93,7 @@
              <span class="task-id">#{{ task.id }}</span> {{ task.title }}
            </div>
            <div class="col-assignee">
-             <div class="avatar-sm">{{ task.assignee.charAt(0) }}</div> {{ task.assignee }}
+             <div class="avatar-sm" *ngIf="task.assignedToName">{{ task.assignedToName.charAt(0) }}</div> {{ task.assignedToName || 'Unassigned' }}
            </div>
            <div class="col-priority">
              <span class="priority-badge" [ngClass]="getPriorityClass(task.priority)">{{ task.priority }}</span>

@@ -15,7 +15,7 @@
     <div class="user-profile" (click)="toggleProfileMenu()">
       <img [src]="userAvatar" class="nav-avatar">
       <div class="user-info">
-        <span class="user-name">{{ user?.name }}</span>
+        <span class="user-name">{{ user?.fullName || 'User' }}</span>
         <span class="user-role">{{ user?.role | titlecase }}</span>
       </div>
       <i class="bi bi-caret-down-fill dropdown-arrow"></i>

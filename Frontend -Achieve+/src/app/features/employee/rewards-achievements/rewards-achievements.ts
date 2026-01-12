@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AchievementService, AchievementDTO } from '../../../core/services/achievement.service';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-rewards-achievements',
@@ -15,5 +17,37 @@ export class RewardsAchievements {
     streak: 0
   };
 
-  achievements: any[] = []; // Empty state to match screenshot 3
+  achievements: AchievementDTO[] = [];
+
+  constructor(
+    private achievementService: AchievementService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.refresh();
+  }
+
+  refresh() {
+    const user = this.authService.getCurrentUser();
+    if (user && user.id) {
+      // Get Stats
+      this.achievementService.getUserStats(user.id).subscribe({
+        next: (data) => {
+          this.stats.badges = data.totalBadges;
+          this.stats.points = data.totalPoints;
+          this.stats.streak = data.currentStreak;
+        },
+        error: (err) => console.error('Failed to loading achievement stats', err)
+      });
+
+      // Get Achievements
+      this.achievementService.getUserAchievements(user.id).subscribe({
+        next: (data) => {
+          this.achievements = data;
+        },
+        error: (err) => console.error('Failed to load achievements', err)
+      });
+    }
+  }
 }

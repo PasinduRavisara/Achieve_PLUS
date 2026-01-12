@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -13,11 +14,18 @@ export class AdminDashboard {
   today = new Date();
   
   stats = [
-    { label: 'Total Tasks', value: 124, trend: '+12', icon: 'bi-list-task', color: 'blue' },
-    { label: 'Team Members', value: 18, trend: '+3', icon: 'bi-people-fill', color: 'green' },
-    { label: 'In Progress', value: 42, trend: '-5', icon: 'bi-arrow-repeat', color: 'cyan' },
-    { label: 'Completion Rate', value: '87%', trend: '+2%', icon: 'bi-check-circle-fill', color: 'yellow' }
+    { label: 'Total Tasks', value: 0, trend: '', icon: 'bi-list-task', color: 'blue' },
+    { label: 'Team Members', value: 0, trend: '', icon: 'bi-people-fill', color: 'green' },
+    { label: 'In Progress', value: 0, trend: '', icon: 'bi-arrow-repeat', color: 'cyan' },
+    { label: 'Points Earned', value: 0, trend: '', icon: 'bi-check-circle-fill', color: 'yellow' }
   ];
+
+  taskOverview = {
+    total: 0,
+    completed: 0,
+    inProgress: 0,
+    pending: 0
+  };
 
   quickLinks = [
     { title: 'Task Management', desc: 'Create, assign, and track tasks', icon: 'bi-list-ul', route: '/admin/tasks', color: 'var(--primary)' },
@@ -26,14 +34,35 @@ export class AdminDashboard {
     { title: 'Leaderboard', desc: 'View top performers', icon: 'bi-trophy', route: '/admin/leaderboard', color: '#ffd700' }
   ];
 
-  taskOverview = {
-    total: 124,
-    completed: 87,
-    inProgress: 24,
-    pending: 13
-  };
+  reminders: any[] = []; 
 
-  reminders: any[] = []; // Start empty to show empty state
+  constructor(private taskService: TaskService) {}
+
+  ngOnInit() {
+    this.refreshDashboard();
+  }
+
+  refreshDashboard() {
+    this.taskService.getAdminStats().subscribe({
+      next: (data) => {
+        if (data) {
+          // Update Overview
+           this.taskOverview.total = data.totalTasks || 0;
+           this.taskOverview.completed = data.completedTasks || 0;
+           this.taskOverview.inProgress = data.inProgressTasks || 0;
+           this.taskOverview.pending = data.pendingTasks || 0; // Assuming backend sends this
+
+           // Update Stats Cards
+           this.stats[0].value = this.taskOverview.total; // Total Tasks
+           this.stats[1].value = data.totalUsers || 0; // Team Members (assuming backend sends this or 0)
+           this.stats[2].value = this.taskOverview.inProgress; // In Progress
+           this.stats[3].value = data.totalPoints || 0; // Points Earned
+           this.stats[3].label = 'Points Earned'; // Changed label from Completion Rate to match likely data
+        }
+      },
+      error: (err) => console.error('Failed to load dashboard stats', err)
+    });
+  }
 
   addReminder() {
     const text = prompt("Enter reminder:");
