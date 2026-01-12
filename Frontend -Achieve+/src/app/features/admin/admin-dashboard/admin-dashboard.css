@@ -237,6 +237,7 @@
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  gap: 1.5rem; /* Added gap to separate header from content */
 }
 
 .empty-state {
@@ -263,7 +264,7 @@
 
 .reminder-item {
   padding: 1rem;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid #ffdd00;
 }
 
 @media (max-width: 1024px) {
@@ -280,4 +281,110 @@
   .stats-grid, .quick-links-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Text Overflow */
+.rem-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  margin: 0;
+  font-weight: 500;
+}
+
+.rem-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.btn-del-mini {
+  background: transparent;
+  border: none;
+  color: #ff5555;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.2s;
+}
+
+.btn-del-mini:hover {
+  transform: scale(1.2);
+}
+
+.btn-edit-mini {
+  background: transparent;
+  border: none;
+  color: #00e0ff;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.2s;
+}
+
+.btn-edit-mini:hover {
+  transform: scale(1.2);
+  color: white;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: #1e1e2d; /* Fallback */
+  background: rgba(30,30,40, 0.95);
+}
+
+.glass-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  resize: vertical;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: var(--primary);
+  color: black;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
 }

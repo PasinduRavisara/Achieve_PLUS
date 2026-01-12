@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TaskService } from '../../../core/services/task.service';
+import { ReminderService } from '../../../core/services/reminder.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
 export class AdminDashboard {
+  private taskService = inject(TaskService);
+  private reminderService = inject(ReminderService);
+  private cdr = inject(ChangeDetectorRef);
+
   today = new Date();
   
   stats = [
@@ -35,37 +41,90 @@ export class AdminDashboard {
   ];
 
   reminders: any[] = []; 
+  showReminderModal = false;
+  newReminderText = '';
+  newReminderDate = '';
+  editingReminderId: number | null = null;
 
-  constructor(private taskService: TaskService) {}
+  constructor() {}
 
   ngOnInit() {
     this.refreshDashboard();
+    this.loadReminders();
   }
 
   refreshDashboard() {
     this.taskService.getAdminStats().subscribe({
       next: (data) => {
         if (data) {
-          // Update Overview
            this.taskOverview.total = data.totalTasks || 0;
            this.taskOverview.completed = data.completedTasks || 0;
            this.taskOverview.inProgress = data.inProgressTasks || 0;
-           this.taskOverview.pending = data.pendingTasks || 0; // Assuming backend sends this
+           this.taskOverview.pending = data.pendingTasks || 0; 
 
-           // Update Stats Cards
-           this.stats[0].value = this.taskOverview.total; // Total Tasks
-           this.stats[1].value = data.totalUsers || 0; // Team Members (assuming backend sends this or 0)
-           this.stats[2].value = this.taskOverview.inProgress; // In Progress
-           this.stats[3].value = data.totalPoints || 0; // Points Earned
-           this.stats[3].label = 'Points Earned'; // Changed label from Completion Rate to match likely data
+           this.stats[0].value = this.taskOverview.total; 
+           this.stats[1].value = data.totalUsers || 0; 
+           this.stats[2].value = this.taskOverview.inProgress; 
+           this.stats[3].value = data.totalPoints || 0; 
+           this.stats[3].label = 'Points Earned'; 
+           this.cdr.markForCheck();
         }
       },
       error: (err) => console.error('Failed to load dashboard stats', err)
     });
   }
-
+  
+  loadReminders() {
+      this.reminderService.getReminders().subscribe({
+          next: (data) => {
+              this.reminders = data;
+              this.cdr.detectChanges(); // Force update
+          },
+          error: (err) => console.error('Error loading reminders', err)
+      });
+  }
   addReminder() {
-    const text = prompt("Enter reminder:");
-    if (text) this.reminders.push({ text, date: new Date() });
+    this.showReminderModal = true;
+    this.editingReminderId = null;
+    this.newReminderText = '';
+    this.newReminderDate = '';
+  }
+  
+  editReminder(rem: any, event: Event) {
+      event.stopPropagation();
+      this.editingReminderId = rem.id;
+      this.newReminderText = rem.text;
+      this.newReminderDate = rem.reminderTime || ''; 
+      this.showReminderModal = true;
+  }
+  
+  closeReminderModal() {
+      this.showReminderModal = false;
+  }
+  
+  saveReminder() {
+      if (!this.newReminderText.trim()) return;
+      
+      if (this.editingReminderId) {
+          this.reminderService.updateReminder(this.editingReminderId, this.newReminderText, this.newReminderDate).subscribe(updated => {
+             const index = this.reminders.findIndex(r => r.id === updated.id);
+             if (index !== -1) this.reminders[index] = updated;
+             this.closeReminderModal();
+          });
+      } else {
+          this.reminderService.createReminder(this.newReminderText, this.newReminderDate).subscribe(rem => {
+              this.reminders.unshift(rem);
+              this.closeReminderModal();
+          });
+      }
+  }
+  
+  deleteReminder(id: number, event: Event) {
+      event.stopPropagation();
+      if(confirm('Delete reminder?')) {
+          this.reminderService.deleteReminder(id).subscribe(() => {
+              this.reminders = this.reminders.filter(r => r.id !== id);
+          });
+      }
   }
 }

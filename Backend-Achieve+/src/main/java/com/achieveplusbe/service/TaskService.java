@@ -220,31 +220,24 @@ public class TaskService {
 
     public Map<String, Object> getAdminStats() {
         List<Task> allTasks = taskRepository.findAll();
+        long totalUsers = userRepository.count();
 
-        // Calculate total tasks by status
-        long totalPendingTasks = allTasks.stream()
-                .filter(task -> task.getStatus() == Task.TaskStatus.PENDING)
-                .count();
+        long pending = allTasks.stream().filter(t -> t.getStatus() == Task.TaskStatus.PENDING).count();
+        long inProgress = allTasks.stream().filter(t -> t.getStatus() == Task.TaskStatus.IN_PROGRESS).count();
+        long completed = allTasks.stream().filter(t -> t.getStatus() == Task.TaskStatus.COMPLETED).count();
 
-        long totalInProgressTasks = allTasks.stream()
-                .filter(task -> task.getStatus() == Task.TaskStatus.IN_PROGRESS)
-                .count();
-
-        long totalCompletedTasks = allTasks.stream()
-                .filter(task -> task.getStatus() == Task.TaskStatus.COMPLETED)
-                .count();
-
-        // Calculate total points from completed tasks
         int totalPoints = allTasks.stream()
-                .filter(task -> task.getStatus() == Task.TaskStatus.COMPLETED)
+                .filter(t -> t.getStatus() == Task.TaskStatus.COMPLETED)
                 .mapToInt(Task::getPoints)
                 .sum();
 
         return Map.of(
-            "totalPendingTasks", totalPendingTasks,
-            "totalInProgressTasks", totalInProgressTasks,
-            "totalCompletedTasks", totalCompletedTasks,
-            "totalPoints", totalPoints
+            "totalTasks", (long) allTasks.size(),
+            "pendingTasks", pending,
+            "inProgressTasks", inProgress,
+            "completedTasks", completed,
+            "totalPoints", totalPoints,
+            "totalUsers", totalUsers
         );
     }
 }

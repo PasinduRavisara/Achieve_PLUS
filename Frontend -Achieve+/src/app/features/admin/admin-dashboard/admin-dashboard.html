@@ -53,7 +53,7 @@
              <span class="p-label"><i class="bi bi-arrow-repeat text-primary"></i> In Progress</span>
              <span>{{ taskOverview.inProgress }}</span>
           </div>
-          <div class="progress-track"><div class="progress-fill primary" style="width: 40%"></div></div>
+          <div class="progress-track"><div class="progress-fill primary" [style.width.%]="taskOverview.total > 0 ? (taskOverview.inProgress / taskOverview.total * 100) : 0"></div></div>
         </div>
 
         <div class="p-bar-group">
@@ -61,7 +61,7 @@
              <span class="p-label"><i class="bi bi-check-circle-fill text-success"></i> Completed</span>
              <span>{{ taskOverview.completed }}</span>
           </div>
-          <div class="progress-track"><div class="progress-fill success" style="width: 70%"></div></div>
+          <div class="progress-track"><div class="progress-fill success" [style.width.%]="taskOverview.total > 0 ? (taskOverview.completed / taskOverview.total * 100) : 0"></div></div>
         </div>
 
         <div class="p-bar-group">
@@ -69,7 +69,7 @@
              <span class="p-label"><i class="bi bi-clock-fill text-warning"></i> Pending</span>
              <span>{{ taskOverview.pending }}</span>
           </div>
-          <div class="progress-track"><div class="progress-fill warning" style="width: 15%"></div></div>
+          <div class="progress-track"><div class="progress-fill warning" [style.width.%]="taskOverview.total > 0 ? (taskOverview.pending / taskOverview.total * 100) : 0"></div></div>
         </div>
       </div>
     </div>
@@ -84,8 +84,15 @@
 
     <div class="reminders-list" *ngIf="reminders.length > 0; else noReminders">
       <div class="reminder-item glass-panel" *ngFor="let rem of reminders">
-        <p>{{ rem.text }}</p>
-        <small>{{ rem.date | date:'shortTime' }}</small>
+        <p class="rem-text" [title]="rem.text">{{ rem.text }}</p>
+        <div class="rem-meta">
+           <small class="text-muted" *ngIf="rem.reminderTime" style="color: #ffdd00 !important"><i class="bi bi-clock"></i> {{ rem.reminderTime | date:'short' }}</small>
+           <small class="text-muted" *ngIf="!rem.reminderTime">{{ rem.createdAt | date:'shortTime' }}</small>
+           <div class="actions" style="display: flex; gap: 5px;">
+              <button class="btn-edit-mini" (click)="editReminder(rem, $event)"><i class="bi bi-pencil-fill"></i></button>
+              <button class="btn-del-mini" (click)="deleteReminder(rem.id, $event)"><i class="bi bi-trash"></i></button>
+           </div>
+        </div>
       </div>
     </div>
 
@@ -97,4 +104,17 @@
       </div>
     </ng-template>
   </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop" *ngIf="showReminderModal" (click)="closeReminderModal()">
+    <div class="modal-content glass-card" (click)="$event.stopPropagation()">
+        <h3 class="mb-3">{{ editingReminderId ? 'Edit' : 'Add' }} Reminder</h3>
+        <textarea [(ngModel)]="newReminderText" class="form-control glass-input mb-3" placeholder="What needs to be done?" rows="3" maxlength="500"></textarea>
+        <input type="datetime-local" [(ngModel)]="newReminderDate" class="form-control glass-input mb-3" style="color-scheme: dark;">
+        <div class="modal-actions flex-end gap-2">
+            <button class="btn-cancel" (click)="closeReminderModal()">Cancel</button>
+            <button class="btn-save" (click)="saveReminder()">Save</button>
+        </div>
+    </div>
 </div>
