@@ -1,4 +1,5 @@
 import { AuthService } from '../../../core/services/auth';
+import { NotificationService } from '../../../core/services/notification.service';
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
@@ -13,16 +14,11 @@ import { filter } from 'rxjs/operators';
 })
 export class TopBar {
   private authService = inject(AuthService);
+  private notificationService = inject(NotificationService);
   private elementRef = inject(ElementRef);
   
   currentRouteName = 'Dashboard';
   showSearch = false;
-
-  notifications = [
-    { id: 1, text: 'New task assigned: Q4 Review', read: false },
-    { id: 2, text: 'Meeting with Dev Team in 15m', read: false },
-    { id: 3, text: 'System update scheduled', read: true },
-  ];
   showNotifications = false;
 
   constructor(private router: Router) {
@@ -71,13 +67,21 @@ export class TopBar {
     this.showSearch = url.includes('tasks') || url.includes('store') || url.includes('employees');
   }
 
+  get notifications() {
+    return this.notificationService.notifications();
+  }
+
+  get unreadCount() {
+    return this.notificationService.unreadCount();
+  }
+
   toggleNotifications() {
     this.showNotifications = !this.showNotifications;
     if(this.showNotifications) this.showProfileMenu = false;
   }
 
   markAllRead() {
-    this.notifications.forEach(n => n.read = true);
+    this.notificationService.markAllAsRead();
   }
 
   showProfileMenu = false;
@@ -89,9 +93,5 @@ export class TopBar {
 
   logout() {
     this.authService.logout();
-  }
-
-  get unreadCount() {
-    return this.notifications.filter(n => !n.read).length;
   }
 }

@@ -37,7 +37,7 @@
             <div class="notif-item" *ngFor="let n of notifications" [class.unread]="!n.read">
               <div class="notif-icon"><i class="bi bi-info-circle"></i></div>
               <div class="notif-content">
-                <p>{{ n.text }}</p>
+                <p>{{ n.message }}</p>
                 <span class="time">Just now</span>
               </div>
               <div class="dot" *ngIf="!n.read"></div>

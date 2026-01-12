@@ -29,6 +29,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final AchievementService achievementService;
+    private final NotificationService notificationService;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public List<TaskDTO> getAllTasks() {
@@ -67,7 +68,6 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-
     @Transactional
     public TaskDTO createTask(TaskDTO taskDTO) {
         Task task = convertToEntity(taskDTO);
@@ -79,6 +79,16 @@ public class TaskService {
         task.setCreatedBy(currentUser);
 
         Task savedTask = taskRepository.save(task);
+
+        if (savedTask.getAssignedUser() != null) {
+            notificationService.createNotification(
+                savedTask.getAssignedUser(),
+                "New Task Assigned: " + savedTask.getTitle(),
+                "INFO",
+                savedTask.getId()
+            );
+        }
+
         return convertToDTO(savedTask);
     }
 
@@ -98,6 +108,16 @@ public class TaskService {
         if (taskDTO.getAssignedTo() != null) {
             User assignedUser = userRepository.findById(taskDTO.getAssignedTo())
                     .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + taskDTO.getAssignedTo()));
+            
+            // Check if assignment changed
+            if (task.getAssignedUser() == null || !task.getAssignedUser().getId().equals(assignedUser.getId())) {
+                 notificationService.createNotification(
+                    assignedUser,
+                    "Task Assigned: " + task.getTitle(),
+                    "INFO",
+                    task.getId()
+                );
+            }
             task.setAssignedUser(assignedUser);
         } else {
             task.setAssignedUser(null);
@@ -121,7 +141,18 @@ public class TaskService {
             throw new UnauthorizedException("You are not authorized to update this task");
         }
 
-        task.setStatus(Task.TaskStatus.valueOf(status));
+        Task.TaskStatus newStatus = Task.TaskStatus.valueOf(status);
+        task.setStatus(newStatus);
+        
+        // Notify Admin (Creator) if completed
+        if (newStatus == Task.TaskStatus.COMPLETED && task.getCreatedBy() != null) {
+            notificationService.createNotification(
+                task.getCreatedBy(),
+                "Task Completed: " + task.getTitle() + " by " + currentUser.getFullName(),
+                "SUCCESS",
+                task.getId()
+            );
+        }
         
         // Check if task is being completed before due date
         if (task.getStatus() == Task.TaskStatus.COMPLETED && 
