@@ -1,101 +1,193 @@
 .wellness-container {
-  max-width: 600px;
+  max-width: 1000px;
   margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2.2rem;
+  background: linear-gradient(90deg, #fff, #aaa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: var(--text-muted);
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.exercise-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .grid-layout, .exercise-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stats */
+.stat-card {
+  padding: 1.5rem;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-val {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Mood */
+.mood-tracker {
+  padding: 1.5rem;
 }
 
 .mood-grid {
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
+  justify-content: space-between;
   margin-top: 1.5rem;
+  gap: 10px;
 }
 
 .mood-btn {
+  flex: 1;
   border: none;
-  background: rgba(255,255,255,0.05); /* Base glass panel background */
-  width: 90px;
-  height: 90px;
+  background: rgba(255,255,255,0.05);
+  padding: 1rem 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
-  color: var(--text-main);
+  color: white;
 }
 
 .mood-btn:hover {
   transform: translateY(-5px);
   background: rgba(255,255,255,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .mood-btn i {
-  font-size: 2rem;
-  margin-bottom: 5px;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Breathing exercise */
+/* Breathing */
 .breathing-exercise {
-  padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2rem;
 }
 
 .circle-container {
-  height: 250px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0;
 }
 
 .breathing-circle {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--primary), transparent);
+  background: radial-gradient(circle, #00f2ff, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
   transition: all 4s ease-in-out;
 }
 
 .breathing-circle.animate {
-  animation: breathe 12s infinite ease-in-out;
+  animation: breathe 19s infinite ease-in-out;
 }
 
+/* 4-7-8 Rhythm approximation */
 @keyframes breathe {
-  0% { transform: scale(1); opacity: 0.8; }
-  40% { transform: scale(1.8); opacity: 0.4; } /* Inhale (4s) */
-  60% { transform: scale(1.8); opacity: 0.4; } /* Hold (7s -> handled by timing approx) */
-  100% { transform: scale(1); opacity: 0.8; } /* Exhale (8s) */
+   0% { transform: scale(1); opacity: 0.7; }
+   21% { transform: scale(1.6); opacity: 0.4; } /* 4s Inhale (4/19 = ~21%) */
+   58% { transform: scale(1.6); opacity: 0.4; } /* 7s Hold (11/19 = ~58%) */
+   100% { transform: scale(1); opacity: 0.7; } /* 8s Exhale */
 }
 
-/* Corrected timing for exact 4-7-8 is harder in CSS only without keyframe adjusting, 
-   but this simulates basic inhale/exhale rhythm for visual feedback. */
 
 .breathing-text {
-  font-size: 1.2rem;
   font-weight: bold;
   color: white;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 4px black;
 }
 
-.btn-start {
-  padding: 0.8rem 2.5rem;
-  border-radius: 30px;
-  border: none;
-  background: white;
-  color: black;
-  font-weight: bold;
-  font-size: 1.1rem;
+/* Bubbles */
+.bubble-wrap {
+  text-align: center;
+  padding: 2rem;
+}
+
+.bubbles-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 1.5rem auto;
+  max-width: 350px;
+}
+
+.bubble {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+  box-shadow: inset 0 0 5px rgba(255,255,255,0.5), 0 2px 5px rgba(0,0,0,0.3);
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.1s;
 }
 
-.btn-start:hover {
-  transform: scale(1.05);
+.bubble:active {
+  transform: scale(0.9);
+}
+
+.bubble.popped {
+  background: rgba(255,255,255,0.05);
+  box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+  transform: scale(0.95);
+  animation: pop 0.2s ease-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(0.95); }
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 1rem;
 }

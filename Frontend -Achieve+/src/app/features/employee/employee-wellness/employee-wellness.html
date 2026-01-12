@@ -1,31 +1,62 @@
 <div class="wellness-container">
-  <div class="header text-center mb-5">
-    <h1>Wellness Corner</h1>
-    <p class="subtitle">Take a moment for yourself</p>
+  <div class="header text-center mb-4">
+    <h1>Wellness Hub</h1>
+    <p class="subtitle">Balance your mind and work.</p>
   </div>
 
-  <div class="mood-tracker glass-card text-center mb-5">
-    <h3>How are you feeling today?</h3>
-    <div class="mood-grid">
-      <button class="mood-btn glass-panel" *ngFor="let mood of moods" (click)="logMood(mood)">
-        <i [class]="'bi ' + mood.icon" [style.color]="mood.color"></i>
-        <span>{{ mood.label }}</span>
-      </button>
+  <div class="grid-layout">
+    <!-- Workload Stats -->
+    <div class="stat-card glass-card">
+       <h3><i class="bi bi-activity text-primary"></i> Workload Balance</h3>
+       <div class="stats-row">
+          <div class="stat-item">
+             <span class="stat-val text-success">{{ stats.completed || 0 }}</span>
+             <span class="stat-label">Completed</span>
+          </div>
+          <div class="stat-item">
+             <span class="stat-val text-warning">{{ stats.inProgress || 0 }}</span>
+             <span class="stat-label">Active</span>
+          </div>
+          <div class="stat-item">
+             <span class="stat-val text-info">{{ stats.pending || 0 }}</span>
+             <span class="stat-label">Pending</span>
+          </div>
+       </div>
     </div>
-  </div>
 
-  <div class="breathing-exercise glass-card text-center">
-    <h3>Breathing Exercise</h3>
-    <p class="subtitle">4-7-8 Technique</p>
-    
-    <div class="circle-container">
-      <div class="breathing-circle" [class.animate]="isBreathing">
-        <span class="breathing-text">{{ breathingText }}</span>
+    <!-- Mood Tracker -->
+    <div class="mood-tracker glass-card">
+      <h3><i class="bi bi-emoji-smile text-warning"></i> How are you feeling?</h3>
+      <div class="mood-grid">
+        <button class="mood-btn glass-panel" *ngFor="let mood of moods" (click)="logMood(mood)">
+          <i [class]="'bi ' + mood.icon" [style.color]="mood.color"></i>
+          <span>{{ mood.label }}</span>
+        </button>
       </div>
     </div>
-    
-    <button class="btn-start" (click)="toggleBreathing()">
-      {{ isBreathing ? 'Stop' : 'Start' }}
-    </button>
+  </div>
+
+  <div class="exercise-row mt-4">
+      <!-- Breathing -->
+      <div class="breathing-exercise glass-card">
+        <h3><i class="bi bi-lungs text-info"></i> Breathing</h3>
+        <div class="circle-container small">
+          <div class="breathing-circle" [class.animate]="isBreathing">
+            <span class="breathing-text">{{ breathingText }}</span>
+          </div>
+        </div>
+        <button class="btn btn-primary-sm" (click)="toggleBreathing()">{{ isBreathing ? 'Stop' : 'Start' }}</button>
+      </div>
+
+      <!-- Bubble Wrap -->
+      <div class="bubble-wrap glass-card">
+         <h3><i class="bi bi-circle-fill text-danger"></i> Stress Relief</h3>
+         <div class="bubbles-grid">
+            <div class="bubble" *ngFor="let popped of bubbles; let i = index" 
+                 [class.popped]="popped" 
+                 (click)="popBubble(i)"></div>
+         </div>
+         <p class="hint">Pop bubbles to relieve stress!</p>
+      </div>
   </div>
 </div>
