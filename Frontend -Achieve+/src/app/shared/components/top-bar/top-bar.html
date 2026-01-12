@@ -1,5 +1,8 @@
-<div class="top-bar glass-panel">
-  <div class="left-section">
+<div class="top-bar">
+  <div class="top-bar-bg"></div>
+  
+  <div class="content-wrapper">
+    <div class="left-section">
     <h2 class="page-title">{{ currentRouteName }}</h2>
   </div>
 
@@ -11,6 +14,48 @@
   </div>
 
   <div class="right-section">
+    <!-- Notifications Bell -->
+    <div class="notification-wrapper" (click)="toggleNotifications(); $event.stopPropagation()">
+      <div class="bell-btn" [class.active]="showNotifications">
+         <i class="bi bi-bell-fill"></i>
+         <span class="badge-dot" *ngIf="unreadCount > 0"></span>
+      </div>
+    </div>
+
+    <!-- Notification Modal Overlay -->
+    <div class="modal-backdrop" *ngIf="showNotifications" (click)="toggleNotifications()">
+      <div class="notification-modal glass-card" (click)="$event.stopPropagation()">
+         <div class="modal-header">
+            <div class="header-left">
+              <h3>Notifications</h3>
+              <span class="badge-count" *ngIf="unreadCount > 0">{{ unreadCount }} new</span>
+            </div>
+            <button class="close-btn" (click)="toggleNotifications()"><i class="bi bi-x"></i></button>
+         </div>
+         
+         <div class="modal-body">
+            <div class="notif-item" *ngFor="let n of notifications" [class.unread]="!n.read">
+              <div class="notif-icon"><i class="bi bi-info-circle"></i></div>
+              <div class="notif-content">
+                <p>{{ n.text }}</p>
+                <span class="time">Just now</span>
+              </div>
+              <div class="dot" *ngIf="!n.read"></div>
+            </div>
+            
+            <div class="empty-notif" *ngIf="notifications.length === 0">
+              <i class="bi bi-bell-slash text-muted fs-2 mb-2"></i>
+              <p>You're all caught up!</p>
+            </div>
+         </div>
+         
+         <div class="modal-footer">
+            <button class="text-btn" (click)="markAllRead()">Mark all as read</button>
+            <button class="btn-primary-sm" (click)="toggleNotifications()">Done</button>
+         </div>
+      </div>
+    </div>
+
     <!-- User Profile (New) -->
     <div class="user-profile" (click)="toggleProfileMenu()">
       <img [src]="userAvatar" class="nav-avatar">
@@ -26,24 +71,7 @@
           <i class="bi bi-person-circle"></i> View Profile
         </a>
         
-        <!-- Notifications in Menu -->
-        <div class="menu-item" (click)="$event.stopPropagation(); toggleNotifications()">
-           <div class="flex-between w-100">
-             <span><i class="bi bi-bell"></i> Notifications</span>
-             <span class="badge-inline" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
-           </div>
-        </div>
-        
-        <!-- Nested Notifications List -->
-        <div class="nested-notifications" *ngIf="showNotifications" (click)="$event.stopPropagation()">
-           <div class="notif-item-small" *ngFor="let n of notifications">
-              <div class="dot-small" *ngIf="!n.read"></div>
-              <span>{{ n.text }}</span>
-           </div>
-           <div class="empty-notif" *ngIf="notifications.length === 0">No notifications</div>
-        </div>
-
-        <a class="menu-item">
+        <a [routerLink]="user?.role === 'admin' ? '/admin/help' : '/dashboard/help'" class="menu-item">
           <i class="bi bi-question-circle"></i> Help & Support
         </a>
         <a [routerLink]="user?.role === 'admin' ? '/admin/settings' : '/dashboard/settings'" class="menu-item">
@@ -55,5 +83,6 @@
         </button>
       </div>
     </div>
+  </div>
   </div>
 </div>

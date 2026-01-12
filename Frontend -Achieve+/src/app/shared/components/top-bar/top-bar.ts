@@ -76,6 +76,10 @@ export class TopBar {
     if(this.showNotifications) this.showProfileMenu = false;
   }
 
+  markAllRead() {
+    this.notifications.forEach(n => n.read = true);
+  }
+
   showProfileMenu = false;
 
   toggleProfileMenu() {

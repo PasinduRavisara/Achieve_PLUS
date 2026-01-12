@@ -1,0 +1,67 @@
+<div class="help-page-container">
+  
+  <!-- Hero Section -->
+  <div class="help-hero">
+    <h1>How can we help you?</h1>
+    <p class="subtitle">Search our knowledge base or browse categories below</p>
+    
+    <div class="search-wrapper">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" placeholder="Search for articles, guides..." class="help-search">
+    </div>
+  </div>
+
+  <!-- Categories Grid -->
+  <div class="categories-grid">
+    <div class="category-card glass-card" *ngFor="let cat of categories">
+      <div class="icon-box mb-3">
+        <i class="bi" [ngClass]="cat.icon"></i>
+      </div>
+      <h3>{{ cat.title }}</h3>
+      <p>{{ cat.desc }}</p>
+    </div>
+  </div>
+
+  <div class="content-row">
+    <!-- FAQ Section -->
+    <div class="faq-section glass-panel">
+      <h2 class="section-title"><i class="bi bi-patch-question-fill text-primary"></i> Frequently Asked Questions</h2>
+      <div class="accordion">
+        <div class="faq-item" *ngFor="let item of faqs; let i = index" [class.active]="item.open" (click)="toggleFaq(i)">
+          <div class="faq-header">
+            <h3>{{ item.question }}</h3>
+            <i class="bi bi-chevron-down arrow-icon" [class.rotate]="item.open"></i>
+          </div>
+          <div class="faq-body" [class.show]="item.open">
+            <p>{{ item.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Sidebar -->
+    <div class="support-sidebar">
+      <div class="contact-card glass-card mb-3">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="contact-icon"><i class="bi bi-chat-dots-fill"></i></div>
+          <div>
+            <h4 class="m-0">Live Chat</h4>
+            <small class="text-muted">Available 9am - 5pm</small>
+          </div>
+        </div>
+        <button class="btn btn-primary w-100">Start Chat</button>
+      </div>
+
+      <div class="contact-card glass-card">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="contact-icon email"><i class="bi bi-envelope-check-fill"></i></div>
+          <div>
+            <h4 class="m-0">Email Support</h4>
+            <small class="text-muted">Response in 24h</small>
+          </div>
+        </div>
+        <button class="btn btn-outline w-100">Contact Us</button>
+      </div>
+    </div>
+  </div>
+</div>

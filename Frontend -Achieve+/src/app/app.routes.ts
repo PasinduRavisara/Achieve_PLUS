@@ -30,11 +30,13 @@ import { Settings } from './features/common/settings/settings';
 import { Leaderboard } from './features/common/leaderboard/leaderboard';
 import { KudosWall } from './features/common/kudos-wall/kudos-wall';
 
+import { HelpSupport } from './features/common/help-support/help-support';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: Login },
   { path: 'signup', component: Signup },
-  
+
   // Admin Routes
   {
     path: 'admin',
@@ -51,6 +53,7 @@ export const routes: Routes = [
       { path: 'profile', component: Profile },
       { path: 'settings', component: Settings },
       { path: 'leaderboard', component: Leaderboard },
+      { path: 'help', component: HelpSupport },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
@@ -72,6 +75,7 @@ export const routes: Routes = [
       { path: 'profile', component: Profile },
       { path: 'settings', component: Settings },
       { path: 'leaderboard', component: Leaderboard },
+      { path: 'help', component: HelpSupport },
     ]
   },
   

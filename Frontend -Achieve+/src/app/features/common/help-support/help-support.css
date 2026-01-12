@@ -1,0 +1,261 @@
+.help-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+}
+
+.help-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.help-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(90deg, #fff, #a5a5a5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.search-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.help-search {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.help-search:focus {
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+  border-color: var(--primary);
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+/* Categories */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.category-card {
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s, background 0.3s;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255,255,255,0.08); /* Lighter glass */
+  border-color: var(--primary);
+}
+
+.icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0, 242, 255, 0.1);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto;
+  transition: all 0.3s;
+}
+
+.category-card:hover .icon-box {
+  background: var(--primary);
+  color: #000;
+  box-shadow: 0 0 15px var(--primary);
+}
+
+.category-card h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.category-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Content Row */
+.content-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .content-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* FAQ */
+.faq-section {
+  padding: 2rem;
+}
+
+.section-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 0.5rem;
+}
+
+.faq-header {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.faq-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #eee;
+  transition: color 0.2s;
+}
+
+.faq-item:hover .faq-header h3 {
+  color: var(--primary);
+}
+
+.faq-item.active .faq-header h3 {
+  color: var(--primary);
+}
+
+.arrow-icon {
+  color: var(--text-muted);
+  transition: transform 0.3s;
+}
+
+.arrow-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.faq-body {
+  display: none;
+  padding-bottom: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.faq-item.active .faq-body {
+  display: block;
+  animation: slideDown 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Contact Sidebar */
+.contact-card {
+  padding: 1.5rem;
+}
+
+.contact-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: rgba(0, 255, 127, 0.1);
+  color: #00ff7f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.contact-icon.email {
+  background: rgba(255, 170, 0, 0.1);
+  color: #ffaa00;
+}
+
+.contact-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+
+.contact-card small {
+  font-size: 0.8rem;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+}
+
+.btn-outline:hover {
+  border-color: white;
+  background: rgba(255,255,255,0.05);
+}
