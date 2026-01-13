@@ -104,6 +104,7 @@ public class TaskService {
         task.setStatus(Task.TaskStatus.valueOf(taskDTO.getStatus()));
         task.setDueDate(taskDTO.getDueDate());
         task.setPoints(taskDTO.getPoints());
+        task.setPriority(taskDTO.getPriority());
 
         if (taskDTO.getAssignedTo() != null) {
             User assignedUser = userRepository.findById(taskDTO.getAssignedTo())
@@ -126,7 +127,7 @@ public class TaskService {
         Task updatedTask = taskRepository.save(task);
         return convertToDTO(updatedTask);
     }
-
+// ...
     @Transactional
     public TaskDTO updateTaskStatus(Long id, String status) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -182,6 +183,7 @@ public class TaskService {
         dto.setStatus(task.getStatus().name());
         dto.setDueDate(task.getDueDate());
         dto.setPoints(task.getPoints());
+        dto.setPriority(task.getPriority());
         dto.setCreatedAt(task.getCreatedAt().format(DATE_FORMATTER));
 
         if (task.getAssignedUser() != null) {
@@ -204,6 +206,7 @@ public class TaskService {
         task.setStatus(Task.TaskStatus.valueOf(dto.getStatus()));
         task.setDueDate(dto.getDueDate());
         task.setPoints(dto.getPoints());
+        task.setPriority(dto.getPriority());
 
         if (dto.getAssignedTo() != null) {
             User assignedUser = userRepository.findById(dto.getAssignedTo())

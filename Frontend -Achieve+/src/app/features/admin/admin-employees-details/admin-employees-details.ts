@@ -1,18 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService, UserDTO } from '../../../core/services/user.service';
+import { AuthService } from '../../../core/services/auth';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-employees-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-employees-details.html',
   styleUrl: './admin-employees-details.css',
 })
 export class AdminEmployeesDetails {
-  employees: any[] = [];
+  private userService = inject(UserService);
+  private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
-  constructor(private userService: UserService) {}
+  employees: any[] = [];
+  showAddModal = false;
+  newEmployee = {
+      fullName: '',
+      email: '',
+      password: '',
+      role: 'ROLE_EMPLOYEE'
+  };
+
+  constructor() {}
 
   ngOnInit() {
     this.refreshEmployees();
@@ -26,10 +39,11 @@ export class AdminEmployeesDetails {
           name: u.fullName,
           email: u.email,
           role: u.role,
-          joinDate: '2026-01-01', // Default as backend missing field
-          status: 'active', // Default
+          joinDate: u.joinDate || '2026-01-01', 
+          status: u.status || 'active', 
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.fullName}`
         }));
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Failed to load employees', err)
     });
@@ -41,5 +55,25 @@ export class AdminEmployeesDetails {
       case 'inactive': return 'status-inactive';
       default: return '';
     }
+  }
+
+  openAddModal() {
+      this.showAddModal = true;
+      this.newEmployee = { fullName: '', email: '', password: '', role: 'ROLE_EMPLOYEE' };
+  }
+  
+  closeAddModal() {
+      this.showAddModal = false;
+  }
+  
+  saveEmployee() {
+      if(!this.newEmployee.fullName || !this.newEmployee.email || !this.newEmployee.password) return;
+      this.authService.register(this.newEmployee).subscribe({
+          next: () => {
+              this.refreshEmployees();
+              this.closeAddModal();
+          },
+          error: (err) => console.error('Create failed', err)
+      });
   }
 }

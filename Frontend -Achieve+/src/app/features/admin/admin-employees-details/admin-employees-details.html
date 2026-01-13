@@ -15,7 +15,7 @@
   <div class="table-card glass-panel p-0 overflow-hidden">
     <div class="table-header p-3 flex-between">
       <div class="table-title">All Employees</div>
-      <!-- Add Search/Filter if needed -->
+      <button class="btn-primary" (click)="openAddModal()" style="background: var(--primary); border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; color: black; font-weight: bold;">+ Add Employee</button>
     </div>
     <table class="employees-table">
       <thead>
@@ -49,4 +49,22 @@
       </tbody>
     </table>
   </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div class="modal-backdrop" *ngIf="showAddModal" (click)="closeAddModal()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+    <div class="modal-content glass-card" (click)="$event.stopPropagation()" style="width: 400px; padding: 20px; border-radius: 12px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1);">
+        <h3 class="mb-3">Add Employee</h3>
+        <input [(ngModel)]="newEmployee.fullName" placeholder="Full Name" class="form-control glass-input mb-2" style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+        <input [(ngModel)]="newEmployee.email" placeholder="Email" class="form-control glass-input mb-2" style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+        <input [(ngModel)]="newEmployee.password" type="password" placeholder="Password" class="form-control glass-input mb-2" style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+        <select [(ngModel)]="newEmployee.role" class="form-control glass-input mb-3" style="width: 100%; padding: 10px; margin-bottom: 20px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
+            <option value="ROLE_EMPLOYEE">Employee</option>
+            <option value="ROLE_ADMIN">Admin</option>
+        </select>
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <button (click)="closeAddModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Cancel</button>
+            <button (click)="saveEmployee()" style="background: var(--primary); border: none; color: black; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">Save</button>
+        </div>
+    </div>
 </div>

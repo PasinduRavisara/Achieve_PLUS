@@ -60,6 +60,10 @@ export class AuthService {
       );
   }
 
+  register(user: any) {
+    return this.http.post(`${this.apiUrl}/register`, user);
+  }
+
   logout() {
     this._currentUser.set(null);
     localStorage.removeItem('achieve_user');

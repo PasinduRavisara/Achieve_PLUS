@@ -46,6 +46,9 @@ public class Task {
     @Column(name = "due_date")
     private LocalDate dueDate;
     private TaskStatus status;
+    
+    @Column(nullable = false) // Default logic handled in service if needed
+    private String priority; // High, Medium, Low
 
     private Integer points;
 

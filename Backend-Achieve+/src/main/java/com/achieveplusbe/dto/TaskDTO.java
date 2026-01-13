@@ -37,6 +37,7 @@ public class TaskDTO {
     private Long createdBy;
     private String createdByName;
     private String createdAt;
+    private String priority; // Added priority
 
     //for unit testing
     public TaskDTO(long l, String taskTitle, String taskDescription, String pending, int i) {
