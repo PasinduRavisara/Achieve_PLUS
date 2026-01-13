@@ -35,9 +35,21 @@ public class Task {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-//    @Enumerated(EnumType.STRING) // Important!
-//    @Column(nullable = false)
-//    private TaskStatus status = TaskStatus.PENDING;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assigned_id")
+    private User assignedUser;
+
+    @Column(name = "assigned_name")
+    private String assignedName;
+
+    @Column(nullable = false) // Default logic handled in service if needed
+    private String priority; // High, Medium, Low
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TaskStatus status;
+
+    private Integer points;
 
     @ManyToOne
     @JoinColumn(name = "created_by")
@@ -45,16 +57,6 @@ public class Task {
 
     @Column(name = "due_date")
     private LocalDate dueDate;
-    private TaskStatus status;
-    
-    @Column(nullable = false) // Default logic handled in service if needed
-    private String priority; // High, Medium, Low
-
-    private Integer points;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assigned_to")
-    private User assignedUser;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -75,6 +77,19 @@ public class Task {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        syncAssignedName();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+        syncAssignedName();
+    }
+
+    private void syncAssignedName() {
+        if (assignedUser != null) {
+            this.assignedName = assignedUser.getFullName();
+        }
     }
 
     public Long getId() {
