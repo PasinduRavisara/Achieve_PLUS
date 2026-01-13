@@ -1,9 +1,9 @@
 package com.achieveplusbe.service;
 
-import com.achieveplusbe.model.MoodLog;
+
 import com.achieveplusbe.model.User;
 import com.achieveplusbe.model.Task;
-import com.achieveplusbe.repository.MoodLogRepository;
+
 import com.achieveplusbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,24 +14,12 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class WellnessService {
-    private final MoodLogRepository moodLogRepository;
+
     private final UserRepository userRepository;
 
-    @Transactional
-    public void logMood(String email, String mood, String note) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-        MoodLog log = new MoodLog();
-        log.setUser(user);
-        log.setMood(mood);
-        log.setNote(note);
-        moodLogRepository.save(log);
-    }
 
-    @Transactional(readOnly = true)
-    public List<MoodLog> getUserMoodHistory(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
-        return moodLogRepository.findByUserIdOrderByCreatedAtDesc(user.getId());
-    }
+
+
 
     @Transactional(readOnly = true)
     public Map<String, Object> getWorkloadStats(String email) {
