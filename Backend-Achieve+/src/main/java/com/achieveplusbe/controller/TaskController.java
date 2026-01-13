@@ -43,26 +43,26 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getCurrentUserStats());
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/admin/all")
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/admin/user/{userId}")
     public ResponseEntity<List<TaskDTO>> getTasksByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(taskService.getTasksByUser(userId));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping("/admin")
     public ResponseEntity<TaskDTO> createTask(@Valid @RequestBody TaskDTO taskDTO) {
         return new ResponseEntity<>(taskService.createTask(taskDTO), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     @PutMapping("/admin/{id}")
     public ResponseEntity<TaskDTO> updateTask(
             @PathVariable Long id,
@@ -70,14 +70,14 @@ public class TaskController {
         return ResponseEntity.ok(taskService.updateTask(id, taskDTO));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/admin/stats")
     public ResponseEntity<Map<String, Object>> getAdminStats() {
         return ResponseEntity.ok(taskService.getAdminStats());

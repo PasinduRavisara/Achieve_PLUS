@@ -34,26 +34,26 @@ public class RewardController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<RewardDTO> createReward(@Valid @RequestBody RewardDTO rewardDTO) {
         return ResponseEntity.ok(rewardService.createReward(rewardDTO));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<RewardDTO> updateReward(@PathVariable Long id, @Valid @RequestBody RewardDTO rewardDTO) {
         return ResponseEntity.ok(rewardService.updateReward(id, rewardDTO));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<Void> deleteReward(@PathVariable Long id) {
         rewardService.deleteReward(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{id}/purchase")
-    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PreAuthorize("hasAuthority('Employee')")
     public ResponseEntity<Boolean> purchaseReward(@PathVariable Long id, @RequestParam Long userId) {
         return ResponseEntity.ok(rewardService.purchaseReward(userId, id));
     }

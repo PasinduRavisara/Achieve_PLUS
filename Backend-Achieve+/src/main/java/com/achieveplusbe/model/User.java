@@ -23,30 +23,22 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
-    @Builder.Default
-    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks = new ArrayList<>();
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
-    private String password;
-
     @Column(name = "full_name", nullable = false)
     private String fullName;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Task> assignedTasks = new ArrayList<>();
+    @Column(nullable = false)
+    private String password;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -55,6 +47,14 @@ public class User {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "assignedUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Task> assignedTasks = new ArrayList<>();
 
     public User(Long id, String fullName, String email) {
         this.id = id;

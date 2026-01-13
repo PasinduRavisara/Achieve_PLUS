@@ -30,7 +30,7 @@ public class UserService {
 
     public List<UserDTO> getLeaderboardUsers() {
         return userRepository.findAll().stream()
-                .filter(user -> user.getRole() == Role.ROLE_EMPLOYEE)  // Only include employees
+                .filter(user -> user.getRole() == Role.Employee)  // Only include employees
                 .map(this::convertToDTO)
                 .sorted((a, b) -> b.getPoints().compareTo(a.getPoints()))  // Sort by points descending
                 .collect(Collectors.toList());

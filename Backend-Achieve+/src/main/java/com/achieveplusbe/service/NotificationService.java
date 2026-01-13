@@ -30,7 +30,7 @@ public class NotificationService {
     public void notifyAllEmployees(String message, String type, Long relatedId) {
         List<User> users = userRepository.findAll();
         users.stream()
-             .filter(u -> u.getRole() == Role.ROLE_EMPLOYEE)
+             .filter(u -> u.getRole() == Role.Employee)
              .forEach(u -> createNotification(u, message, type, relatedId));
     }
     
@@ -38,7 +38,7 @@ public class NotificationService {
     public void notifyAdmin(String message, String type, Long relatedId) {
         List<User> users = userRepository.findAll();
         users.stream()
-             .filter(u -> u.getRole() == Role.ROLE_ADMIN)
+             .filter(u -> u.getRole() == Role.Admin)
              .forEach(u -> createNotification(u, message, type, relatedId));
     }
 
