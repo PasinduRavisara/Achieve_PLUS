@@ -407,6 +407,11 @@ textarea.glass-input { resize: vertical; min-height: 100px; }
     appearance: none;
     cursor: pointer;
 }
+.select-wrapper select option {
+    background-color: #1e1e2d;
+    color: white;
+    padding: 10px;
+}
 .select-arrow {
     position: absolute;
     right: 1rem;
@@ -461,3 +466,128 @@ textarea.glass-input { resize: vertical; min-height: 100px; }
 .opt-low { color: #00ff88; background: #1e1e2d; }
 .opt-med { color: orange; background: #1e1e2d; }
 .opt-high { color: #ff5555; background: #1e1e2d; }
+
+/* Details Modal Styles */
+.details-body {
+  padding: 0.5rem 0;
+}
+
+.detail-row {
+  margin-bottom: 1.2rem;
+}
+
+.detail-row label, .detail-col label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.points-val {
+  color: #ffc107;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.description-box {
+  background: rgba(0,0,0,0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  line-height: 1.5;
+  color: #e0e0e0;
+  border: 1px solid rgba(255,255,255,0.05);
+  white-space: pre-wrap;
+}
+
+.inline-avatar {
+  width: 24px;
+  height: 24px;
+  font-size: 0.7rem;
+}
+
+.task-row {
+  cursor: pointer;
+}
+
+.col-points {
+  flex: 0.8;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  color: #ffc107;
+}
+
+.error-msg {
+    color: #ff5555;
+    margin-left: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    animation: fadeIn 0.2s;
+}
+/* Delete Modal */
+.delete-modal {
+    max-width: 400px;
+    background: #14141e; /* Solid dark background */
+    border: 1px solid rgba(255, 85, 85, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.text-danger {
+    color: #ff5555 !important;
+}
+
+.modal-body {
+    padding: 1rem 0;
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.btn-delete {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #ff5555 0%, #ff3333 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(255, 85, 85, 0.3);
+}
+
+.btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 85, 85, 0.4);
+}

@@ -25,7 +25,6 @@ public class TaskDTO {
     @NotNull(message = "Status is required")
     private String status;
 
-    @NotNull(message = "Due date is required")
     private LocalDate dueDate;
 
     @NotNull(message = "Points value is required")

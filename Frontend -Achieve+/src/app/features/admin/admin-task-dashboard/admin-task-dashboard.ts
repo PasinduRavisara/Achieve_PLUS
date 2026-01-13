@@ -28,14 +28,61 @@ export class AdminTaskDashboard {
       priority: 'Medium',
       assignedTo: undefined,
       points: 10,
-      status: 'Pending'
+      status: 'PENDING'
+  };
+
+  minDate: string = '';
+  
+  errors = {
+    title: false,
+    dueDate: false,
+    assignedTo: false
   };
 
   constructor(private taskService: TaskService) {}
+  
+  // ...
+
+  saveTask() {
+      // Reset errors
+      this.errors = { title: false, dueDate: false, assignedTo: false };
+      let hasError = false;
+
+      if (!this.newTask.title) { this.errors.title = true; hasError = true; }
+      // Due Date is optional now
+      if (!this.newTask.assignedTo) { this.errors.assignedTo = true; hasError = true; }
+      
+      if (hasError) return;
+      
+      if (this.newTask.points! < 0) {
+          alert('Points must be 0 or greater.');
+          return;
+      }
+      
+      if (this.newTask.dueDate && this.newTask.dueDate < this.minDate) {
+           alert('Due date must be in the future.');
+           return;
+      }
+      
+      const sub = this.editingTaskId 
+          ? this.taskService.updateTask(this.editingTaskId, this.newTask)
+          : this.taskService.createTask(this.newTask);
+          
+      sub.subscribe({
+          next: () => {
+              this.refreshTasks();
+              this.closeTaskModal();
+          },
+          error: (err) => console.error('Save task failed', err)
+      });
+  }
 
   ngOnInit() {
     this.refreshTasks();
     this.loadEmployees();
+    const today = new Date();
+    today.setDate(today.getDate() + 1); // Set to tomorrow
+    this.minDate = today.toISOString().split('T')[0];
   }
   
   loadEmployees() {
@@ -45,16 +92,16 @@ export class AdminTaskDashboard {
   get filteredTasks() {
     if (this.activeTab === 'all') return this.tasks;
     const statusMap: Record<string, string> = {
-      'pending': 'Pending',
-      'inprogress': 'In Progress',
-      'completed': 'Completed'
+      'pending': 'PENDING',
+      'inprogress': 'IN_PROGRESS',
+      'completed': 'COMPLETED'
     };
     return this.tasks.filter(t => t.status === statusMap[this.activeTab] || t.status === this.activeTab);
   }
 
-  get pendingCount() { return this.tasks.filter(t => t.status === 'Pending').length; }
-  get inProgressCount() { return this.tasks.filter(t => t.status === 'In Progress').length; }
-  get completedCount() { return this.tasks.filter(t => t.status === 'Completed').length; }
+  get pendingCount() { return this.tasks.filter(t => t.status === 'PENDING').length; }
+  get inProgressCount() { return this.tasks.filter(t => t.status === 'IN_PROGRESS').length; }
+  get completedCount() { return this.tasks.filter(t => t.status === 'COMPLETED').length; }
 
   setTab(tab: string) {
     this.activeTab = tab;
@@ -72,9 +119,9 @@ export class AdminTaskDashboard {
 
   getStatusClass(status: string): string {
     switch(status) {
-      case 'Pending': return 'status-pending';
-      case 'In Progress': return 'status-inprogress';
-      case 'Completed': return 'status-completed';
+      case 'PENDING': return 'status-pending';
+      case 'IN_PROGRESS': return 'status-inprogress';
+      case 'COMPLETED': return 'status-completed';
       default: return '';
     }
   }
@@ -95,7 +142,7 @@ export class AdminTaskDashboard {
       if (task) {
           this.newTask = { ...task };
       } else {
-          this.newTask = { title: '', description: '', dueDate: '', priority: 'Medium', assignedTo: undefined, points: 10, status: 'Pending' };
+          this.newTask = { title: '', description: '', dueDate: '', priority: 'Medium', assignedTo: undefined, points: 10, status: 'PENDING' };
       }
       this.showTaskModal = true;
   }
@@ -104,26 +151,45 @@ export class AdminTaskDashboard {
       this.showTaskModal = false;
   }
   
-  saveTask() {
-      if(!this.newTask.title || !this.newTask.assignedTo) return;
-      
-      const sub = this.editingTaskId 
-          ? this.taskService.updateTask(this.editingTaskId, this.newTask)
-          : this.taskService.createTask(this.newTask);
-          
-      sub.subscribe({
-          next: () => {
-              this.refreshTasks();
-              this.closeTaskModal();
-          },
-          error: (err) => console.error('Save task failed', err)
-      });
-  }
+
+  
+  // Delete Confirmation
+  showDeleteModal = false;
+  taskToDeleteId: number | null = null;
   
   deleteTask(id: number, event: Event) {
       event.stopPropagation();
-      if(confirm('Delete this task?')) {
-          this.taskService.deleteTask(id).subscribe(() => this.refreshTasks());
+      this.taskToDeleteId = id;
+      this.showDeleteModal = true;
+  }
+  
+  confirmDelete() {
+      if (this.taskToDeleteId) {
+          this.taskService.deleteTask(this.taskToDeleteId).subscribe(() => {
+              this.refreshTasks();
+              this.closeDeleteModal();
+          });
       }
+  }
+  
+  closeDeleteModal() {
+      this.showDeleteModal = false;
+      this.taskToDeleteId = null;
+  }
+
+  // Details Modal
+  showDetailsModal = false;
+  selectedTask: TaskDTO | null = null;
+  selectedTaskIndex: number = -1;
+
+  openDetailsModal(task: TaskDTO, index: number) {
+      this.selectedTask = task;
+      this.selectedTaskIndex = index;
+      this.showDetailsModal = true;
+  }
+
+  closeDetailsModal() {
+      this.showDetailsModal = false;
+      this.selectedTask = null;
   }
 }
