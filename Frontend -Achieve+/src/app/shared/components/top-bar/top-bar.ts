@@ -3,7 +3,9 @@ import { NotificationService } from '../../../core/services/notification.service
 import { Component, inject, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, RouterModule } from '@angular/router';
+
 import { filter } from 'rxjs/operators';
+import { SearchService } from '../../../core/services/search.service';
 
 @Component({
   selector: 'app-top-bar',
@@ -15,6 +17,7 @@ import { filter } from 'rxjs/operators';
 export class TopBar {
   private authService = inject(AuthService);
   private notificationService = inject(NotificationService);
+  private searchService = inject(SearchService);
   private elementRef = inject(ElementRef);
   
   currentRouteName = 'Dashboard';
@@ -29,6 +32,10 @@ export class TopBar {
     });
     // Initial call
     this.updateState(this.router.url);
+  }
+
+  onSearch(event: any) {
+    this.searchService.setSearchQuery(event.target.value);
   }
 
   @HostListener('document:click', ['$event'])

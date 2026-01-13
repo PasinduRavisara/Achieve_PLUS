@@ -9,7 +9,7 @@
   <div class="center-section">
     <div class="search-bar" *ngIf="showSearch">
       <i class="bi bi-search search-icon"></i>
-      <input type="text" placeholder="Search anything..." class="search-input">
+      <input type="text" placeholder="Search anything..." class="search-input" (input)="onSearch($event)">
     </div>
   </div>
 

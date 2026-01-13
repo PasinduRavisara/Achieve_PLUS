@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskService, TaskDTO } from '../../../core/services/task.service';
 import { UserService } from '../../../core/services/user.service';
+import { SearchService } from '../../../core/services/search.service';
 
 @Component({
   selector: 'app-admin-task-dashboard',
@@ -77,26 +78,47 @@ export class AdminTaskDashboard {
       });
   }
 
+  /* Search Logic */
+  private searchService = inject(SearchService);
+  currentSearchQuery = '';
+
   ngOnInit() {
     this.refreshTasks();
     this.loadEmployees();
     const today = new Date();
     today.setDate(today.getDate() + 1); // Set to tomorrow
     this.minDate = today.toISOString().split('T')[0];
+    
+    this.searchService.searchQuery$.subscribe(q => {
+        this.currentSearchQuery = q;
+        this.cdr.detectChanges(); // search comes from outside
+    });
   }
-  
+
   loadEmployees() {
       this.userService.getAllUsers().subscribe(users => this.employees = users);
   }
 
+  // ...
+
   get filteredTasks() {
-    if (this.activeTab === 'all') return this.tasks;
-    const statusMap: Record<string, string> = {
-      'pending': 'PENDING',
-      'inprogress': 'IN_PROGRESS',
-      'completed': 'COMPLETED'
-    };
-    return this.tasks.filter(t => t.status === statusMap[this.activeTab] || t.status === this.activeTab);
+    let tasksToFilter = this.tasks;
+    
+    if (this.activeTab !== 'all') {
+        const statusMap: Record<string, string> = {
+          'pending': 'PENDING',
+          'inprogress': 'IN_PROGRESS',
+          'completed': 'COMPLETED'
+        };
+        tasksToFilter = this.tasks.filter(t => t.status === statusMap[this.activeTab] || t.status === this.activeTab);
+    }
+    
+    if (this.currentSearchQuery) {
+        const q = this.currentSearchQuery.toLowerCase();
+        tasksToFilter = tasksToFilter.filter(t => t.title.toLowerCase().includes(q));
+    }
+    
+    return tasksToFilter;
   }
 
   get pendingCount() { return this.tasks.filter(t => t.status === 'PENDING').length; }
