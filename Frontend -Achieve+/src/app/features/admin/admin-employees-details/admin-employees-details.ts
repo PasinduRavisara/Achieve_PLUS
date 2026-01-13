@@ -52,6 +52,7 @@ export class AdminEmployeesDetails {
           name: u.fullName,
           email: u.email,
           role: u.role,
+          points: u.points || 0,
           joinDate: u.joinDate || '2026-01-01', 
           status: u.status || 'active', 
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.fullName}`

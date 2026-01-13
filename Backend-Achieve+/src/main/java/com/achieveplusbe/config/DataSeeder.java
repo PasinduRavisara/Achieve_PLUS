@@ -29,14 +29,14 @@ public class DataSeeder {
         return args -> {
             if (userRepository.count() == 0) {
                 List<User> users = Arrays.asList(
-                    createUser("pasindu", "pasindu@gmail.com", "password", Role.Admin),
-                    createUser("Ravisara", "ravisara@gmail.com", "password", Role.Employee),
-                    createUser("Sarah Connor", "sarah@achieve.com", "password", Role.Admin),
-                    createUser("Bruce Wayne", "bruce@achieve.com", "password", Role.Admin),
-                    createUser("John Doe", "john@achieve.com", "password", Role.Employee),
-                    createUser("Jane Smith", "jane@achieve.com", "password", Role.Employee),
-                    createUser("Peter Parker", "peter@achieve.com", "password", Role.Employee),
-                    createUser("Clark Kent", "clark@achieve.com", "password", Role.Employee)
+                    createUser("pasindu", "pasindu@gmail.com", "password", Role.Admin, 1250),
+                    createUser("Ravisara", "ravisara@gmail.com", "password", Role.Employee, 980),
+                    createUser("Sarah Connor", "sarah@achieve.com", "password", Role.Admin, 1100),
+                    createUser("Bruce Wayne", "bruce@achieve.com", "password", Role.Admin, 2400),
+                    createUser("John Doe", "john@achieve.com", "password", Role.Employee, 450),
+                    createUser("Jane Smith", "jane@achieve.com", "password", Role.Employee, 670),
+                    createUser("Peter Parker", "peter@achieve.com", "password", Role.Employee, 890),
+                    createUser("Clark Kent", "clark@achieve.com", "password", Role.Employee, 1500)
                 );
 
                 List<User> savedUsers = userRepository.saveAll(users);
@@ -63,12 +63,13 @@ public class DataSeeder {
         System.out.println("Tasks seeded successfully!");
     }
 
-    private User createUser(String fullName, String email, String password, Role role) {
+    private User createUser(String fullName, String email, String password, Role role, Integer points) {
         return User.builder()
                 .fullName(fullName)
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .role(role)
+                .points(points)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

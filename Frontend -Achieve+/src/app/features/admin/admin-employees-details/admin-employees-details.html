@@ -27,6 +27,7 @@
           <th>EMAIL</th>
           <th>ROLE</th>
           <th>JOIN DATE</th>
+          <th>POINTS</th>
           <th>STATUS</th>
         </tr>
       </thead>
@@ -43,6 +44,7 @@
             <span class="role-badge">{{ emp.role }}</span>
           </td>
           <td class="text-muted">{{ emp.joinDate }}</td>
+          <td class="text-warning fw-bold">{{ emp.points | number }} XP</td>
           <td>
             <span class="status-badge" [ngClass]="getStatusClass(emp.status)">
               {{ emp.status }}

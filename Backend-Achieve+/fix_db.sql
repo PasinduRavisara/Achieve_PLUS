@@ -11,8 +11,9 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id BIGINT NOT NULL AUTO_INCREMENT,
     full_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
     role ENUM('Admin', 'Employee') NOT NULL,
+    points INT DEFAULT 0,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     created_at DATETIME(6) NOT NULL,
     updated_at DATETIME(6) NOT NULL,

@@ -4,52 +4,61 @@
     <p class="subtitle">Top performers of the month</p>
   </div>
 
-  <div class="podium-section">
+  <div class="podium-section" *ngIf="topPlayers.length > 0">
     <!-- 2nd Place -->
-    <div class="podium second">
+    <div class="podium second" *ngIf="topPlayers[1]" [style.visibility]="topPlayers[1] ? 'visible' : 'hidden'">
       <div class="avatar-wrapper">
-        <img [src]="topPlayers[1].avatar" alt="2nd Place">
+        <img [src]="topPlayers[1]?.avatar" alt="2nd Place">
         <div class="rank-badge silver">2</div>
       </div>
       <div class="podium-stand glass-panel">
         <div class="player-info">
-          <h3>{{ topPlayers[1].name }}</h3>
-          <p class="points">{{ topPlayers[1].points | number }} XP</p>
+          <h3>{{ topPlayers[1]?.name }}</h3>
+          <p class="points">{{ topPlayers[1]?.points | number }} XP</p>
         </div>
       </div>
     </div>
 
     <!-- 1st Place -->
-    <div class="podium first">
+    <div class="podium first" *ngIf="topPlayers[0]">
       <div class="crown"><i class="bi bi-crown-fill"></i></div>
       <div class="avatar-wrapper">
-        <img [src]="topPlayers[0].avatar" alt="1st Place">
+        <img [src]="topPlayers[0]?.avatar" alt="1st Place">
         <div class="rank-badge gold">1</div>
       </div>
       <div class="podium-stand glass-panel">
         <div class="player-info">
-          <h3>{{ topPlayers[0].name }}</h3>
-          <p class="points">{{ topPlayers[0].points | number }} XP</p>
+          <h3>{{ topPlayers[0]?.name }}</h3>
+          <p class="points">{{ topPlayers[0]?.points | number }} XP</p>
         </div>
       </div>
     </div>
 
     <!-- 3rd Place -->
-    <div class="podium third">
+    <div class="podium third" *ngIf="topPlayers[2]" [style.visibility]="topPlayers[2] ? 'visible' : 'hidden'">
       <div class="avatar-wrapper">
-        <img [src]="topPlayers[2].avatar" alt="3rd Place">
+        <img [src]="topPlayers[2]?.avatar" alt="3rd Place">
         <div class="rank-badge bronze">3</div>
       </div>
       <div class="podium-stand glass-panel">
         <div class="player-info">
-          <h3>{{ topPlayers[2].name }}</h3>
-          <p class="points">{{ topPlayers[2].points | number }} XP</p>
+          <h3>{{ topPlayers[2]?.name }}</h3>
+          <p class="points">{{ topPlayers[2]?.points | number }} XP</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="list-section glass-panel">
+  <!-- Empty State -->
+  <div class="empty-state glass-panel" *ngIf="topPlayers.length === 0">
+      <div class="empty-icon-wrapper">
+          <i class="bi bi-trophy display-1 text-muted"></i>
+      </div>
+      <h2 class="mt-3">No Champions Yet</h2>
+      <p class="text-muted">The leaderboard is waiting for the first trailblazers.</p>
+  </div>
+
+  <div class="list-section glass-panel" *ngIf="topPlayers.length > 0">
     <div class="list-header">
       <span>Rank</span>
       <span>Player</span>
