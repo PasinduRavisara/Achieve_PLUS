@@ -120,46 +120,69 @@
 </div>
 
 <!-- Task Modal -->
-<div class="modal-backdrop" *ngIf="showTaskModal" (click)="closeTaskModal()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-    <div class="modal-content glass-card" (click)="$event.stopPropagation()" style="width: 500px; padding: 25px; border-radius: 12px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1);">
-        <h3 class="mb-4">{{ editingTaskId ? 'Edit' : 'Create' }} Task</h3>
-        
-        <div class="form-group mb-3">
-            <label class="text-muted small mb-1">Title</label>
-            <input [(ngModel)]="newTask.title" placeholder="Title" class="form-control glass-input" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
-        </div>
-
-        <div class="form-group mb-3">
-            <label class="text-muted small mb-1">Description</label>
-            <textarea [(ngModel)]="newTask.description" placeholder="Description" rows="3" class="form-control glass-input" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;"></textarea>
-        </div>
-
-        <div class="row" style="display: flex; gap: 15px; margin-bottom: 15px;">
-            <div class="col-6" style="flex: 1;">
-                 <label class="text-muted small mb-1">Due Date</label>
-                 <input type="datetime-local" [(ngModel)]="newTask.dueDate" class="form-control glass-input" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px; color-scheme: dark;">
-            </div>
-            <div class="col-6" style="flex: 1;">
-                 <label class="text-muted small mb-1">Priority</label>
-                 <select [(ngModel)]="newTask.priority" class="form-control glass-input" style="width: 100%; padding: 10px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
-                     <option value="Low">Low</option>
-                     <option value="Medium">Medium</option>
-                     <option value="High">High</option>
-                 </select>
-            </div>
-        </div>
-
-        <div class="form-group mb-4">
-             <label class="text-muted small mb-1">Assign To</label>
-             <select [(ngModel)]="newTask.assignedTo" class="form-control glass-input" style="width: 100%; padding: 10px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
-                 <option [ngValue]="undefined" disabled>Select Employee</option>
-                 <option *ngFor="let emp of employees" [ngValue]="emp.id">{{ emp.fullName }} ({{ emp.role }})</option>
-             </select>
+<div class="modal-backdrop" *ngIf="showTaskModal" (click)="closeTaskModal()">
+    <div class="modal-content glass-card premium-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3 class="modal-title">{{ editingTaskId ? 'Edit' : 'Create' }} Task</h3>
+            <button class="btn-close" (click)="closeTaskModal()"><i class="bi bi-x"></i></button>
         </div>
         
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
-            <button (click)="closeTaskModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 10px 20px; border-radius: 6px; cursor: pointer;">Cancel</button>
-            <button (click)="saveTask()" style="background: var(--primary); border: none; color: black; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold;">{{ editingTaskId ? 'Update' : 'Create' }}</button>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label class="form-label">Task Title</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-type input-icon"></i>
+                    <input [(ngModel)]="newTask.title" placeholder="e.g. Update Landing Page" class="form-control glass-input">
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label">Description</label>
+                <div class="input-wrapper">
+                    <i class="bi bi-text-paragraph input-icon textarea-icon"></i>
+                    <textarea [(ngModel)]="newTask.description" placeholder="Describe the task details..." rows="4" class="form-control glass-input"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                 <label class="form-label">Due Date</label>
+                 <div class="input-wrapper">
+                    <input type="datetime-local" [(ngModel)]="newTask.dueDate" class="form-control glass-input date-input">
+                 </div>
+            </div>
+            
+            <div class="form-group">
+                 <label class="form-label">Priority</label>
+                 <div class="input-wrapper select-wrapper">
+                     <i class="bi bi-flag input-icon"></i>
+                     <select [(ngModel)]="newTask.priority" class="form-control glass-input">
+                         <option value="Low" class="opt-low">Low</option>
+                         <option value="Medium" class="opt-med">Medium</option>
+                         <option value="High" class="opt-high">High</option>
+                     </select>
+                     <i class="bi bi-chevron-down select-arrow"></i>
+                 </div>
+            </div>
+
+            <div class="form-group full-width">
+                 <label class="form-label">Assign To</label>
+                 <div class="input-wrapper select-wrapper">
+                     <i class="bi bi-person input-icon"></i>
+                     <select [(ngModel)]="newTask.assignedTo" class="form-control glass-input">
+                         <option [ngValue]="undefined" disabled>Select Employee</option>
+                         <option *ngFor="let emp of employees" [ngValue]="emp.id">{{ emp.fullName }} ({{ emp.role | titlecase }})</option>
+                     </select>
+                     <i class="bi bi-chevron-down select-arrow"></i>
+                 </div>
+            </div>
+        </div>
+        
+        <div class="modal-actions">
+            <button class="btn-cancel" (click)="closeTaskModal()">Cancel</button>
+            <button class="btn-save" (click)="saveTask()">
+                <i class="bi" [class.bi-plus-lg]="!editingTaskId" [class.bi-check-lg]="editingTaskId"></i>
+                {{ editingTaskId ? 'Update Task' : 'Create Task' }}
+            </button>
         </div>
     </div>
 </div>
