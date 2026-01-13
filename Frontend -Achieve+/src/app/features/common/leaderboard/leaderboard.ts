@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../core/services/user.service';
 
@@ -21,7 +21,7 @@ export class Leaderboard {
   topPlayers: LeaderboardEntry[] = [];
   otherPlayers: LeaderboardEntry[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.refreshLeaderboard();
@@ -43,6 +43,7 @@ export class Leaderboard {
 
         this.topPlayers = entries.slice(0, 3);
         this.otherPlayers = entries.slice(3);
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Failed to load leaderboard', err)
     });

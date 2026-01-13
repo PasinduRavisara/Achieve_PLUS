@@ -54,9 +54,12 @@ public class DataSeeder {
         List<Task> tasks = Arrays.asList(
             createTask("Complete Project Proposal", "Draft and submit the Q4 project proposal.", "High", Task.TaskStatus.IN_PROGRESS, 50, admin, employee, LocalDate.now().plusDays(2)),
             createTask("Review Code PRs", "Review pending pull requests for the backend service.", "Medium", Task.TaskStatus.PENDING, 30, admin, employee, LocalDate.now().plusDays(1)),
-            createTask("Update Documentation", "Update the API documentation with recent changes.", "Low", Task.TaskStatus.COMPLETED, 20, admin, employee, LocalDate.now().minusDays(1)),
+            createTask("Update Documentation", "Update the API documentation with recent changes.", "Low", Task.TaskStatus.COMPLETED, 85, admin, employee, LocalDate.now().minusDays(1)),
             createTask("Client Meeting Prep", "Prepare slides for the upcoming client meeting.", "High", Task.TaskStatus.PENDING, 40, admin, admin, LocalDate.now().plusDays(3)),
-            createTask("Fix Login Bug", "Investigate and fix the reported login issue on mobile.", "High", Task.TaskStatus.IN_PROGRESS, 60, admin, employee, LocalDate.now().plusDays(5))
+            createTask("Fix Login Bug", "Investigate and fix the reported login issue on mobile.", "High", Task.TaskStatus.IN_PROGRESS, 60, admin, employee, LocalDate.now().plusDays(5)),
+            createTask("Design System Update", "Refine the color palette.", "Medium", Task.TaskStatus.COMPLETED, 120, admin, users.get(5), LocalDate.now().minusDays(2)), // Jane
+            createTask("Backend Optimization", "Improve database query performance.", "High", Task.TaskStatus.COMPLETED, 200, admin, users.get(4), LocalDate.now().minusDays(3)), // John
+            createTask("Mobile App MVP", "Release the beta version.", "Critical", Task.TaskStatus.COMPLETED, 350, admin, users.get(7), LocalDate.now().minusDays(5)) // Clark
         );
 
         taskRepository.saveAll(tasks);

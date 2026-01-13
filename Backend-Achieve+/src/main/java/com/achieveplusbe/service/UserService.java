@@ -99,8 +99,8 @@ public class UserService {
     }
 
     private UserDTO convertToDTO(User user) {
-        // Calculate total points from completed tasks
-        int totalPoints = user.getAssignedTasks().stream()
+        // Calculate total points from completed tasks AND base points
+        int totalPoints = user.getPoints() + user.getAssignedTasks().stream()
                 .filter(task -> task.getStatus() == Task.TaskStatus.COMPLETED)
                 .mapToInt(Task::getPoints)
                 .sum();
