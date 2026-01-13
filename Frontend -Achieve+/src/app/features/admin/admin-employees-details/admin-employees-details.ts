@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService, UserDTO } from '../../../core/services/user.service';
 import { AuthService } from '../../../core/services/auth';
 import { FormsModule } from '@angular/forms';
+import { SearchService } from '../../../core/services/search.service';
 
 @Component({
   selector: 'app-admin-employees-details',
@@ -25,10 +26,22 @@ export class AdminEmployeesDetails {
       role: 'ROLE_EMPLOYEE'
   };
 
+  /* Search Logic */
+  currentSearchQuery = '';
+
   constructor() {}
 
   ngOnInit() {
     this.refreshEmployees();
+  }
+
+  get filteredEmployees() {
+      if (!this.currentSearchQuery) return this.employees;
+      const q = this.currentSearchQuery.toLowerCase();
+      return this.employees.filter(e => 
+          e.name.toLowerCase().includes(q) || 
+          e.email.toLowerCase().includes(q)
+      );
   }
 
   refreshEmployees() {

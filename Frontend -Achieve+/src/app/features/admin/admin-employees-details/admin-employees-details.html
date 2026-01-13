@@ -1,13 +1,16 @@
 <div class="employees-container">
   <!-- Banner Header -->
-  <div class="header-banner glass-panel mb-4">
-    <div class="header-content">
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <div>
       <h1>Employee Management</h1>
       <p class="subtitle">View team members</p>
     </div>
-    <div class="header-illustration">
-       <!-- Placeholder for illustration or decorative icon -->
-       <i class="bi bi-people-fill illustration-icon"></i>
+    
+    <!-- Local Search -->
+    <div class="local-search-container">
+       <i class="bi bi-search search-icon"></i>
+       <input type="text" placeholder="Search employees..." [(ngModel)]="currentSearchQuery" class="local-search-input">
     </div>
   </div>
 
@@ -28,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let emp of employees">
+        <tr *ngFor="let emp of filteredEmployees">
           <td>
             <div class="employee-cell">
               <!-- <img [src]="emp.avatar" class="avatar"> --><!-- Screenshot didn't clearly show avatar in table, but it's good UX. Screenshot showed just text 'Ravisara' in first col. I will keep avatar for better aesthetic. -->

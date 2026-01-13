@@ -70,8 +70,7 @@ export class TopBar {
     else this.currentRouteName = 'Dashboard';
 
     // Update Search Visibility
-    // Search visible only in: tasks, store, employees
-    this.showSearch = url.includes('tasks') || url.includes('store') || url.includes('employees');
+    this.showSearch = false; 
   }
 
   get notifications() {

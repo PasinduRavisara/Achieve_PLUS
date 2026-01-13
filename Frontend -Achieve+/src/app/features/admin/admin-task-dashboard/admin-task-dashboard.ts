@@ -79,7 +79,6 @@ export class AdminTaskDashboard {
   }
 
   /* Search Logic */
-  private searchService = inject(SearchService);
   currentSearchQuery = '';
 
   ngOnInit() {
@@ -88,11 +87,6 @@ export class AdminTaskDashboard {
     const today = new Date();
     today.setDate(today.getDate() + 1); // Set to tomorrow
     this.minDate = today.toISOString().split('T')[0];
-    
-    this.searchService.searchQuery$.subscribe(q => {
-        this.currentSearchQuery = q;
-        this.cdr.detectChanges(); // search comes from outside
-    });
   }
 
   loadEmployees() {

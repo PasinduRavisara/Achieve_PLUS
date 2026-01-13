@@ -5,7 +5,11 @@
       <h1>Task Management</h1>
       <p class="subtitle">Manage and monitor task progress</p>
     </div>
-    <!-- Search is in top-bar -->
+    <!-- Local Search -->
+    <div class="local-search-container">
+       <i class="bi bi-search search-icon"></i>
+       <input type="text" placeholder="Search tasks..." [(ngModel)]="currentSearchQuery" class="local-search-input">
+    </div>
   </div>
 
   <!-- Stats Grid -->

@@ -7,26 +7,18 @@
 }
 
 /* Header Banner */
-.header-banner {
+/* Header */
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 2.5rem;
-  background: white; /* Screenshot shows white/light bg for banner */
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-  /* Dark mode override for our theme */
-  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-  border: 1px solid rgba(255,255,255,0.05);
 }
 
-.header-content h1 {
+.page-header h1 {
   font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #0d6efd; /* Blue title as in screenshot */
-  background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+  margin-bottom: 0.2rem;
+  background: linear-gradient(90deg, #0d6efd, #0dcaf0); /* Keep blue theme for employees */
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -34,13 +26,40 @@
 
 .subtitle {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
-.header-illustration {
-  font-size: 5rem;
-  color: rgba(13, 110, 253, 0.2);
-  transform: rotate(-10deg);
+/* Local Search */
+.local-search-container {
+    position: relative;
+    width: 300px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.local-search-input {
+    width: 100%;
+    background: rgba(30, 30, 45, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 0.6rem 1rem 0.6rem 2.5rem;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.local-search-input:focus {
+    outline: none;
+    background: rgba(40, 40, 60, 0.8);
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.1);
 }
 
 /* Table Card */
