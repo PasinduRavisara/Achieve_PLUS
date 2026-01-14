@@ -27,12 +27,21 @@ public class DataSeeder {
     @Bean
     public CommandLineRunner initData() {
         return args -> {
+            // Always ensure Admins have 0 points (Fix for existing data)
+            userRepository.findAll().stream()
+                .filter(u -> u.getRole() == Role.Admin && u.getPoints() > 0)
+                .forEach(u -> {
+                    u.setPoints(0);
+                    userRepository.save(u);
+                    System.out.println("Reset points for Admin: " + u.getFullName());
+                });
+
             if (userRepository.count() == 0) {
                 List<User> users = Arrays.asList(
-                    createUser("pasindu", "pasindu@gmail.com", "password", Role.Admin, 1250),
+                    createUser("pasindu", "pasindu@gmail.com", "password", Role.Admin, 0),
                     createUser("Ravisara", "ravisara@gmail.com", "password", Role.Employee, 980),
-                    createUser("Sarah Connor", "sarah@achieve.com", "password", Role.Admin, 1100),
-                    createUser("Bruce Wayne", "bruce@achieve.com", "password", Role.Admin, 2400),
+                    createUser("Sarah Connor", "sarah@achieve.com", "password", Role.Admin, 0),
+                    createUser("Bruce Wayne", "bruce@achieve.com", "password", Role.Admin, 0),
                     createUser("John Doe", "john@achieve.com", "password", Role.Employee, 450),
                     createUser("Jane Smith", "jane@achieve.com", "password", Role.Employee, 670),
                     createUser("Peter Parker", "peter@achieve.com", "password", Role.Employee, 890),

@@ -106,11 +106,15 @@ public class UserService {
     }
 
     private UserDTO convertToDTO(User user) {
-        // Calculate total points from completed tasks AND base points
-        int totalPoints = user.getPoints() + user.getAssignedTasks().stream()
+        int totalPoints = 0;
+        
+        // Admins don't get points
+        if (user.getRole() != Role.Admin) {
+            totalPoints = user.getPoints() + user.getAssignedTasks().stream()
                 .filter(task -> task.getStatus() == Task.TaskStatus.COMPLETED)
                 .mapToInt(Task::getPoints)
                 .sum();
+        }
 
         return UserDTO.builder()
                 .id(user.getId())
