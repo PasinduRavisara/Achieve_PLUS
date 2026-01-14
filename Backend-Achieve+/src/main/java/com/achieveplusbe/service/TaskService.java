@@ -145,8 +145,20 @@ public class TaskService {
             throw new UnauthorizedException("You are not authorized to update this task");
         }
 
+        Task.TaskStatus oldStatus = task.getStatus();
         Task.TaskStatus newStatus = Task.TaskStatus.valueOf(status);
         task.setStatus(newStatus);
+        
+        // Log for Trends
+        if (newStatus == Task.TaskStatus.IN_PROGRESS && oldStatus != Task.TaskStatus.IN_PROGRESS) {
+            systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("TASK_STARTED").entityType("TASK").build());
+        } else if (oldStatus == Task.TaskStatus.IN_PROGRESS && newStatus != Task.TaskStatus.IN_PROGRESS) {
+             systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("TASK_STOPPED").entityType("TASK").build());
+        }
+
+        if (newStatus == Task.TaskStatus.COMPLETED && oldStatus != Task.TaskStatus.COMPLETED) {
+             systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("POINTS_EARNED").entityType("POINTS").build());
+        }
         
         // Notify Admin (Creator) if completed
         if (newStatus == Task.TaskStatus.COMPLETED && task.getCreatedBy() != null) {
@@ -174,6 +186,13 @@ public class TaskService {
     public void deleteTask(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+
+        if (task.getStatus() == Task.TaskStatus.IN_PROGRESS) {
+             systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("TASK_STOPPED").entityType("TASK").build());
+        }
+        if (task.getStatus() == Task.TaskStatus.COMPLETED) {
+             systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("POINTS_LOST").entityType("POINTS").build());
+        }
 
         taskRepository.delete(task);
         
@@ -275,23 +294,21 @@ public class TaskService {
         String usersTrend = calculateStreakTrend(userCreates, userDeletes, "New", "Removed");
 
 
-        // 3. In Progress Trend (Active in last 10 mins)
-        long recentInProgress = allTasks.stream()
-             .filter(t -> t.getStatus() == Task.TaskStatus.IN_PROGRESS && t.getUpdatedAt() != null && t.getUpdatedAt().isAfter(tenMinutesAgo))
-             .count();
-        String inProgressTrend = (recentInProgress > 0) ? "+" + recentInProgress + " Active" : null;
+        // 3. In Progress Trend
+        List<LocalDateTime> progressStarts = systemLogRepository.findByActionAndTimestampAfter("TASK_STARTED", tenMinutesAgo)
+             .stream().map(com.achieveplusbe.model.SystemLog::getTimestamp).collect(Collectors.toList());
+        List<LocalDateTime> progressStops = systemLogRepository.findByActionAndTimestampAfter("TASK_STOPPED", tenMinutesAgo)
+             .stream().map(com.achieveplusbe.model.SystemLog::getTimestamp).collect(Collectors.toList());
+             
+        String inProgressTrend = calculateStreakTrend(progressStarts, progressStops, "Active", "Inactive");
 
-        // 4. Points Trend (Gained in last 10 mins)
-        int recentTaskPoints = allTasks.stream()
-            .filter(t -> t.getStatus() == Task.TaskStatus.COMPLETED && t.getUpdatedAt() != null && t.getUpdatedAt().isAfter(tenMinutesAgo))
-            .mapToInt(Task::getPoints)
-            .sum();
-         int recentBasePoints = userRepository.findAll().stream()
-            .filter(u -> u.getCreatedAt() != null && u.getCreatedAt().isAfter(tenMinutesAgo))
-            .mapToInt(User::getPoints)
-            .sum();
-         int recentPoints = recentTaskPoints + recentBasePoints;
-         String pointsTrend = (recentPoints > 0) ? "+" + recentPoints + " This Month" : null;
+        // 4. Points Trend
+        List<LocalDateTime> pointsGained = systemLogRepository.findByActionAndTimestampAfter("POINTS_EARNED", tenMinutesAgo)
+            .stream().map(com.achieveplusbe.model.SystemLog::getTimestamp).collect(Collectors.toList());
+        List<LocalDateTime> pointsLost = systemLogRepository.findByActionAndTimestampAfter("POINTS_LOST", tenMinutesAgo)
+            .stream().map(com.achieveplusbe.model.SystemLog::getTimestamp).collect(Collectors.toList());
+            
+        String pointsTrend = calculateStreakTrend(pointsGained, pointsLost, "This Month", "Lost");
 
         return Map.of(
             "totalTasks", (long) allTasks.size(),

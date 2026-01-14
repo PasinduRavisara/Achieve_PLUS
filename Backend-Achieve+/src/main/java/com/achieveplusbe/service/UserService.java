@@ -96,6 +96,17 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
+        // Log Points Lost for Trends
+        // Calculate total points including tasks to see if we should log a loss
+        int totalPoints = user.getPoints() + user.getAssignedTasks().stream()
+                .filter(task -> task.getStatus() == Task.TaskStatus.COMPLETED)
+                .mapToInt(Task::getPoints)
+                .sum();
+                
+        if (totalPoints > 0) {
+             systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("POINTS_LOST").entityType("POINTS").build());
+        }
+
         userRepository.delete(user);
         
         com.achieveplusbe.model.SystemLog log = com.achieveplusbe.model.SystemLog.builder()
