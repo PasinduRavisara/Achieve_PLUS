@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("null")
 public class UserService {
 
+    private final com.achieveplusbe.repository.SystemLogRepository systemLogRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -96,6 +97,12 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
         userRepository.delete(user);
+        
+        com.achieveplusbe.model.SystemLog log = com.achieveplusbe.model.SystemLog.builder()
+                .action("USER_DELETED")
+                .entityType("USER")
+                .build();
+        systemLogRepository.save(log);
     }
 
     private UserDTO convertToDTO(User user) {

@@ -20,10 +20,10 @@ export class AdminDashboard {
   today = new Date();
   
   stats = [
-    { label: 'Total Tasks', value: 0, trend: '', icon: 'bi-list-task', color: 'blue' },
-    { label: 'Team Members', value: 0, trend: '', icon: 'bi-people-fill', color: 'green' },
-    { label: 'In Progress', value: 0, trend: '', icon: 'bi-arrow-repeat', color: 'cyan' },
-    { label: 'Points Earned', value: 0, trend: '', icon: 'bi-check-circle-fill', color: 'yellow' }
+    { label: 'Total Tasks', value: 0, trend: '+10%', icon: 'bi-list-task', color: 'blue' },
+    { label: 'Team Members', value: 0, trend: '+2 New', icon: 'bi-people-fill', color: 'green' },
+    { label: 'In Progress', value: 0, trend: '+5%', icon: 'bi-arrow-repeat', color: 'cyan' },
+    { label: 'Points Earned', value: 0, trend: '+15%', icon: 'bi-check-circle-fill', color: 'yellow' }
   ];
 
   taskOverview = {
@@ -63,9 +63,16 @@ export class AdminDashboard {
            this.taskOverview.pending = data.pendingTasks || 0; 
 
            this.stats[0].value = this.taskOverview.total; 
+           this.stats[0].trend = data.tasksTrend || '';
+
            this.stats[1].value = data.totalUsers || 0; 
+           this.stats[1].trend = data.usersTrend || '';
+
            this.stats[2].value = this.taskOverview.inProgress; 
+           this.stats[2].trend = data.inProgressTrend || '';
+
            this.stats[3].value = data.totalPoints || 0; 
+           this.stats[3].trend = data.pointsTrend || '';
            this.stats[3].label = 'Points Earned'; 
            this.cdr.markForCheck();
         }

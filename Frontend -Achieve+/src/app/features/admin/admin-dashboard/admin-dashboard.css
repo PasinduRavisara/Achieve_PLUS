@@ -96,11 +96,20 @@
 }
 
 .stat-trend {
-  background: rgba(0, 255, 136, 0.1);
-  color: #00ff88;
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.trend-up {
+  background: rgba(0, 255, 136, 0.1);
+  color: #00ff88;
+}
+
+.trend-down {
+  background: rgba(255, 85, 85, 0.1);
+  color: #ff5555;
 }
 
 .stat-icon-circle {

@@ -13,7 +13,12 @@
     <div class="stat-info">
       <span class="stat-label">{{ stat.label }}</span>
       <h2 class="stat-value">{{ stat.value }}</h2>
-      <span class="stat-trend badge">{{ stat.trend }}</span>
+      <span class="stat-trend badge" 
+            *ngIf="stat.trend"
+            [class.trend-up]="stat.trend.includes('+')"
+            [class.trend-down]="stat.trend.includes('-')">
+        {{ stat.trend }}
+      </span>
     </div>
     <div class="stat-icon-circle">
       <i [class]="'bi ' + stat.icon"></i>

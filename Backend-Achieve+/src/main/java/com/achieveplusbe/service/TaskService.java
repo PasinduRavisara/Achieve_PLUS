@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("null")
 public class TaskService {
 
+    private final com.achieveplusbe.repository.SystemLogRepository systemLogRepository;
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final AchievementService achievementService;
@@ -53,6 +55,8 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
+
+    
     public List<TaskDTO> getCurrentUserTasks() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email)
@@ -92,7 +96,6 @@ public class TaskService {
         return convertToDTO(savedTask);
     }
 
-
     @Transactional
     public TaskDTO updateTask(Long id, TaskDTO taskDTO) {
         Task task = taskRepository.findById(id)
@@ -127,7 +130,7 @@ public class TaskService {
         Task updatedTask = taskRepository.save(task);
         return convertToDTO(updatedTask);
     }
-// ...
+
     @Transactional
     public TaskDTO updateTaskStatus(Long id, String status) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -173,9 +176,16 @@ public class TaskService {
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
 
         taskRepository.delete(task);
+        
+        com.achieveplusbe.model.SystemLog log = com.achieveplusbe.model.SystemLog.builder()
+                .action("TASK_DELETED")
+                .entityType("TASK")
+                .build();
+        systemLogRepository.save(log);
     }
 
     private TaskDTO convertToDTO(Task task) {
+        // ... (lines 179-223 omitted, keeping existing methods)
         TaskDTO dto = new TaskDTO();
         dto.setId(task.getId());
         dto.setTitle(task.getTitle());
@@ -198,23 +208,23 @@ public class TaskService {
 
         return dto;
     }
-
+    
     private Task convertToEntity(TaskDTO dto) {
-        Task task = new Task();
-        task.setTitle(dto.getTitle());
-        task.setDescription(dto.getDescription());
-        task.setStatus(Task.TaskStatus.valueOf(dto.getStatus()));
-        task.setDueDate(dto.getDueDate());
-        task.setPoints(dto.getPoints());
-        task.setPriority(dto.getPriority());
-
-        if (dto.getAssignedTo() != null) {
-            User assignedUser = userRepository.findById(dto.getAssignedTo())
-                    .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + dto.getAssignedTo()));
-            task.setAssignedUser(assignedUser);
-        }
-
-        return task;
+         Task task = new Task();
+         task.setTitle(dto.getTitle());
+         task.setDescription(dto.getDescription());
+         task.setStatus(Task.TaskStatus.valueOf(dto.getStatus()));
+         task.setDueDate(dto.getDueDate());
+         task.setPoints(dto.getPoints());
+         task.setPriority(dto.getPriority());
+ 
+         if (dto.getAssignedTo() != null) {
+             User assignedUser = userRepository.findById(dto.getAssignedTo())
+                     .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + dto.getAssignedTo()));
+             task.setAssignedUser(assignedUser);
+         }
+ 
+         return task;
     }
 
     public Map<String, Object> getCurrentUserStats() {
@@ -229,10 +239,59 @@ public class TaskService {
         long inProgress = allTasks.stream().filter(t -> t.getStatus() == Task.TaskStatus.IN_PROGRESS).count();
         long completed = allTasks.stream().filter(t -> t.getStatus() == Task.TaskStatus.COMPLETED).count();
 
-        int totalPoints = allTasks.stream()
+        int totalTaskPoints = allTasks.stream()
                 .filter(t -> t.getStatus() == Task.TaskStatus.COMPLETED)
                 .mapToInt(Task::getPoints)
                 .sum();
+
+        int totalBasePoints = userRepository.findAll().stream()
+                .mapToInt(User::getPoints)
+                .sum();
+
+        int totalPoints = totalTaskPoints + totalBasePoints;
+
+        // Trends visibility Rule: Only show activity from last 10 minutes
+        LocalDateTime tenMinutesAgo = LocalDateTime.now().minusMinutes(10);
+
+        // 1. Tasks Trend
+        List<LocalDateTime> taskCreates = allTasks.stream()
+                .filter(t -> t.getCreatedAt() != null && t.getCreatedAt().isAfter(tenMinutesAgo))
+                .map(Task::getCreatedAt)
+                .collect(Collectors.toList());
+        List<LocalDateTime> taskDeletes = systemLogRepository.findByActionAndTimestampAfter("TASK_DELETED", tenMinutesAgo)
+                .stream().map(com.achieveplusbe.model.SystemLog::getTimestamp).collect(Collectors.toList());
+
+        String tasksTrend = calculateStreakTrend(taskCreates, taskDeletes, "New", "Removed");
+
+
+        // 2. Users Trend
+        List<LocalDateTime> userCreates = userRepository.findAll().stream()
+                .filter(u -> u.getCreatedAt() != null && u.getCreatedAt().isAfter(tenMinutesAgo))
+                .map(User::getCreatedAt)
+                .collect(Collectors.toList());
+        List<LocalDateTime> userDeletes = systemLogRepository.findByActionAndTimestampAfter("USER_DELETED", tenMinutesAgo)
+                .stream().map(com.achieveplusbe.model.SystemLog::getTimestamp).collect(Collectors.toList());
+
+        String usersTrend = calculateStreakTrend(userCreates, userDeletes, "New", "Removed");
+
+
+        // 3. In Progress Trend (Active in last 10 mins)
+        long recentInProgress = allTasks.stream()
+             .filter(t -> t.getStatus() == Task.TaskStatus.IN_PROGRESS && t.getUpdatedAt() != null && t.getUpdatedAt().isAfter(tenMinutesAgo))
+             .count();
+        String inProgressTrend = (recentInProgress > 0) ? "+" + recentInProgress + " Active" : null;
+
+        // 4. Points Trend (Gained in last 10 mins)
+        int recentTaskPoints = allTasks.stream()
+            .filter(t -> t.getStatus() == Task.TaskStatus.COMPLETED && t.getUpdatedAt() != null && t.getUpdatedAt().isAfter(tenMinutesAgo))
+            .mapToInt(Task::getPoints)
+            .sum();
+         int recentBasePoints = userRepository.findAll().stream()
+            .filter(u -> u.getCreatedAt() != null && u.getCreatedAt().isAfter(tenMinutesAgo))
+            .mapToInt(User::getPoints)
+            .sum();
+         int recentPoints = recentTaskPoints + recentBasePoints;
+         String pointsTrend = (recentPoints > 0) ? "+" + recentPoints + " This Month" : null;
 
         return Map.of(
             "totalTasks", (long) allTasks.size(),
@@ -240,8 +299,52 @@ public class TaskService {
             "inProgressTasks", inProgress,
             "completedTasks", completed,
             "totalPoints", totalPoints,
-            "totalUsers", totalUsers
+            "totalUsers", totalUsers,
+            "tasksTrend", tasksTrend != null ? tasksTrend : "",
+            "usersTrend", usersTrend != null ? usersTrend : "",
+            "inProgressTrend", inProgressTrend != null ? inProgressTrend : "",
+            "pointsTrend", pointsTrend != null ? pointsTrend : ""
         );
+    }
+
+    private String calculateStreakTrend(List<LocalDateTime> creates, List<LocalDateTime> deletes, String createLabel, String deleteLabel) {
+        if (creates.isEmpty() && deletes.isEmpty()) {
+            return null;
+        }
+
+        // Combine events
+        List<TrendEvent> events = new java.util.ArrayList<>();
+        creates.forEach(t -> events.add(new TrendEvent(t, "CREATE")));
+        deletes.forEach(t -> events.add(new TrendEvent(t, "DELETE")));
+
+        // Sort descending
+        events.sort((a, b) -> b.timestamp.compareTo(a.timestamp));
+
+        if (events.isEmpty()) return null;
+
+        // Determine streak
+        String currentMode = events.get(0).type; // "CREATE" or "DELETE"
+        long count = 0;
+
+        for (TrendEvent event : events) {
+            if (event.type.equals(currentMode)) {
+                count++;
+            } else {
+                break; // Streak broken
+            }
+        }
+
+        if (currentMode.equals("CREATE")) {
+            return "+" + count + " " + createLabel;
+        } else {
+            return "-" + count + " " + deleteLabel;
+        }
+    }
+
+    @lombok.AllArgsConstructor
+    private static class TrendEvent {
+        LocalDateTime timestamp;
+        String type;
     }
 }
 
