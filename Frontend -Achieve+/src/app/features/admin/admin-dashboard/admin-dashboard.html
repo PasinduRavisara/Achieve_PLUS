@@ -9,18 +9,20 @@
 
 <!-- Stats Row -->
 <div class="stats-grid mb-4">
-  <div class="glass-card stat-card" *ngFor="let stat of stats">
-    <div class="stat-info">
+  <div class="stat-card glass-card" [ngClass]="stat.color" *ngFor="let stat of stats">
+    <div class="stat-header">
       <span class="stat-label">{{ stat.label }}</span>
-      <h2 class="stat-value">{{ stat.value }}</h2>
-      <span class="stat-trend badge" 
+      <span class="stat-trend badge"
             *ngIf="stat.trend"
             [class.trend-up]="stat.trend.includes('+')"
             [class.trend-down]="stat.trend.includes('-')">
         {{ stat.trend }}
       </span>
     </div>
-    <div class="stat-icon-circle">
+
+    <h2 class="stat-value">{{ stat.value }}</h2>
+
+    <div class="stat-icon-bg">
       <i [class]="'bi ' + stat.icon"></i>
     </div>
   </div>

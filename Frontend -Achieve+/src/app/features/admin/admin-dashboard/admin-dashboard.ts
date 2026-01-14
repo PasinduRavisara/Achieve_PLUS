@@ -20,9 +20,9 @@ export class AdminDashboard {
   today = new Date();
   
   stats = [
-    { label: 'Total Tasks', value: 0, trend: '+10%', icon: 'bi-list-task', color: 'blue' },
+    { label: 'Total Tasks', value: 0, trend: '+10%', icon: 'bi-list-task', color: 'primary' },
     { label: 'Team Members', value: 0, trend: '+2 New', icon: 'bi-people-fill', color: 'green' },
-    { label: 'In Progress', value: 0, trend: '+5%', icon: 'bi-arrow-repeat', color: 'cyan' },
+    { label: 'In Progress', value: 0, trend: '+5%', icon: 'bi-arrow-repeat', color: 'secondary' },
     { label: 'Points Earned', value: 0, trend: '+15%', icon: 'bi-check-circle-fill', color: 'yellow' }
   ];
 
