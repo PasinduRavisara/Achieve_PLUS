@@ -7,8 +7,9 @@ DROP TABLE IF EXISTS mood_logs;
 
 DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS reward;
 
--- 3. Recreate users table (Order: id, full_name, email, role, password, created_at, updated_at)
+-- 3. Recreate users table (Order: id, full_name, role, points, email, password, created_at, updated_at)
 CREATE TABLE users (
     id BIGINT NOT NULL AUTO_INCREMENT,
     full_name VARCHAR(255) NOT NULL,
@@ -43,5 +44,18 @@ CREATE TABLE task (
     CONSTRAINT FK_Task_CreatedBy FOREIGN KEY (created_by) REFERENCES users (id)
 ) ENGINE=InnoDB;
 
--- 5. Re-enable Foreign Key Checks
+-- 5. Recreate reward table (Order: id, name, description, points_cost, quantity, image_url, created_at, updated_at)
+CREATE TABLE reward (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    points_cost INT NOT NULL,
+    quantity INT NOT NULL,
+    image_url VARCHAR(255) NOT NULL,
+    created_at DATETIME(6) NOT NULL,
+    updated_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+-- 6. Re-enable Foreign Key Checks
 SET FOREIGN_KEY_CHECKS = 1;

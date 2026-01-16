@@ -1,8 +1,10 @@
 package com.achieveplusbe.config;
 
 import com.achieveplusbe.model.Role;
+import com.achieveplusbe.model.Reward;
 import com.achieveplusbe.model.Task;
 import com.achieveplusbe.model.User;
+import com.achieveplusbe.repository.RewardRepository;
 import com.achieveplusbe.repository.TaskRepository;
 import com.achieveplusbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class DataSeeder {
 
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
+    private final RewardRepository rewardRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Bean
@@ -53,6 +56,7 @@ public class DataSeeder {
                 System.out.println("Users seeded successfully!");
                 
                 seedTasks(savedUsers);
+                seedRewards();
             }
         };
     }
@@ -99,6 +103,32 @@ public class DataSeeder {
                 .createdBy(createdBy)
                 .assignedUser(assignedTo)
                 .dueDate(dueDate)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
+    private void seedRewards() {
+        if (rewardRepository.count() == 0) {
+            List<Reward> rewards = Arrays.asList(
+                createReward("Amazon Gift Card", "A $50 gift card for Amazon.", 500, 50, "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Amazon_icon.png/1024px-Amazon_icon.png"),
+                createReward("Netflix Subscription", "1 Month Netflix Premium Subscription.", 300, 30, "https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg"),
+                createReward("Spotify Premium", "3 Months Spotify Premium.", 400, 40, "https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg"),
+                createReward("Extra Day Off", "One extra paid leave day.", 1000, 10, "https://cdn-icons-png.flaticon.com/512/2662/2662503.png"),
+                createReward("Uber Eats Voucher", "$20 Voucher for Uber Eats.", 200, 100, "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Uber_Eats_2020_logo.svg/2560px-Uber_Eats_2020_logo.svg.png")
+            );
+            rewardRepository.saveAll(rewards);
+            System.out.println("Rewards seeded successfully!");
+        }
+    }
+
+    private Reward createReward(String name, String description, Integer pointsCost, Integer quantity, String imageUrl) {
+        return Reward.builder()
+                .name(name)
+                .description(description)
+                .pointsCost(pointsCost)
+                .quantity(quantity)
+                .imageUrl(imageUrl)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

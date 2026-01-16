@@ -162,3 +162,8 @@
   max-width: 300px;
 }
 
+.rewards-table th, .rewards-table td {
+  padding: 0.8rem 1rem;
+}
+.truncate { max-width: 150px; }
+

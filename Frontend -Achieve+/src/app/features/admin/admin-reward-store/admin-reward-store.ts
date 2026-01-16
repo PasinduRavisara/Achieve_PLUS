@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RewardService } from '../../../core/services/reward.service';
@@ -13,17 +13,20 @@ import { RewardService } from '../../../core/services/reward.service';
 export class AdminRewardStore {
   rewards: any[] = [];
 
-  constructor(private rewardService: RewardService) {}
+  constructor(private rewardService: RewardService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.refreshRewards();
   }
 
   refreshRewards() {
+    console.log('Refreshing rewards...');
     this.rewardService.getAllRewards().subscribe({
       next: (data) => {
+        console.log('Rewards received:', data);
         // Map pointsCost to cost for template compatibility
         this.rewards = data.map(r => ({ ...r, cost: r.pointsCost }));
+        this.cdr.detectChanges(); // Force view update
       },
       error: (err) => console.error('Failed to load rewards', err)
     });
