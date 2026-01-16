@@ -130,13 +130,22 @@
 }
 
 /* Badges */
+/* Badges */
 .role-badge {
-  background: #0dcaf0;
-  color: white;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
+}
+
+.role-badge.admin {
+  background: #0d6efd;
+  color: white;
+}
+
+.role-badge.employee {
+  background: #0dcaf0;
+  color: black;
 }
 
 .status-badge {
@@ -145,6 +154,127 @@
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: capitalize;
+}
+
+/* Action Buttons */
+.btn-delete-icon {
+  background: rgba(255, 85, 85, 0.1);
+  color: #ff5555;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete-icon:hover {
+  background: #ff5555;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* --- Premium Delete Modal --- */
+.delete-modal-content {
+  text-align: center;
+  padding: 40px 30px !important; /* Override glass-card padding */
+  background: radial-gradient(circle at top, #2d2d3a, #1a1b26);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  max-width: 420px !important;
+}
+
+.delete-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border-radius: 50%;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  font-size: 1.8rem;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+.delete-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+.delete-message {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.delete-message strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.delete-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Equal width buttons */
+  gap: 15px;
+}
+
+/* Redesigned Buttons */
+.btn-cancel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #cbd5e1;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn-confirm-delete {
+  background: #ef4444; /* Clean vibrant red */
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-confirm-delete:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.5);
+  background: #dc2626;
+}
+
+.btn-confirm-delete:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-confirm-delete:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .status-active {
@@ -156,6 +286,15 @@
   background: transparent;
   border: 1px solid #198754;
   color: #198754; /* Screenshot shows plain green text or button for status? Actually it shows a green filled button 'active'. */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 /* Utilities */

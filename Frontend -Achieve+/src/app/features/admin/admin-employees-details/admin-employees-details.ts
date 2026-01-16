@@ -90,4 +90,54 @@ export class AdminEmployeesDetails {
           error: (err) => console.error('Create failed', err)
       });
   }
+  /* Delete Logic */
+  showDeleteModal = false;
+  userToDeleteId: number | null = null;
+  userToDeleteName: string = '';
+  isDeleting = false;
+
+  initiateDelete(emp: any) {
+      if (emp.role === 'Admin' && emp.name === 'pasindu') { 
+          alert("Cannot delete the main admin.");
+          return;
+      }
+      this.userToDeleteId = emp.id;
+      this.userToDeleteName = emp.name;
+      this.showDeleteModal = true;
+      this.cdr.detectChanges();
+  }
+
+  cancelDelete() {
+      if (this.isDeleting) return; // Prevent closing while deleting
+      this.showDeleteModal = false;
+      this.userToDeleteId = null;
+  }
+
+  confirmDelete(event?: Event) {
+      if(event) event.stopPropagation();
+      
+      if (this.userToDeleteId && !this.isDeleting) {
+          this.isDeleting = true;
+          const id = this.userToDeleteId;
+          this.userService.deleteUser(id).subscribe({
+              next: () => {
+                  this.employees = this.employees.filter(e => e.id !== id);
+                  this.isDeleting = false;
+                  this.showDeleteModal = false;
+                  this.userToDeleteId = null;
+                  this.cdr.detectChanges();
+              },
+              error: (err) => {
+                  console.error('Failed to delete user', err);
+                  alert('Delete failed. Please try again.');
+                  this.isDeleting = false;
+                  this.cdr.detectChanges();
+              }
+          });
+      }
+  }
+
+  deleteEmployee(id: number) {
+      // Legacy direct call unused
+  }
 }

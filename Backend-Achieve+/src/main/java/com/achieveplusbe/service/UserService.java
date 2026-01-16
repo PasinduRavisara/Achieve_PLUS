@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final com.achieveplusbe.repository.SystemLogRepository systemLogRepository;
+    private final com.achieveplusbe.repository.NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -95,6 +96,9 @@ public class UserService {
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        
+        // Delete notifications first to avoid Foreign Key constraint
+        notificationRepository.deleteByRecipientId(id);
 
         // Log Points Lost for Trends
         // Calculate total points including tasks to see if we should log a loss

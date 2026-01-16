@@ -29,19 +29,20 @@
           <th>JOIN DATE</th>
           <th>POINTS</th>
           <th>STATUS</th>
+          <th style="min-width: 80px;">ACTIONS</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let emp of filteredEmployees">
           <td>
             <div class="employee-cell">
-              <!-- <img [src]="emp.avatar" class="avatar"> --><!-- Screenshot didn't clearly show avatar in table, but it's good UX. Screenshot showed just text 'Ravisara' in first col. I will keep avatar for better aesthetic. -->
+              <!-- <img [src]="emp.avatar" class="avatar"> -->
               <span class="name">{{ emp.name }}</span>
             </div>
           </td>
           <td class="text-muted">{{ emp.email }}</td>
           <td>
-            <span class="role-badge">{{ emp.role }}</span>
+            <span class="role-badge" [class.admin]="emp.role === 'Admin'" [class.employee]="emp.role === 'Employee'">{{ emp.role }}</span>
           </td>
           <td class="text-muted">{{ emp.joinDate }}</td>
           <td class="text-warning fw-bold">{{ emp.points | number }} XP</td>
@@ -49,6 +50,11 @@
             <span class="status-badge" [ngClass]="getStatusClass(emp.status)">
               {{ emp.status }}
             </span>
+          </td>
+          <td>
+            <button class="btn-delete-icon" (click)="initiateDelete(emp)" title="Delete User">
+               <i class="bi bi-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -58,7 +64,8 @@
 
 <!-- Add Employee Modal -->
 <div class="modal-backdrop" *ngIf="showAddModal" (click)="closeAddModal()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-    <div class="modal-content glass-card" (click)="$event.stopPropagation()" style="width: 400px; padding: 20px; border-radius: 12px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1);">
+   <!-- ... existing modal content ... -->
+   <div class="modal-content glass-card" (click)="$event.stopPropagation()" style="width: 400px; padding: 20px; border-radius: 12px; background: #1a1b26; border: 1px solid rgba(255,255,255,0.1);">
         <h3 class="mb-3">Add Employee</h3>
         <input [(ngModel)]="newEmployee.fullName" placeholder="Full Name" class="form-control glass-input mb-2" style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
         <input [(ngModel)]="newEmployee.email" placeholder="Email" class="form-control glass-input mb-2" style="width: 100%; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px;">
@@ -70,6 +77,34 @@
         <div style="display: flex; justify-content: flex-end; gap: 10px;">
             <button (click)="closeAddModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Cancel</button>
             <button (click)="saveEmployee()" style="background: var(--primary); border: none; color: black; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-backdrop" *ngIf="showDeleteModal" (click)="cancelDelete()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+    <div class="delete-modal-content glass-card" (click)="$event.stopPropagation()">
+        <div class="delete-icon-wrapper">
+             <i class="bi bi-trash3-fill"></i>
+        </div>
+        
+        <h3 class="delete-title">Delete Employee</h3>
+        
+        <p class="delete-message">
+           Are you sure you want to delete <strong>{{ userToDeleteName }}</strong>?<br>
+           This action cannot be undone and will remove all associated data.
+        </p>
+        
+        <div class="delete-actions">
+            <button class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+            <button class="btn-confirm-delete" (click)="confirmDelete($event)" [disabled]="isDeleting">
+                <ng-container *ngIf="!isDeleting">
+                     Delete
+                </ng-container>
+                <ng-container *ngIf="isDeleting">
+                    <i class="bi bi-hourglass-split animate-spin"></i> Deleting...
+                </ng-container>
+            </button>
         </div>
     </div>
 </div>
