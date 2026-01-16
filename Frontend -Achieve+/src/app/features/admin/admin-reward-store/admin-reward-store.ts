@@ -13,6 +13,16 @@ import { RewardService } from '../../../core/services/reward.service';
 export class AdminRewardStore {
   rewards: any[] = [];
 
+  showModal = false;
+  isEditing = false;
+  currentReward: any = {
+    name: '',
+    description: '',
+    pointsCost: 0,
+    quantity: 0,
+    imageUrl: ''
+  };
+
   constructor(private rewardService: RewardService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
@@ -20,22 +30,107 @@ export class AdminRewardStore {
   }
 
   refreshRewards() {
-    console.log('Refreshing rewards...');
     this.rewardService.getAllRewards().subscribe({
       next: (data) => {
-        console.log('Rewards received:', data);
         // Map pointsCost to cost for template compatibility
         this.rewards = data.map(r => ({ ...r, cost: r.pointsCost }));
-        this.cdr.detectChanges(); // Force view update
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Failed to load rewards', err)
     });
   }
 
-  deleteReward(id: number) {
-    if(confirm('Are you sure you want to delete this reward?')) {
-      this.rewardService.deleteReward(id).subscribe({
-        next: () => this.refreshRewards(),
+  errorMessage = '';
+
+  openModal(reward?: any) {
+    this.errorMessage = ''; // Reset error
+    if (reward) {
+      this.isEditing = true;
+      // Deep copy to avoid binding issues with table
+      this.currentReward = { ...reward, pointsCost: reward.pointsCost || reward.cost };
+    } else {
+      this.isEditing = false;
+      this.currentReward = {
+        name: '',
+        description: '',
+        pointsCost: null,
+        quantity: null,
+        imageUrl: ''
+      };
+    }
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.errorMessage = '';
+  }
+
+  saveReward() {
+    // Validation
+    if (!this.currentReward.name || !this.currentReward.name.trim()) {
+      this.errorMessage = 'Reward name is required';
+      return;
+    }
+    if (this.currentReward.pointsCost === null || this.currentReward.pointsCost < 0) {
+      this.errorMessage = 'Valid points cost is required';
+      return;
+    }
+    if (this.currentReward.quantity === null || this.currentReward.quantity < 0) {
+      this.errorMessage = 'Valid quantity is required';
+      return;
+    }
+
+    // Optional URL Validation
+    if (this.currentReward.imageUrl && this.currentReward.imageUrl.trim()) {
+      try {
+        new URL(this.currentReward.imageUrl);
+      } catch (_) {
+        this.errorMessage = 'Please enter a valid URL';
+        return;
+      }
+    }
+
+    if (this.isEditing) {
+      this.rewardService.updateReward(this.currentReward.id, this.currentReward).subscribe({
+        next: () => {
+          this.refreshRewards();
+          this.closeModal();
+        },
+        error: (err) => console.error('Failed to update reward', err)
+      });
+    } else {
+      this.rewardService.createReward(this.currentReward).subscribe({
+        next: () => {
+          this.refreshRewards();
+          this.closeModal();
+        },
+        error: (err) => console.error('Failed to create reward', err)
+      });
+    }
+  }
+
+  // Delete Modal Logic
+  showDeleteModal = false;
+  rewardToDelete: number | null = null;
+
+  openDeleteModal(id: number) {
+    this.rewardToDelete = id;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+    this.rewardToDelete = null;
+  }
+
+  confirmDelete() {
+    if (this.rewardToDelete) {
+      this.rewardService.deleteReward(this.rewardToDelete).subscribe({
+        next: () => {
+          this.refreshRewards();
+          this.closeDeleteModal();
+        },
         error: (err) => console.error('Failed to delete reward', err)
       });
     }

@@ -36,7 +36,7 @@ public class Reward {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
+    @Column
     private String imageUrl;
 
     @CreatedDate

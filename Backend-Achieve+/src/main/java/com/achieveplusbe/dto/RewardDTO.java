@@ -29,6 +29,5 @@ public class RewardDTO {
     @Min(value = 0, message = "Quantity must be greater than or equal to 0")
     private Integer quantity;
 
-    @NotBlank(message = "Image URL is required")
     private String imageUrl;
 } 
