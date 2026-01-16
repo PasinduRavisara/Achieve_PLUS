@@ -40,7 +40,11 @@
     
     <!-- Empty State -->
     <div class="empty-state" *ngIf="rewards.length === 0">
-      <p>No rewards found.</p>
+      <div class="empty-icon">
+        <i class="bi bi-gift"></i>
+      </div>
+      <h3>No Rewards Found</h3>
+      <p>There are currently no items in the reward store.</p>
     </div>
   </div>
 </div>
