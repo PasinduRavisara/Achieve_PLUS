@@ -1,5 +1,7 @@
 package com.achieveplusbe.service;
 
+import org.springframework.lang.NonNull;
+
 import com.achieveplusbe.model.Reminder;
 import com.achieveplusbe.model.User;
 import com.achieveplusbe.repository.ReminderRepository;
@@ -35,7 +37,7 @@ public class ReminderService {
     }
 
     @Transactional
-    public void deleteReminder(Long id) {
+    public void deleteReminder(@NonNull Long id) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
         
@@ -47,7 +49,7 @@ public class ReminderService {
     }
 
     @Transactional
-    public Reminder updateReminder(Long id, String text, java.time.LocalDateTime reminderTime) {
+    public Reminder updateReminder(@NonNull Long id, String text, java.time.LocalDateTime reminderTime) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
         

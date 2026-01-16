@@ -1,6 +1,7 @@
 package com.achieveplusbe.controller;
 
 import com.achieveplusbe.model.Reminder;
+import org.springframework.lang.NonNull;
 import com.achieveplusbe.service.ReminderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,13 +34,13 @@ public class ReminderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReminder(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteReminder(@PathVariable @NonNull Long id) {
         reminderService.deleteReminder(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reminder> updateReminder(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+    public ResponseEntity<Reminder> updateReminder(@PathVariable @NonNull Long id, @RequestBody Map<String, String> payload) {
         String text = payload.get("text");
         String timeStr = payload.get("reminderTime");
         java.time.LocalDateTime reminderTime = null;

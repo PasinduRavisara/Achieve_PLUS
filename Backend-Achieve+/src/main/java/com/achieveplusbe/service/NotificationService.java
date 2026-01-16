@@ -1,6 +1,7 @@
 package com.achieveplusbe.service;
 
 import com.achieveplusbe.model.Notification;
+import org.springframework.lang.NonNull;
 import com.achieveplusbe.model.User;
 import com.achieveplusbe.model.Role;
 import com.achieveplusbe.repository.NotificationRepository;
@@ -49,7 +50,7 @@ public class NotificationService {
     }
 
     @Transactional
-    public void markAsRead(Long id) {
+    public void markAsRead(@NonNull Long id) {
         Notification n = notificationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notification not found"));
         n.setRead(true);

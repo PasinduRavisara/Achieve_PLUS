@@ -25,6 +25,7 @@ public class DataSeeder {
     private final PasswordEncoder passwordEncoder;
 
     @Bean
+    @SuppressWarnings("null")
     public CommandLineRunner initData() {
         return args -> {
             // Always ensure Admins have 0 points (Fix for existing data)
@@ -56,6 +57,7 @@ public class DataSeeder {
         };
     }
 
+    @SuppressWarnings("null")
     private void seedTasks(List<User> users) {
         User admin = users.stream().filter(u -> u.getRole() == Role.Admin).findFirst().orElse(users.get(0));
         User employee = users.stream().filter(u -> u.getRole() == Role.Employee).findFirst().orElse(users.get(1));

@@ -6,7 +6,7 @@ import com.achieveplusbe.model.User;
 import com.achieveplusbe.model.Task;
 import com.achieveplusbe.repository.RewardRepository;
 import com.achieveplusbe.repository.UserRepository;
-import com.achieveplusbe.service.NotificationService;
+
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

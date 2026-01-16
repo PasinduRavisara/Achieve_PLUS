@@ -1,6 +1,7 @@
 package com.achieveplusbe.controller;
 
 import com.achieveplusbe.model.Notification;
+import org.springframework.lang.NonNull;
 import com.achieveplusbe.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class NotificationController {
     }
 
     @PutMapping("/{id}/read")
-    public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<Void> markAsRead(@PathVariable @NonNull Long id) {
         notificationService.markAsRead(id);
         return ResponseEntity.ok().build();
     }
