@@ -14,6 +14,9 @@ export interface TaskDTO {
   assignedToName?: string;
   createdBy?: number;
   createdByName?: string;
+  createdAt?: string;
+  completedAt?: string;
+  updatedAt?: string;
 }
 
 @Injectable({

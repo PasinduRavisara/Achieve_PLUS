@@ -157,7 +157,10 @@ public class TaskService {
         }
 
         if (newStatus == Task.TaskStatus.COMPLETED && oldStatus != Task.TaskStatus.COMPLETED) {
+             task.setCompletedAt(LocalDateTime.now());
              systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("POINTS_EARNED").entityType("POINTS").build());
+        } else if (oldStatus == Task.TaskStatus.COMPLETED && newStatus != Task.TaskStatus.COMPLETED) {
+             task.setCompletedAt(null);
         }
         
         // Notify Admin (Creator) if completed
@@ -214,6 +217,11 @@ public class TaskService {
         dto.setPoints(task.getPoints());
         dto.setPriority(task.getPriority());
         dto.setCreatedAt(task.getCreatedAt().format(DATE_FORMATTER));
+        dto.setUpdatedAt(task.getUpdatedAt().format(DATE_FORMATTER));
+        
+        if (task.getCompletedAt() != null) {
+            dto.setCompletedAt(task.getCompletedAt().format(DATE_FORMATTER));
+        }
 
         if (task.getAssignedUser() != null) {
             dto.setAssignedTo(task.getAssignedUser().getId());

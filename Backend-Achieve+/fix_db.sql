@@ -2,6 +2,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 2. Drop tables to ensure clean slate and no conflicts
+use achieveplus;
 DROP TABLE IF EXISTS mood_logs;
 
 DROP TABLE IF EXISTS task;
