@@ -7,17 +7,28 @@
     </div>
     
     <div class="filters flex-gap">
-      <select class="custom-select">
-        <option>Last Month</option>
-        <option>Last Week</option>
-        <option>Today</option>
-      </select>
       
-      <select class="custom-select">
-        <option>All Employees</option>
-        <option>Pasindu</option>
-        <option>Ravisara</option>
-      </select>
+      <!-- Timeframe Filter -->
+      <div class="select-wrapper">
+        <i class="bi bi-calendar3 select-icon"></i>
+        <select class="custom-select" [(ngModel)]="timeframe" (change)="applyFilters()">
+          <option value="All Time">All Time</option>
+          <option value="Today">Today</option>
+          <option value="Last Week">Last 7 Days</option>
+          <option value="Last Month">Last 30 Days</option>
+        </select>
+        <i class="bi bi-chevron-down select-arrow"></i>
+      </div>
+      
+      <!-- Employee Filter -->
+      <div class="select-wrapper">
+        <i class="bi bi-person select-icon"></i>
+        <select class="custom-select" [(ngModel)]="employeeFilter" (change)="applyFilters()">
+          <option value="All Employees">All Employees</option>
+          <option *ngFor="let emp of employees" [value]="emp.fullName">{{ emp.fullName }}</option>
+        </select>
+        <i class="bi bi-chevron-down select-arrow"></i>
+      </div>
 
       <button class="btn-refresh" (click)="refresh()">
         <i class="bi bi-arrow-clockwise"></i> Refresh

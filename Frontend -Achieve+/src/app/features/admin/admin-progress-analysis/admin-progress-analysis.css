@@ -23,44 +23,94 @@
 /* Filters */
 .filters {
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  align-items: center;
 }
 
-.flex-gap {
-  gap: 10px;
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.custom-select {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--text-main);
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  outline: none;
-  cursor: pointer;
+.select-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-muted);
+  pointer-events: none;
   font-size: 0.9rem;
 }
 
+.select-arrow {
+  position: absolute;
+  right: 1rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  font-size: 0.8rem;
+}
+
+.custom-select {
+  appearance: none;
+  background: rgba(30, 30, 45, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 0.7rem 2.5rem 0.7rem 2.8rem; /* Space for icons */
+  border-radius: 12px;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  min-width: 160px;
+}
+
+.custom-select:hover {
+  background: rgba(40, 40, 60, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.custom-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 242, 255, 0.1);
+}
+
 .custom-select option {
-  background: #1e1e2d; /* Dark dropdown bg */
+  background: #1e1e2d;
+  color: white;
+  padding: 10px;
 }
 
 .btn-refresh {
-  background: transparent;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(0, 150, 255, 0.1));
   border: 1px solid var(--primary);
   color: var(--primary);
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 242, 255, 0.1);
 }
 
 .btn-refresh:hover {
-  background: rgba(0, 242, 255, 0.1);
-  box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+  background: var(--primary);
+  color: #000;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-refresh:active {
+  transform: translateY(0);
+}
+
+.btn-refresh i {
+  transition: transform 0.5s ease;
+}
+
+.btn-refresh:hover i {
+  transform: rotate(180deg);
 }
 
 /* Stats Grid */
