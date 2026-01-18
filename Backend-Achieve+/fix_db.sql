@@ -45,6 +45,7 @@ CREATE TABLE task (
 ) ENGINE=InnoDB;
 
 -- 5. Recreate reward table (Order: id, name, description, points_cost, quantity, image_url, created_at, updated_at)
+-- Note: image_url needs to be LONGTEXT to support both URLs and file paths (and potential Base64 legacy data)
 CREATE TABLE reward (
     id BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,

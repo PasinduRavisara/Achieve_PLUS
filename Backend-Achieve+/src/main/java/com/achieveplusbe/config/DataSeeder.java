@@ -108,6 +108,7 @@ public class DataSeeder {
                 .build();
     }
 
+    @SuppressWarnings("null")
     private void seedRewards() {
         if (rewardRepository.count() == 0) {
             List<Reward> rewards = Arrays.asList(

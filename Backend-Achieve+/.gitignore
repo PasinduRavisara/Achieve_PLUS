@@ -47,3 +47,10 @@ logs/
 secrets.properties
 
 
+
+### Uploads ###
+src/main/resources/static/uploads/
+
+### Uploads ###
+src/main/resources/static/uploads/
+
