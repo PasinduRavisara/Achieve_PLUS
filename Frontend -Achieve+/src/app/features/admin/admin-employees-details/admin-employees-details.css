@@ -303,3 +303,230 @@
 .mb-4 { margin-bottom: 1.5rem; }
 .overflow-hidden { overflow: hidden; }
 .flex-between { display: flex; justify-content: space-between; align-items: center; }
+/* Modal Styling - Premium Match */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content.glass-card, .modal-content.glass-panel {
+  width: 450px;
+  max-width: 90vw;
+  background: linear-gradient(145deg, rgba(30, 30, 45, 0.95), rgba(20, 20, 30, 0.95)) !important; /* Override inline if any remains */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  padding: 2rem !important;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  padding: 0;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff, #a0a0ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.btn-close {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btn-close:hover { 
+  background: rgba(255, 255, 255, 0.1); 
+  color: white; 
+  transform: rotate(90deg); 
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  margin-left: 4px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Refined Input Styles for Admin Employee Modal */
+.form-control, .glass-input {
+  width: 100%;
+  background: rgba(10, 10, 15, 0.4) !important; /* Darker, more transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  padding: 0.8rem 1rem 0.8rem 2.8rem !important;
+  color: #ffffff !important; /* Ensure text is always white */
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.form-control:focus, .glass-input:focus {
+  outline: none;
+  background: rgba(15, 15, 25, 0.6) !important; /* Slightly lighter on focus but still dark */
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.15);
+}
+
+/* Fix autofill background color issues in Chrome/Edge */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1a1b26 inset !important; /* Match modal bg */
+    -webkit-text-fill-color: white !important;
+    caret-color: white !important;
+    border-radius: 12px !important;
+}
+
+.input-icon {
+  color: rgba(255, 255, 255, 0.5); /* softer icon color */
+}
+
+.form-control:focus + .input-icon, 
+.input-wrapper:focus-within .input-icon {
+    color: #0d6efd; /* Highlight icon on focus */
+}
+
+/* Select specific overrides */
+.select-wrapper { 
+    position: relative; 
+    display: flex;
+    align-items: center;
+}
+
+.select-wrapper select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    padding-right: 2.5rem !important; /* Space for the custom arrow */
+    background-color: rgba(10, 10, 15, 0.4) !important;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+    font-size: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s;
+}
+
+.select-wrapper:focus-within .select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+    color: #0d6efd;
+}
+
+select.form-control option {
+    background-color: #1a1b26;
+    color: white;
+    padding: 12px;
+}
+/* Modal Actions */
+.modal-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-cancel:hover { color: white; background: rgba(255,255,255,0.05); }
+
+.btn-save {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-save:hover {
+  background: #0b5ed7;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(13, 110, 253, 0.4);
+}
+
+
+/* Animation Keyframes */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* Error Message */
+.error-msg {
+    color: #ff5555;
+    margin-left: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+}

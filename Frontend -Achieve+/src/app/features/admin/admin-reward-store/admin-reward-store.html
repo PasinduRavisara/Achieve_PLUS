@@ -54,7 +54,7 @@
   <!-- Modal Content -->
   <div class="modal-content glass-panel" (click)="$event.stopPropagation()">
     <div class="modal-header">
-      <h2>{{ isEditing ? 'Edit Reward' : 'Add New Reward' }}</h2>
+      <h2>{{ isEditing ? 'Edit Reward' : 'Create Reward' }}</h2>
       <button class="close-btn" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
     </div>
     
@@ -66,22 +66,34 @@
 
       <div class="form-group">
         <label>Reward Name <span class="text-danger">*</span></label>
-        <input type="text" [(ngModel)]="currentReward.name" placeholder="E.g. Amazon Gift Card" class="form-control">
+        <div class="input-wrapper">
+            <i class="bi bi-gift input-icon"></i>
+            <input type="text" [(ngModel)]="currentReward.name" placeholder="E.g. Amazon Gift Card" class="form-control">
+        </div>
       </div>
       
       <div class="form-group">
         <label>Description</label>
-        <textarea [(ngModel)]="currentReward.description" placeholder="Brief description of the reward..." class="form-control" rows="3"></textarea>
+        <div class="input-wrapper">
+            <i class="bi bi-text-paragraph input-icon textarea-icon"></i>
+            <textarea [(ngModel)]="currentReward.description" placeholder="Brief description of the reward..." class="form-control" rows="3"></textarea>
+        </div>
       </div>
 
       <div class="row">
         <div class="form-group col-6">
           <label>Points Cost <span class="text-danger">*</span></label>
-          <input type="number" [(ngModel)]="currentReward.pointsCost" class="form-control">
+          <div class="input-wrapper">
+              <i class="bi bi-currency-exchange input-icon"></i>
+              <input type="number" [(ngModel)]="currentReward.pointsCost" class="form-control">
+          </div>
         </div>
         <div class="form-group col-6">
           <label>Quantity <span class="text-danger">*</span></label>
-          <input type="number" [(ngModel)]="currentReward.quantity" class="form-control">
+          <div class="input-wrapper">
+              <i class="bi bi-box-seam input-icon"></i>
+              <input type="number" [(ngModel)]="currentReward.quantity" class="form-control">
+          </div>
         </div>
       </div>
 
@@ -93,7 +105,10 @@
         </div>
         
         <!-- URL Input -->
-        <input *ngIf="uploadMode === 'url'" type="text" [(ngModel)]="currentReward.imageUrl" (input)="resetImageError()" placeholder="https://..." class="form-control">
+        <div class="input-wrapper" *ngIf="uploadMode === 'url'">
+            <i class="bi bi-link-45deg input-icon"></i>
+            <input type="text" [(ngModel)]="currentReward.imageUrl" (input)="resetImageError()" placeholder="https://..." class="form-control">
+        </div>
         
         <!-- File Input -->
         <div *ngIf="uploadMode === 'file'" class="file-upload-container">
@@ -122,7 +137,10 @@
 
     <div class="modal-footer">
       <button class="btn-cancel" (click)="closeModal()">Cancel</button>
-      <button class="btn-save" (click)="saveReward()">{{ isEditing ? 'Save Changes' : 'Create Reward' }}</button>
+      <button class="btn-save" (click)="saveReward()">
+        <i class="bi" [class.bi-check-lg]="isEditing" [class.bi-plus-lg]="!isEditing"></i>
+        {{ isEditing ? 'Save Changes' : 'Create Reward' }}
+      </button>
     </div>
   </div>
 </div>
