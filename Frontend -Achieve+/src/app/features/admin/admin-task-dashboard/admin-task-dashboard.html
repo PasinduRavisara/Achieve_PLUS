@@ -14,14 +14,14 @@
 
   <!-- Stats Grid -->
   <div class="stats-grid mb-4">
-    <!-- Pending -->
+    <!-- Completed -->
     <div class="stat-card glass-panel flex-between">
       <div>
-        <span class="stat-label">Pending</span>
-        <h2 class="stat-value">{{ pendingCount }}</h2>
+        <span class="stat-label">Completed</span>
+        <h2 class="stat-value">{{ completedCount }}</h2>
       </div>
-      <div class="stat-icon-box icon-pending">
-        <i class="bi bi-hourglass-split"></i>
+      <div class="stat-icon-box icon-completed">
+        <i class="bi bi-check-circle"></i>
       </div>
     </div>
 
@@ -36,14 +36,25 @@
       </div>
     </div>
 
-    <!-- Completed -->
+    <!-- Pending -->
     <div class="stat-card glass-panel flex-between">
       <div>
-        <span class="stat-label">Completed</span>
-        <h2 class="stat-value">{{ completedCount }}</h2>
+        <span class="stat-label">Pending</span>
+        <h2 class="stat-value">{{ pendingCount }}</h2>
       </div>
-      <div class="stat-icon-box icon-completed">
-        <i class="bi bi-check-circle"></i>
+      <div class="stat-icon-box icon-pending">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+    </div>
+
+    <!-- Overdue (New) -->
+    <div class="stat-card glass-panel flex-between">
+      <div>
+        <span class="stat-label">Overdue</span>
+        <h2 class="stat-value">{{ overdueCount }}</h2>
+      </div>
+      <div class="stat-icon-box icon-overdue">
+        <i class="bi bi-exclamation-circle"></i>
       </div>
     </div>
   </div>
@@ -70,14 +81,17 @@
       <button class="tab-btn" [class.active]="activeTab === 'all'" (click)="setTab('all')">
         <i class="bi bi-list"></i> All <span class="badge-pill">{{ tasks.length }}</span>
       </button>
-      <button class="tab-btn" [class.active]="activeTab === 'pending'" (click)="setTab('pending')">
-        <i class="bi bi-hourglass"></i> Pending <span class="badge-pill badge-warning">{{ pendingCount }}</span>
+      <button class="tab-btn" [class.active]="activeTab === 'completed'" (click)="setTab('completed')">
+        <i class="bi bi-check2-circle"></i> Completed <span class="badge-pill badge-success">{{ completedCount }}</span>
       </button>
       <button class="tab-btn" [class.active]="activeTab === 'inprogress'" (click)="setTab('inprogress')">
         <i class="bi bi-play-circle"></i> In Progress <span class="badge-pill badge-info">{{ inProgressCount }}</span>
       </button>
-      <button class="tab-btn" [class.active]="activeTab === 'completed'" (click)="setTab('completed')">
-        <i class="bi bi-check2-circle"></i> Completed <span class="badge-pill badge-success">{{ completedCount }}</span>
+      <button class="tab-btn" [class.active]="activeTab === 'pending'" (click)="setTab('pending')">
+        <i class="bi bi-hourglass"></i> Pending <span class="badge-pill badge-warning">{{ pendingCount }}</span>
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'overdue'" (click)="setTab('overdue')">
+        <i class="bi bi-exclamation-circle"></i> Overdue <span class="badge-pill badge-danger">{{ overdueCount }}</span>
       </button>
     </div>
 

@@ -31,7 +31,7 @@ CREATE TABLE task (
     assigned_id BIGINT,
     assigned_name VARCHAR(255),
     priority VARCHAR(255) NOT NULL,
-    status ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED') NOT NULL,
+    status ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED', 'OVERDUE') NOT NULL,
     points INT,
     created_by BIGINT,
     due_date DATE,

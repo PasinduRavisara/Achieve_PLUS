@@ -97,12 +97,12 @@ export class AdminTaskDashboard {
 
   get filteredTasks() {
     let tasksToFilter = this.tasks;
-    
     if (this.activeTab !== 'all') {
         const statusMap: Record<string, string> = {
           'pending': 'PENDING',
           'inprogress': 'IN_PROGRESS',
-          'completed': 'COMPLETED'
+          'completed': 'COMPLETED',
+          'overdue': 'OVERDUE'
         };
         tasksToFilter = this.tasks.filter(t => t.status === statusMap[this.activeTab] || t.status === this.activeTab);
     }
@@ -118,6 +118,7 @@ export class AdminTaskDashboard {
   get pendingCount() { return this.tasks.filter(t => t.status === 'PENDING').length; }
   get inProgressCount() { return this.tasks.filter(t => t.status === 'IN_PROGRESS').length; }
   get completedCount() { return this.tasks.filter(t => t.status === 'COMPLETED').length; }
+  get overdueCount() { return this.tasks.filter(t => t.status === 'OVERDUE').length; }
 
   setTab(tab: string) {
     this.activeTab = tab;
@@ -138,6 +139,7 @@ export class AdminTaskDashboard {
       case 'PENDING': return 'status-pending';
       case 'IN_PROGRESS': return 'status-inprogress';
       case 'COMPLETED': return 'status-completed';
+      case 'OVERDUE': return 'status-overdue';
       default: return '';
     }
   }

@@ -73,7 +73,8 @@ public class Task {
 
         PENDING,
         IN_PROGRESS,
-        COMPLETED
+        COMPLETED,
+        OVERDUE
     }
 
     @PrePersist

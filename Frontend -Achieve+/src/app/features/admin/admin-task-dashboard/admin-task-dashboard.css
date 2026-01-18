@@ -69,6 +69,7 @@
 .icon-pending { background: rgba(255, 193, 7, 0.15); color: #ffc107; }
 .icon-progress { background: rgba(13, 110, 253, 0.15); color: #0d6efd; }
 .icon-completed { background: rgba(25, 135, 84, 0.15); color: #198754; }
+.icon-overdue { background: rgba(255, 85, 85, 0.15); color: #ff5555; }
 
 /* All Tasks Section */
 .all-tasks-section {
@@ -175,6 +176,7 @@
 .badge-warning { background: #ffc107; color: black; }
 .badge-info { background: #0d6efd; color: white; }
 .badge-success { background: #198754; color: white; }
+.badge-danger { background: #ff5555; color: white; }
 
 /* Task List */
 .task-list-container {
@@ -241,6 +243,7 @@
 .status-pending { color: #ffc107; }
 .status-inprogress { color: #0d6efd; }
 .status-completed { color: #198754; }
+.status-overdue { color: #ff5555; }
 
 .priority-badge {
   padding: 4px 8px;

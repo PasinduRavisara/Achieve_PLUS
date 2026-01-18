@@ -74,7 +74,9 @@ public class DataSeeder {
             createTask("Fix Login Bug", "Investigate and fix the reported login issue on mobile.", "High", Task.TaskStatus.IN_PROGRESS, 60, admin, employee, LocalDate.now().plusDays(5)),
             createTask("Design System Update", "Refine the color palette.", "Medium", Task.TaskStatus.COMPLETED, 120, admin, users.get(5), LocalDate.now().minusDays(2)), // Jane
             createTask("Backend Optimization", "Improve database query performance.", "High", Task.TaskStatus.COMPLETED, 200, admin, users.get(4), LocalDate.now().minusDays(3)), // John
-            createTask("Mobile App MVP", "Release the beta version.", "Critical", Task.TaskStatus.COMPLETED, 350, admin, users.get(7), LocalDate.now().minusDays(5)) // Clark
+            createTask("Mobile App MVP", "Release the beta version.", "Critical", Task.TaskStatus.COMPLETED, 350, admin, users.get(7), LocalDate.now().minusDays(5)), // Clark
+            createTask("Legacy System Audit", "Audit the old legacy system for security holes.", "Medium", Task.TaskStatus.OVERDUE, 90, admin, employee, LocalDate.now().minusDays(10)),
+            createTask("Q3 Financial Report", "Prepare the financial report for Q3.", "High", Task.TaskStatus.OVERDUE, 150, admin, employee, LocalDate.now().minusDays(5))
         );
 
         taskRepository.saveAll(tasks);

@@ -6,7 +6,7 @@ export interface TaskDTO {
   id: number;
   title: string;
   description: string;
-  status: string; // 'Pending', 'In Progress', 'Completed'
+  status: string; // 'Pending', 'In Progress', 'Completed', 'Overdue'
   priority?: string; // High, Medium, Low
   dueDate: string;
   points: number;
