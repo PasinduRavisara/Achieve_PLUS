@@ -27,12 +27,22 @@ export class RewardService {
     return this.http.get<RewardDTO[]>(`${this.apiUrl}/available`);
   }
 
-  createReward(reward: Partial<RewardDTO>): Observable<RewardDTO> {
-    return this.http.post<RewardDTO>(this.apiUrl, reward);
+  createReward(reward: Partial<RewardDTO>, file?: File): Observable<RewardDTO> {
+    const formData = new FormData();
+    formData.append('reward', JSON.stringify(reward));
+    if (file) {
+      formData.append('file', file);
+    }
+    return this.http.post<RewardDTO>(this.apiUrl, formData);
   }
 
-  updateReward(id: number, reward: Partial<RewardDTO>): Observable<RewardDTO> {
-    return this.http.put<RewardDTO>(`${this.apiUrl}/${id}`, reward);
+  updateReward(id: number, reward: Partial<RewardDTO>, file?: File): Observable<RewardDTO> {
+    const formData = new FormData();
+    formData.append('reward', JSON.stringify(reward));
+    if (file) {
+      formData.append('file', file);
+    }
+    return this.http.put<RewardDTO>(`${this.apiUrl}/${id}`, formData);
   }
 
   deleteReward(id: number): Observable<void> {

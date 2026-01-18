@@ -86,8 +86,37 @@
       </div>
 
       <div class="form-group">
-        <label>Image URL</label>
-        <input type="text" [(ngModel)]="currentReward.imageUrl" placeholder="https://..." class="form-control">
+        <label>Reward Image</label>
+        <div class="image-upload-tabs">
+          <button class="tab-btn" [class.active]="uploadMode === 'url'" (click)="toggleUploadMode('url')">Image URL</button>
+          <button class="tab-btn" [class.active]="uploadMode === 'file'" (click)="toggleUploadMode('file')">Upload Image</button>
+        </div>
+        
+        <!-- URL Input -->
+        <input *ngIf="uploadMode === 'url'" type="text" [(ngModel)]="currentReward.imageUrl" (input)="resetImageError()" placeholder="https://..." class="form-control">
+        
+        <!-- File Input -->
+        <div *ngIf="uploadMode === 'file'" class="file-upload-container">
+          <label class="custom-file-upload">
+            <i class="bi bi-cloud-arrow-up-fill me-2"></i> Choose Image
+            <input type="file" (change)="onFileSelected($event)" accept="image/*">
+          </label>
+        </div>
+
+        <!-- Unified Premium Preview -->
+        <div class="preview-section mt-3" *ngIf="currentReward.imageUrl && !imagePreviewError">
+          <div class="preview-card">
+            <img [src]="currentReward.imageUrl" alt="Reward Preview" (error)="handleImageError()">
+            <div class="preview-overlay">
+              <span>Preview</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Error State -->
+        <div class="alert-error mt-3" *ngIf="imagePreviewError && currentReward.imageUrl">
+          <i class="bi bi-exclamation-triangle"></i> Invalid image source. Please verify the URL or file.
+        </div>
       </div>
     </div>
 

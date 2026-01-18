@@ -51,7 +51,7 @@ CREATE TABLE reward (
     description TEXT,
     points_cost INT NOT NULL,
     quantity INT NOT NULL,
-    image_url VARCHAR(255),
+    image_url LONGTEXT,
     created_at DATETIME(6) NOT NULL,
     updated_at DATETIME(6) NOT NULL,
     PRIMARY KEY (id)

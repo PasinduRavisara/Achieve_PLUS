@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RestController
 @RequestMapping("/rewards")
 @CrossOrigin(origins = "${app.cors.allowed-origins}")
@@ -33,16 +38,25 @@ public class RewardController {
         return ResponseEntity.ok(rewardService.getRewardById(id));
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAuthority('Admin')")
-    public ResponseEntity<RewardDTO> createReward(@Valid @RequestBody RewardDTO rewardDTO) {
-        return ResponseEntity.ok(rewardService.createReward(rewardDTO));
+    public ResponseEntity<RewardDTO> createReward(
+            @RequestPart("reward") String rewardDTOStr,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        RewardDTO rewardDTO = mapper.readValue(rewardDTOStr, RewardDTO.class);
+        return ResponseEntity.ok(rewardService.createReward(rewardDTO, file));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAuthority('Admin')")
-    public ResponseEntity<RewardDTO> updateReward(@PathVariable Long id, @Valid @RequestBody RewardDTO rewardDTO) {
-        return ResponseEntity.ok(rewardService.updateReward(id, rewardDTO));
+    public ResponseEntity<RewardDTO> updateReward(
+            @PathVariable Long id, 
+            @RequestPart("reward") String rewardDTOStr,
+            @RequestPart(value = "file", required = false) MultipartFile file) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        RewardDTO rewardDTO = mapper.readValue(rewardDTOStr, RewardDTO.class);
+        return ResponseEntity.ok(rewardService.updateReward(id, rewardDTO, file));
     }
 
     @DeleteMapping("/{id}")

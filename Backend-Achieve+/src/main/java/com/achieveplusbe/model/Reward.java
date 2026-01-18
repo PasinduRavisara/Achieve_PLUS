@@ -36,7 +36,7 @@ public class Reward {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column
+    @Column(columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     @CreatedDate

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000", "http://localhost:4200"})
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -45,5 +45,11 @@ public class AuthController {
             logger.error("Registration failed for email: {}", userDTO.getEmail(), e);
             throw e;
         }
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<String> getCurrentUser() {
+        var auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok("User: " + auth.getName() + ", Authorities: " + auth.getAuthorities());
     }
 }

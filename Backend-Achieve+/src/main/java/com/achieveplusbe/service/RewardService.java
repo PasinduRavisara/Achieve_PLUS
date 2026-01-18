@@ -13,7 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @SuppressWarnings("null")
@@ -47,7 +54,12 @@ public class RewardService {
     }
 
     @Transactional
-    public RewardDTO createReward(RewardDTO rewardDTO) {
+    public RewardDTO createReward(RewardDTO rewardDTO, MultipartFile file) {
+        if (file != null && !file.isEmpty()) {
+            String imageUrl = saveImage(file);
+            rewardDTO.setImageUrl(imageUrl);
+        }
+        
         Reward reward = convertToEntity(rewardDTO);
         Reward savedReward = rewardRepository.save(reward);
 
@@ -58,18 +70,54 @@ public class RewardService {
     }
 
     @Transactional
-    public RewardDTO updateReward(Long id, RewardDTO rewardDTO) {
+    public RewardDTO updateReward(Long id, RewardDTO rewardDTO, MultipartFile file) {
         Reward existingReward = rewardRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Reward not found with id: " + id));
         
+        if (file != null && !file.isEmpty()) {
+            String imageUrl = saveImage(file);
+            existingReward.setImageUrl(imageUrl);
+        } else if (rewardDTO.getImageUrl() != null) {
+            existingReward.setImageUrl(rewardDTO.getImageUrl());
+        }
+
         existingReward.setName(rewardDTO.getName());
         existingReward.setDescription(rewardDTO.getDescription());
         existingReward.setPointsCost(rewardDTO.getPointsCost());
         existingReward.setQuantity(rewardDTO.getQuantity());
-        existingReward.setImageUrl(rewardDTO.getImageUrl());
+        // imageUrl is handled above
 
         Reward updatedReward = rewardRepository.save(existingReward);
         return convertToDTO(updatedReward);
+    }
+
+    private String saveImage(MultipartFile file) {
+        try {
+            Path uploadPath = Paths.get("src/main/resources/static/uploads/rewards");
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+            
+            String filename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            Path filePath = uploadPath.resolve(filename);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+            
+            // Return the URL path (relative to context path /api)
+            // Since we mapped /uploads/** to the file system, we return that path.
+            // But wait, the context path is /api.
+            // If the frontend accesses /api/uploads/rewards/..., then we should return /uploads/rewards/...
+            // But if the frontend uses a full URL, it might be simpler.
+            // Let's assume the frontend appends the base URL or uses it as is.
+            // However, RewardDTO usually stores the full URL or a relative path correctly.
+            // Let's store a relative path that works with the resource handler.
+            // Resource handler maps /uploads/**.
+            // So we need to return http://localhost:8080/api/uploads/rewards/filename
+            // Or just /api/uploads/rewards/filename
+            
+            return "/api/uploads/rewards/" + filename;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + file.getOriginalFilename(), e);
+        }
     }
 
     @Transactional
