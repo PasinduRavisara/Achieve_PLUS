@@ -118,17 +118,29 @@ input:focus {
 }
 
 .footer {
+  margin-top: 1.5rem;
   text-align: center;
+}
+
+.footer p {
+  color: #a0a0ba;
   font-size: 0.9rem;
-  color: var(--text-muted);
 }
 
 .footer a {
-  color: var(--primary);
+  color: #fff;
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s;
 }
 
 .footer a:hover {
   text-decoration: underline;
+  color: #5b47fb;
+}
+
+/* Error State */
+.input-wrapper input.is-invalid {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15);
 }

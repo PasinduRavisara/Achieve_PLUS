@@ -3,6 +3,7 @@ package com.achieveplusbe.service;
 import com.achieveplusbe.dto.AuthRequest;
 import com.achieveplusbe.dto.AuthResponse;
 import com.achieveplusbe.dto.UserDTO;
+import com.achieveplusbe.exception.EmailAlreadyExistsException;
 import com.achieveplusbe.model.Role;
 import com.achieveplusbe.model.User;
 import com.achieveplusbe.repository.UserRepository;
@@ -59,20 +60,19 @@ public class AuthService {
     @Transactional
     public UserDTO register(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new RuntimeException("Email already in use");
+            throw new EmailAlreadyExistsException("Email already in use");
         }
 
         User user = new User();
+        user.setFullName(userDTO.getFullName());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setFullName(userDTO.getFullName());
-        user.setRole(Role.valueOf(userDTO.getRole()));
+        user.setRole(Role.valueOf(userDTO.getRole())); // Ensure frontend sends correct role string or handle logic here
 
-        User savedUser = userRepository.save(user);
+        userRepository.save(user);
 
-        userDTO.setId(savedUser.getId());
-        userDTO.setPassword(null); // Clear password for security
-
+        // Return without password
+        userDTO.setPassword(null);
         return userDTO;
     }
 }

@@ -482,6 +482,12 @@ select.form-control option {
   gap: 1rem;
 }
 
+/* Error State */
+.form-control.is-invalid {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 0 4px rgba(255, 77, 77, 0.15);
+}
+
 .btn-cancel {
   background: transparent;
   border: none;

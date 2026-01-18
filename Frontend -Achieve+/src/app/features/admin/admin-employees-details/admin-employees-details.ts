@@ -23,7 +23,8 @@ export class AdminEmployeesDetails {
       fullName: '',
       email: '',
       password: '',
-      role: 'ROLE_EMPLOYEE'
+      confirmPassword: '',
+      role: 'Employee'
   };
 
   /* Search Logic */
@@ -31,6 +32,7 @@ export class AdminEmployeesDetails {
 
   constructor() {}
 
+// ... (ngOnInit remains the same)
   ngOnInit() {
     this.refreshEmployees();
   }
@@ -71,9 +73,19 @@ export class AdminEmployeesDetails {
     }
   }
 
+  /* State for error messages */
+  passwordMismatchError: string | null = null;
+  emailExistsError: string | null = null;
+  emailInvalidError: string | null = null;
+  formSubmitted: boolean = false;
+
   openAddModal() {
       this.showAddModal = true;
-      this.newEmployee = { fullName: '', email: '', password: '', role: 'ROLE_EMPLOYEE' };
+      this.passwordMismatchError = null;
+      this.emailExistsError = null;
+      this.emailInvalidError = null;
+      this.formSubmitted = false;
+      this.newEmployee = { fullName: '', email: '', password: '', confirmPassword: '', role: 'Employee' };
   }
   
   closeAddModal() {
@@ -81,13 +93,44 @@ export class AdminEmployeesDetails {
   }
   
   saveEmployee() {
-      if(!this.newEmployee.fullName || !this.newEmployee.email || !this.newEmployee.password) return;
-      this.authService.register(this.newEmployee).subscribe({
+      this.formSubmitted = true;
+      this.passwordMismatchError = null;
+      this.emailExistsError = null;
+      this.emailInvalidError = null;
+
+      if(!this.newEmployee.fullName || !this.newEmployee.email || !this.newEmployee.password || !this.newEmployee.confirmPassword) {
+        return;
+      }
+
+      // Email Validation
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(this.newEmployee.email)) {
+          this.emailInvalidError = "Invalid email format";
+          return;
+      }
+      
+      if (this.newEmployee.password !== this.newEmployee.confirmPassword) {
+        this.passwordMismatchError = "Passwords do not match!";
+        return;
+      }
+
+      // Remove confirmPassword before sending to backend
+      const { confirmPassword, ...employeeData } = this.newEmployee;
+
+      this.authService.register(employeeData).subscribe({
           next: () => {
               this.refreshEmployees();
               this.closeAddModal();
           },
-          error: (err) => console.error('Create failed', err)
+          error: (err) => {
+              console.error('Create failed', err);
+              if (err.error && err.error.message === 'Email already in use') {
+                  this.emailExistsError = 'Email is already taken';
+              } else {
+                  // Handle other errors if needed
+              }
+              this.cdr.detectChanges();
+          }
       });
   }
   /* Delete Logic */

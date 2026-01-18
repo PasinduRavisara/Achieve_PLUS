@@ -5,20 +5,23 @@
       <p>Create your account</p>
     </div>
 
-    <form>
+    <form (ngSubmit)="onSignup()">
       <div class="form-group">
         <label>Full Name</label>
         <div class="input-wrapper">
           <i class="bi bi-person"></i>
-          <input type="text" placeholder="John Doe">
+          <input type="text" placeholder="John Doe" [(ngModel)]="fullName" name="fullName">
         </div>
       </div>
       
       <div class="form-group">
-        <label>Email Address</label>
+        <div class="label-row flex-between" style="display: flex; justify-content: space-between;">
+           <label>Email Address</label>
+           <span *ngIf="emailExistsError" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">{{ emailExistsError }}</span>
+        </div>
         <div class="input-wrapper">
           <i class="bi bi-envelope"></i>
-          <input type="email" placeholder="name@company.com">
+          <input type="email" placeholder="name@company.com" [(ngModel)]="email" name="email" [class.is-invalid]="emailExistsError">
         </div>
       </div>
 
@@ -26,11 +29,22 @@
         <label>Password</label>
         <div class="input-wrapper">
           <i class="bi bi-lock"></i>
-          <input type="password" placeholder="••••••••">
+          <input type="password" placeholder="••••••••" [(ngModel)]="password" name="password">
         </div>
       </div>
 
-      <button class="btn-login glow-hover">Sign Up</button>
+      <div class="form-group">
+        <div class="label-row flex-between" style="display: flex; justify-content: space-between;">
+           <label>Confirm Password</label>
+           <span *ngIf="passwordMismatchError" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">{{ passwordMismatchError }}</span>
+        </div>
+        <div class="input-wrapper">
+          <i class="bi bi-lock-fill"></i>
+          <input type="password" placeholder="••••••••" [(ngModel)]="confirmPassword" name="confirmPassword" [class.is-invalid]="passwordMismatchError">
+        </div>
+      </div>
+
+      <button class="btn-login glow-hover" type="submit">Sign Up</button>
       
       <div class="footer">
         <p>Already have an account? <a routerLink="/login">Login</a></p>

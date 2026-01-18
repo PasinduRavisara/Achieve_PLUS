@@ -18,7 +18,7 @@
   <div class="table-card glass-panel p-0 overflow-hidden">
     <div class="table-header p-3 flex-between">
       <div class="table-title">All Employees</div>
-      <button class="btn-primary" (click)="openAddModal()" style="background: var(--primary); border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; color: black; font-weight: bold;">+ Add Employee</button>
+      <button class="btn-primary" (click)="openAddModal()" style="background: var(--primary); border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; color: black; font-weight: bold;">+ Add User</button>
     </div>
     <table class="employees-table">
       <thead>
@@ -66,32 +66,55 @@
 <div class="modal-backdrop" *ngIf="showAddModal" (click)="closeAddModal()">
     <div class="modal-content glass-card" (click)="$event.stopPropagation()">
         <div class="modal-header">
-            <h3 class="modal-title">Add Employee</h3>
+            <h3 class="modal-title">Add User</h3>
             <button class="btn-close" (click)="closeAddModal()"><i class="bi bi-x"></i></button>
         </div>
         
         <div class="modal-body">
             <div class="form-group">
-                <label class="form-label">Full Name</label>
+                <div class="label-row flex-between" style="display: flex; justify-content: space-between;">
+                    <label class="form-label">Full Name <span style="color: #ff4d4d; margin-left: 2px;">*</span></label>
+                    <span *ngIf="formSubmitted && !newEmployee.fullName" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">Required</span>
+                </div>
                 <div class="input-wrapper">
                     <i class="bi bi-person input-icon"></i>
-                    <input [(ngModel)]="newEmployee.fullName" placeholder="e.g. John Doe" class="form-control glass-input">
+                    <input [(ngModel)]="newEmployee.fullName" placeholder="e.g. John Doe" class="form-control glass-input" [class.is-invalid]="formSubmitted && !newEmployee.fullName">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Email Address</label>
+                <div class="label-row flex-between" style="display: flex; justify-content: space-between;">
+                    <label class="form-label">Email Address <span style="color: #ff4d4d; margin-left: 2px;">*</span></label>
+                    <span *ngIf="formSubmitted && !newEmployee.email" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">Required</span>
+                    <span *ngIf="emailInvalidError && !(!newEmployee.email && formSubmitted)" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">{{ emailInvalidError }}</span>
+                    <span *ngIf="emailExistsError && !emailInvalidError && !(!newEmployee.email && formSubmitted)" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">{{ emailExistsError }}</span>
+                </div>
                 <div class="input-wrapper">
                     <i class="bi bi-envelope input-icon"></i>
-                    <input [(ngModel)]="newEmployee.email" placeholder="john@example.com" class="form-control glass-input">
+                    <input [(ngModel)]="newEmployee.email" placeholder="john@example.com" class="form-control glass-input" [class.is-invalid]="emailExistsError || emailInvalidError || (formSubmitted && !newEmployee.email)">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Password</label>
+                <div class="label-row flex-between" style="display: flex; justify-content: space-between;">
+                    <label class="form-label">Password <span style="color: #ff4d4d; margin-left: 2px;">*</span></label>
+                    <span *ngIf="formSubmitted && !newEmployee.password" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">Required</span>
+                </div>
                 <div class="input-wrapper">
                     <i class="bi bi-lock input-icon"></i>
-                    <input [(ngModel)]="newEmployee.password" type="password" placeholder="••••••••" class="form-control glass-input">
+                    <input [(ngModel)]="newEmployee.password" type="password" placeholder="••••••••" class="form-control glass-input" [class.is-invalid]="formSubmitted && !newEmployee.password">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label-row flex-between" style="display: flex; justify-content: space-between;">
+                    <label class="form-label">Confirm Password <span style="color: #ff4d4d; margin-left: 2px;">*</span></label>
+                    <span *ngIf="formSubmitted && !newEmployee.confirmPassword" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">Required</span>
+                    <span *ngIf="passwordMismatchError" class="text-danger small" style="color: #ff4d4d; font-size: 0.8rem;">{{ passwordMismatchError }}</span>
+                </div>
+                <div class="input-wrapper">
+                    <i class="bi bi-lock-fill input-icon"></i>
+                    <input [(ngModel)]="newEmployee.confirmPassword" type="password" placeholder="••••••••" class="form-control glass-input" [class.is-invalid]="passwordMismatchError || (formSubmitted && !newEmployee.confirmPassword)">
                 </div>
             </div>
 
@@ -100,8 +123,8 @@
                 <div class="input-wrapper select-wrapper">
                     <i class="bi bi-shield-check input-icon"></i>
                     <select [(ngModel)]="newEmployee.role" class="form-control glass-input">
-                        <option value="ROLE_EMPLOYEE">Employee</option>
-                        <option value="ROLE_ADMIN">Admin</option>
+                        <option value="Employee">Employee</option>
+                        <option value="Admin">Admin</option>
                     </select>
                     <i class="bi bi-chevron-down select-arrow"></i>
                 </div>
@@ -111,7 +134,7 @@
         <div class="modal-actions">
             <button class="btn-cancel" (click)="closeAddModal()">Cancel</button>
             <button class="btn-save" (click)="saveEmployee()">
-                <i class="bi bi-check-lg"></i> {{ newEmployee.role === 'ROLE_ADMIN' ? 'Save Admin' : 'Save Employee' }}
+                <i class="bi bi-check-lg"></i> {{ newEmployee.role === 'Admin' ? 'Save Admin' : 'Save Employee' }}
             </button>
         </div>
     </div>
