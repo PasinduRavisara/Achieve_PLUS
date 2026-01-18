@@ -158,9 +158,16 @@ public class TaskService {
 
         if (newStatus == Task.TaskStatus.COMPLETED && oldStatus != Task.TaskStatus.COMPLETED) {
              task.setCompletedAt(LocalDateTime.now());
+             // Add points to user
+             currentUser.setPoints(currentUser.getPoints() + task.getPoints());
+             userRepository.save(currentUser);
+             
              systemLogRepository.save(com.achieveplusbe.model.SystemLog.builder().action("POINTS_EARNED").entityType("POINTS").build());
         } else if (oldStatus == Task.TaskStatus.COMPLETED && newStatus != Task.TaskStatus.COMPLETED) {
              task.setCompletedAt(null);
+             // Deduct points if task is re-opened (prevent abuse)
+             currentUser.setPoints(Math.max(0, currentUser.getPoints() - task.getPoints()));
+             userRepository.save(currentUser);
         }
         
         // Notify Admin (Creator) if completed

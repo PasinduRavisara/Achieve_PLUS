@@ -3,7 +3,6 @@ package com.achieveplusbe.service;
 import com.achieveplusbe.dto.RewardDTO;
 import com.achieveplusbe.model.Reward;
 import com.achieveplusbe.model.User;
-import com.achieveplusbe.model.Task;
 import com.achieveplusbe.repository.RewardRepository;
 import com.achieveplusbe.repository.UserRepository;
 
@@ -140,27 +139,23 @@ public class RewardService {
             return false;
         }
 
-        // Get user's current points from their achievements
-        int userPoints = user.getAssignedTasks().stream()
-                .filter(task -> task.getStatus() == Task.TaskStatus.COMPLETED)
-                .mapToInt(Task::getPoints)
-                .sum();
-
-        // Check if user has enough points
-        if (userPoints < reward.getPointsCost()) {
+        // Check if user has enough points (using persisted balance)
+        if (user.getPoints() < reward.getPointsCost()) {
             return false;
         }
 
-        // Deduct points from user's completed tasks
-        // This is a simplified version - in a real application, you might want to
-        // track points separately or implement a more sophisticated points system
+        // Deduct points from user's balance
+        user.setPoints(user.getPoints() - reward.getPointsCost());
+        userRepository.save(user);
+
         reward.setQuantity(reward.getQuantity() - 1);
         rewardRepository.save(reward);
 
-        // TODO: Implement a proper points deduction system
-        // For now, we'll just return true as the points are already earned from completed tasks
+        // Notify Admin/System about purchase if needed (optional)
         
         return true;
+        
+
     }
 
     private RewardDTO convertToDTO(Reward reward) {
