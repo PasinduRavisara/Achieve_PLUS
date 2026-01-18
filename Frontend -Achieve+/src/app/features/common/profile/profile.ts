@@ -19,6 +19,7 @@ export class Profile {
   user = {
     id: 0,
     name: '',
+    userName: '',
     email: '',
     role: '',
     bio: 'Web Developer passionate about building great user experiences.', // Placeholder/Local
@@ -38,6 +39,7 @@ export class Profile {
           this.user = {
             id: u.id,
             name: u.fullName,
+            userName: u.userName,
             email: u.email,
             role: u.role,
             bio: this.user.bio, // Preserve local
@@ -58,6 +60,7 @@ export class Profile {
     if (this.user.id) {
        this.userService.updateUser(this.user.id, { 
          fullName: this.user.name,
+         userName: this.user.userName,
          email: this.user.email 
        }).subscribe({
          next: (updated) => {
@@ -65,7 +68,10 @@ export class Profile {
            this.refreshUser();
            alert('Profile updated successfully!');
          },
-         error: (err) => alert('Failed to update profile')
+         error: (err) => {
+           console.error(err);
+           alert(err.error?.message || 'Failed to update profile');
+         }
        });
     }
   }

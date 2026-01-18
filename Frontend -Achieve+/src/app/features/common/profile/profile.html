@@ -12,6 +12,12 @@
 
     <div class="profile-body">
       <div class="info-group">
+        <label>Username</label>
+        <div *ngIf="!isEditing" class="info-value">@{{ user.userName }}</div>
+        <input *ngIf="isEditing" [(ngModel)]="user.userName" class="glass-input" placeholder="Username">
+      </div>
+
+      <div class="info-group">
         <label>Email</label>
         <div class="info-value">{{ user.email }}</div>
       </div>

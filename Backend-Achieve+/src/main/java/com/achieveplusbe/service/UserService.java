@@ -50,8 +50,11 @@ public class UserService {
             throw new RuntimeException("Email already in use");
         }
 
+        String generatedUserName = generateUniqueUserName(userDTO.getFullName());
+
         User user = User.builder()
                 .email(userDTO.getEmail())
+                .userName(generatedUserName)
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .fullName(userDTO.getFullName())
                 .role(Role.valueOf(userDTO.getRole()))
@@ -77,6 +80,14 @@ public class UserService {
 
         user.setEmail(userDTO.getEmail());
         user.setFullName(userDTO.getFullName());
+
+        // Update username if provided and different
+        if (userDTO.getUserName() != null && !userDTO.getUserName().equals(user.getUserName())) {
+            if (userRepository.existsByUserName(userDTO.getUserName())) {
+                throw new RuntimeException("Username already in use");
+            }
+            user.setUserName(userDTO.getUserName());
+        }
 
         // Only update password if provided
         if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
@@ -135,9 +146,22 @@ public class UserService {
                 .id(user.getId())
                 .email(user.getEmail())
                 .fullName(user.getFullName())
+                .userName(user.getUserName())
                 .role(user.getRole().name())
                 .points(totalPoints)
                 .build();
+    }
+
+    public String generateUniqueUserName(String fullName) {
+        String baseName = fullName.toLowerCase().replaceAll("\\s+", "");
+        String candidateName = baseName;
+        int count = 1;
+
+        while (userRepository.existsByUserName(candidateName)) {
+            candidateName = baseName + count;
+            count++;
+        }
+        return candidateName;
     }
 
 }

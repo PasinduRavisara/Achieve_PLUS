@@ -22,6 +22,8 @@ public class UserDTO {
     @NotBlank(message = "Full name is required")
     private String fullName;
 
+    private String userName;
+
     private String password;
 
     @NotBlank(message = "Role is required")
@@ -47,6 +49,14 @@ public class UserDTO {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {

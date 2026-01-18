@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 export interface UserDTO {
   id: number;
   fullName: string;
+  userName: string;
   email: string;
   role: string;
   points: number;

@@ -30,6 +30,9 @@ public class User {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Column(name = "user_name", nullable = false, unique = true)
+    private String userName;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -101,6 +104,14 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public Role getRole() {

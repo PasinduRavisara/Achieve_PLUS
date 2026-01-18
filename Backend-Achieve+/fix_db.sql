@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS reward;
 CREATE TABLE users (
     id BIGINT NOT NULL AUTO_INCREMENT,
     full_name VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) NOT NULL UNIQUE,
     role ENUM('Admin', 'Employee') NOT NULL,
     points INT DEFAULT 0,
     email VARCHAR(255) NOT NULL,
@@ -20,7 +21,8 @@ CREATE TABLE users (
     created_at DATETIME(6) NOT NULL,
     updated_at DATETIME(6) NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY (email)
+    UNIQUE KEY (email),
+    UNIQUE KEY (user_name)
 ) ENGINE=InnoDB;
 
 -- 4. Recreate task table (Order: id, title, description, assigned_id, assigned_name, priority, status, points, created_by, due_date, created_at, updated_at)

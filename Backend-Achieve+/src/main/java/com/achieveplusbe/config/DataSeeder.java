@@ -84,8 +84,17 @@ public class DataSeeder {
     }
 
     private User createUser(String fullName, String email, String password, Role role, Integer points) {
+        String baseName = fullName.toLowerCase().replaceAll("\\s+", "");
+        String candidateName = baseName;
+        int count = 1;
+        while (userRepository.existsByUserName(candidateName)) {
+            candidateName = baseName + count;
+            count++;
+        }
+
         return User.builder()
                 .fullName(fullName)
+                .userName(candidateName)
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .role(role)
