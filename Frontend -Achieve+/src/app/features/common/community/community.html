@@ -13,9 +13,23 @@
         <div class="input-area">
             <textarea 
                 [(ngModel)]="newPostContent" 
+                (input)="onInput($event)"
                 placeholder="Who are you thanking? (@name)&#10;Write a heartwarming message..."
                 rows="4"
             ></textarea>
+            
+            <div *ngIf="showMentions" class="mention-dropdown">
+                <div *ngFor="let user of mentionList" class="mention-item" (click)="selectMention(user)">
+                    <div class="mention-avatar">
+                        <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.userName" alt="av">
+                    </div>
+                    <div class="mention-info">
+                        <span class="mention-name">{{ user.fullName }}</span>
+                        <span class="mention-desc" *ngIf="user.userName === 'everyone'">Notify everyone</span>
+                        <span class="mention-handle" *ngIf="user.userName !== 'everyone'">@{{ user.userName }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-actions">
             <button class="btn-cancel" (click)="newPostContent = ''">Cancel</button>
