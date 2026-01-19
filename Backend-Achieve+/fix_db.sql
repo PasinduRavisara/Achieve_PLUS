@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS mood_logs;
 DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS reward;
+DROP TABLE IF EXISTS post_likes;
+DROP TABLE IF EXISTS community_posts;
 
 -- 3. Recreate users table (Order: id, full_name, role, points, email, password, created_at, updated_at)
 CREATE TABLE users (
@@ -60,5 +62,25 @@ CREATE TABLE reward (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
--- 6. Re-enable Foreign Key Checks
+-- 6. Recreate community_posts table
+CREATE TABLE community_posts (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    content TEXT NOT NULL,
+    user_id BIGINT NOT NULL,
+    created_at DATETIME(6) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_CommunityPost_User FOREIGN KEY (user_id) REFERENCES users (id)
+) ENGINE=InnoDB;
+
+-- 7. Recreate post_likes table
+CREATE TABLE post_likes (
+    post_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    KEY (post_id),
+    KEY (user_id),
+    CONSTRAINT FK_PostLikes_Post FOREIGN KEY (post_id) REFERENCES community_posts (id),
+    CONSTRAINT FK_PostLikes_User FOREIGN KEY (user_id) REFERENCES users (id)
+) ENGINE=InnoDB;
+
+-- 8. Re-enable Foreign Key Checks
 SET FOREIGN_KEY_CHECKS = 1;

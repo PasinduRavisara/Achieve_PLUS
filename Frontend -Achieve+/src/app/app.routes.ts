@@ -29,6 +29,7 @@ import { Profile } from './features/common/profile/profile';
 import { Settings } from './features/common/settings/settings';
 import { Leaderboard } from './features/common/leaderboard/leaderboard';
 import { KudosWall } from './features/common/kudos-wall/kudos-wall';
+import { Community } from './features/common/community/community';
 
 import { HelpSupport } from './features/common/help-support/help-support';
 
@@ -49,7 +50,7 @@ export const routes: Routes = [
       { path: 'progress-analysis', component: AdminProgressAnalysis },
       { path: 'reward-store', component: AdminRewardStore },
       { path: 'employees', component: AdminEmployeesDetails },
-      { path: 'community', component: KudosWall },
+      { path: 'community', component: Community },
       { path: 'profile', component: Profile },
       { path: 'settings', component: Settings },
       { path: 'leaderboard', component: Leaderboard },
@@ -71,7 +72,7 @@ export const routes: Routes = [
       { path: 'rewards', component: RewardsAchievements },
       { path: 'store', component: RewardStore },
       { path: 'wellness', component: EmployeeWellness },
-      { path: 'community', component: KudosWall },
+      { path: 'community', component: Community },
       { path: 'profile', component: Profile },
       { path: 'settings', component: Settings },
       { path: 'leaderboard', component: Leaderboard },

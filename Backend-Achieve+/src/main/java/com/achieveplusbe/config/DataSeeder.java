@@ -26,6 +26,7 @@ public class DataSeeder {
     private final TaskRepository taskRepository;
     private final RewardRepository rewardRepository;
     private final PasswordEncoder passwordEncoder;
+    private final com.achieveplusbe.repository.CommunityPostRepository communityPostRepository;
 
     @Bean
     @SuppressWarnings("null")
@@ -40,8 +41,9 @@ public class DataSeeder {
                     System.out.println("Reset points for Admin: " + u.getFullName());
                 });
 
+            List<User> users;
             if (userRepository.count() == 0) {
-                List<User> users = Arrays.asList(
+                users = Arrays.asList(
                     createUser("pasindu", "pasindu@gmail.com", "password", Role.Admin, 0),
                     createUser("Ravisara", "ravisara@gmail.com", "password", Role.Employee, 980),
                     createUser("Sarah Connor", "sarah@achieve.com", "password", Role.Admin, 0),
@@ -52,12 +54,16 @@ public class DataSeeder {
                     createUser("Clark Kent", "clark@achieve.com", "password", Role.Employee, 1500)
                 );
 
-                List<User> savedUsers = userRepository.saveAll(users);
+                users = userRepository.saveAll(users);
                 System.out.println("Users seeded successfully!");
                 
-                seedTasks(savedUsers);
+                seedTasks(users);
                 seedRewards();
+            } else {
+                users = userRepository.findAll();
             }
+            
+            seedCommunityPosts(users);
         };
     }
 
@@ -143,6 +149,43 @@ public class DataSeeder {
                 .imageUrl(imageUrl)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
+                .build();
+    }
+    
+    private void seedCommunityPosts(List<User> users) {
+        if (communityPostRepository.count() == 0 && !users.isEmpty()) {
+            User pasindu = users.get(0);
+            User ravisara = users.get(1);
+            User sarah = users.get(2);
+            User bruce = users.get(3);
+            User john = users.get(4);
+            User jane = users.get(5);
+            User peter = users.get(6);
+            User clark = users.get(7);
+            
+            List<com.achieveplusbe.model.CommunityPost> posts = Arrays.asList(
+                createPost("So proud of the team for hitting our Q3 targets early! @everyone", pasindu, LocalDateTime.now().minusHours(2)),
+                createPost("Big thanks to @janesmith for helping me with the frontend bugs today. You're a lifesaver! \uD83D\uDE4C", john, LocalDateTime.now().minusHours(5)),
+                createPost("Just finished the new API documentation. Check it out team!", sarah, LocalDateTime.now().minusDays(1)),
+                createPost("Does anyone have a spare monitor adapter? Mine just died.", peter, LocalDateTime.now().minusDays(1)),
+                createPost("Welcome to the team @clarkkent! Glad to have you on board.", bruce, LocalDateTime.now().minusDays(2)),
+                createPost("Happy Birthday @ravisara! Hope you have a fantastic day! \uD83C\uDF82\uD83C\uDF89", pasindu, LocalDateTime.now().minusDays(2)),
+                createPost("The new coffee machine in the break room is amazing. Highly recommend the cappuccino.", jane, LocalDateTime.now().minusDays(3)),
+                createPost("Great job on the presentation today @brucewayne. Very insightful.", ravisara, LocalDateTime.now().minusDays(3)),
+                createPost("Reminder: All timesheets are due by Friday 5 PM. Don't forget! @everyone", pasindu, LocalDateTime.now().minusDays(4)),
+                createPost("Can we get a workshop on the new security protocols? I think it would be helpful.", clark, LocalDateTime.now().minusDays(5))
+            );
+            
+            communityPostRepository.saveAll(posts);
+            System.out.println("Community posts seeded successfully!");
+        }
+    }
+    
+    private com.achieveplusbe.model.CommunityPost createPost(String content, User author, LocalDateTime createdAt) {
+        return com.achieveplusbe.model.CommunityPost.builder()
+                .content(content)
+                .author(author)
+                .createdAt(createdAt)
                 .build();
     }
 }

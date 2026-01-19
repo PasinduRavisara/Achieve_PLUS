@@ -1,0 +1,60 @@
+<div class="community-container">
+    <div class="header">
+        <h1>Community Feed</h1>
+        <p class="subtitle">Share thoughts, ideas, and appreciation</p>
+    </div>
+
+    <!-- Create Post Section -->
+    <div class="create-post-card">
+        <div class="card-header">
+            <span class="sparkle-icon">✨</span>
+            <h3>Send Appreciation</h3>
+        </div>
+        <div class="input-area">
+            <textarea 
+                [(ngModel)]="newPostContent" 
+                placeholder="Who are you thanking? (@name)&#10;Write a heartwarming message..."
+                rows="4"
+            ></textarea>
+        </div>
+        <div class="card-actions">
+            <button class="btn-cancel" (click)="newPostContent = ''">Cancel</button>
+            <button class="btn-post" (click)="createPost()" [disabled]="!newPostContent.trim()">Post Kudos</button>
+        </div>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-banner">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Feed Section -->
+    <div class="feed">
+        <div *ngIf="loading" class="loading-spinner">Loading...</div>
+        <div *ngIf="!loading && posts.length === 0 && !errorMessage" class="empty-state">No posts yet. Be the first to share!</div>
+        
+        <div *ngFor="let post of posts" class="post-card">
+            <div class="post-header">
+                <div class="avatar">
+                    <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + post.authorName" alt="Avatar">
+                </div>
+                <div class="meta">
+                    <span class="author-name">{{ post.authorName }}</span>
+                    <span class="action-text">shared a thought</span>
+                    <span class="time-ago">{{ getTimeAgo(post.createdAt) }} ago</span>
+                </div>
+            </div>
+
+            <div class="post-content">
+                <p [innerHTML]="formatContent(post.content)"></p>
+            </div>
+
+            <div class="post-footer">
+                <button class="like-btn" [class.liked]="post.isLikedByCurrentUser" (click)="toggleLike(post)">
+                    <span class="heart-icon">❤️</span>
+                    <span class="count">{{ post.likeCount }}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

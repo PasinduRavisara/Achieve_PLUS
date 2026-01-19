@@ -79,7 +79,8 @@ public class GlobalExceptionHandler {
         log.error("Unhandled exception", ex);
 
         Map<String, Object> body = new HashMap<>();
-        body.put("message", "An unexpected error occurred");
+        body.put("message", "An unexpected error occurred: " + ex.getMessage());
+        body.put("error", ex.getClass().getSimpleName());
 
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
