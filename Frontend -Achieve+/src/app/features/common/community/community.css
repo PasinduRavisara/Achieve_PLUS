@@ -1,9 +1,399 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:host {
+    display: block;
+    min-height: 100vh;
+    background: radial-gradient(circle at 0% 0%, rgba(76, 29, 149, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+    background-attachment: fixed;
+}
+
 .community-container {
-    padding: 2rem;
-    max-width: 800px;
+    padding: 3rem 2rem;
+    max-width: 850px;
     margin: 0 auto;
+    color: #f8fafc;
+    font-family: 'Outfit', sans-serif;
+    position: relative;
+}
+
+/* --- Ambient Background Glow --- */
+.community-container::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: -1;
+    pointer-events: none;
+    animation: pulseGlow 10s ease-in-out infinite alternate;
+}
+
+/* --- Header Section --- */
+.header {
+    margin-bottom: 4rem;
+    text-align: center;
+    animation: slideDown 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 2em rgba(192, 132, 252, 0.3));
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+/* --- Create Post Card (Glass) --- */
+.create-post-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.create-post-card:focus-within {
+    transform: scale(1.02);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.15);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.sparkle-icon {
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #ffd700, #fcd34d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(253, 216, 53, 0.4));
+    animation: bounce 2s infinite;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #f8fafc;
+}
+
+.input-area textarea {
+    width: 100%;
+    background: rgba(2, 6, 23, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: #f1f5f9;
+    font-size: 1.1rem;
+    font-family: inherit;
+    line-height: 1.6;
+    resize: none;
+    transition: all 0.3s ease;
+}
+
+.input-area textarea:focus {
+    outline: none;
+    background: rgba(2, 6, 23, 0.7);
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+}
+
+.input-area textarea::placeholder {
+    color: #475569;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-cancel {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+}
+
+.btn-post {
+    position: relative;
+    background: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+    border: none;
+    padding: 0.75rem 2.5rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(219, 39, 119, 0.4);
+}
+
+.btn-post:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #475569;
+    box-shadow: none;
+}
+
+.btn-post:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(219, 39, 119, 0.5);
+}
+
+/* Button Shine Effect */
+.btn-post::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn-post:not(:disabled):hover::before {
+    left: 100%;
+}
+
+/* --- Feed --- */
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.post-card {
+    background: rgba(30, 41, 59, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.post-card:nth-child(2) { animation-delay: 0.1s; }
+.post-card:nth-child(3) { animation-delay: 0.2s; }
+.post-card:nth-child(4) { animation-delay: 0.3s; }
+.post-card:nth-child(5) { animation-delay: 0.4s; }
+
+.post-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    background: rgba(30, 41, 59, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.3);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.avatar img {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px; /* Squircle */
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.post-card:hover .avatar img {
+    transform: rotate(3deg) scale(1.1);
+    border-color: #c084fc;
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.author-name {
+    font-weight: 700;
+    font-size: 1.15rem;
     color: #fff;
-    font-family: 'Inter', sans-serif;
+}
+
+.time-ago {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.post-content {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #e2e8f0;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 3px solid rgba(139, 92, 246, 0.3);
+    transition: border-color 0.3s;
+}
+
+.post-card:hover .post-content {
+    border-left-color: #c084fc;
+}
+
+/* --- Mentions --- */
+::ng-deep .mention {
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+::ng-deep .mention:hover {
+    background: rgba(56, 189, 248, 0.2);
+    transform: translateY(-1px);
+}
+
+::ng-deep .mention-everyone {
+    color: #f472b6;
+    background: rgba(244, 114, 182, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: 6px;
+    font-weight: 700;
+    border: 1px dashed rgba(244, 114, 182, 0.3);
+}
+
+/* --- Like Button --- */
+.post-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.like-btn {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    padding: 0.6rem 1.2rem;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.like-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: scale(1.05);
+}
+
+.like-btn.liked {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(236, 72, 153, 0.15));
+    border-color: rgba(244, 63, 94, 0.5);
+    color: #fda4af;
+    box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
+}
+
+.heart-icon {
+    font-size: 1.2rem;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.like-btn:active .heart-icon {
+    transform: scale(0.8);
+}
+
+.like-btn.liked .heart-icon {
+    animation: heartPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* --- Keyframes --- */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes pulseGlow {
+    from { opacity: 0.5; transform: translateX(-50%) scale(0.8); }
+    to { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+    100% { transform: scale(1); }
+}
+
+/* --- Error/Empty States --- */
+.error-banner {
+    background: rgba(220, 38, 38, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #64748b;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
 }
 
 .header {
