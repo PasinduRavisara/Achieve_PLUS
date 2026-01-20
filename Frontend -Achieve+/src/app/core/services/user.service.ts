@@ -10,7 +10,7 @@ export interface UserDTO {
   email: string;
   role: string;
   points: number;
-  joinDate?: string; // Optional if not always sent
+  createdAt?: string; // Mapped from backend 'createdAt'
   status?: string;   // Optional
 }
 

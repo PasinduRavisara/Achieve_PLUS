@@ -152,6 +152,7 @@ public class DataSeeder {
                 .build();
     }
     
+    @SuppressWarnings("null")
     private void seedCommunityPosts(List<User> users) {
         if (communityPostRepository.count() == 0 && !users.isEmpty()) {
             User pasindu = users.get(0);

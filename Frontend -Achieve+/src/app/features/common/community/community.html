@@ -43,11 +43,11 @@
     </div>
 
     <!-- Feed Section -->
-    <div class="feed">
+    <div class="feed" (click)="handleFeedClick($event)">
         <div *ngIf="loading" class="loading-spinner">Loading...</div>
         <div *ngIf="!loading && posts.length === 0 && !errorMessage" class="empty-state">No posts yet. Be the first to share!</div>
         
-        <div *ngFor="let post of posts" class="post-card">
+        <div *ngFor="let post of posts; trackBy: trackByPostId" class="post-card">
             <div class="post-header">
                 <div class="avatar">
                     <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + post.authorName" alt="Avatar">
@@ -55,12 +55,12 @@
                 <div class="meta">
                     <span class="author-name">{{ post.authorName }}</span>
                     <span class="action-text">shared a thought</span>
-                    <span class="time-ago">{{ getTimeAgo(post.createdAt) }} ago</span>
+                    <span class="time-ago">{{ post.relativeTime }} ago</span>
                 </div>
             </div>
 
             <div class="post-content">
-                <p [innerHTML]="formatContent(post.content)"></p>
+                <p [innerHTML]="post.formattedContent"></p>
             </div>
 
             <div class="post-footer">
@@ -68,6 +68,63 @@
                     <span class="heart-icon">❤️</span>
                     <span class="count">{{ post.likeCount }}</span>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div *ngIf="selectedUser" class="user-modal-overlay" (click)="closeUserModal()">
+        <div class="user-modal-card" (click)="$event.stopPropagation()">
+            <!-- Background Effects -->
+            <div class="modal-background-fx">
+                <div class="fx-blob blob-1"></div>
+                <div class="fx-blob blob-2"></div>
+                <div class="fx-grid"></div>
+            </div>
+
+            <button class="modal-close" (click)="closeUserModal()">×</button>
+            
+            <div class="modal-content-layer">
+                <div class="modal-top-section">
+                    <div class="avatar-halo">
+                        <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + selectedUser.userName" [alt]="selectedUser.fullName" class="modal-avatar-img">
+                        <div class="status-indicator"></div>
+                    </div>
+                    
+                    <div class="identity-block">
+                        <h2 class="user-fullname">{{ selectedUser.fullName }}</h2>
+                        <a [href]="'/admin/profile/' + selectedUser.userName" class="user-handle">@{{ selectedUser.userName }}</a>
+                    </div>
+                </div>
+
+                <div class="modal-stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-bg gold">
+                            <span class="icon">✨</span>
+                        </div>
+                        <div class="stat-content">
+                            <span class="value gold-text">{{ selectedUser.points || 0 }}</span>
+                            <span class="label">Total Points</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon-bg purple">
+                            <span class="icon">🛡️</span>
+                        </div>
+                        <div class="stat-content">
+                            <span class="value purple-text">{{ selectedUser.role || 'Member' }}</span>
+                            <span class="label">Current Role</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="contact-pill">
+                        <span class="icon">✉️</span>
+                        {{ selectedUser.email }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

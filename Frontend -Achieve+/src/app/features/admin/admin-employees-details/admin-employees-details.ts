@@ -46,16 +46,28 @@ export class AdminEmployeesDetails {
       );
   }
 
+  /* User Detail Modal Logic */
+  selectedUser: any | null = null; // Holds the user to show in the modal
+
+  viewUser(emp: any) {
+      this.selectedUser = emp;
+  }
+
+  closeUserModal() {
+      this.selectedUser = null;
+  }
+
   refreshEmployees() {
     this.userService.getAllUsers().subscribe({
       next: (users) => {
         this.employees = users.map(u => ({
           id: u.id,
           name: u.fullName,
+          userName: u.userName, // Added this field
           email: u.email,
           role: u.role,
           points: u.points || 0,
-          joinDate: u.joinDate || '2026-01-01', 
+          joinDate: u.createdAt || '2026-01-01', 
           status: u.status || 'active', 
           avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.fullName}`
         }));
@@ -164,7 +176,8 @@ export class AdminEmployeesDetails {
           const id = this.userToDeleteId;
           this.userService.deleteUser(id).subscribe({
               next: () => {
-                  this.employees = this.employees.filter(e => e.id !== id);
+                   // Refresh the full list from backend to ensure state consistency
+                  this.refreshEmployees(); 
                   this.isDeleting = false;
                   this.showDeleteModal = false;
                   this.userToDeleteId = null;

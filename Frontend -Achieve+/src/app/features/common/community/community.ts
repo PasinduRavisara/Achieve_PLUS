@@ -58,7 +58,11 @@ export class Community implements OnInit {
     this.communityService.getAllPosts().subscribe({
       next: (data) => {
         console.log('Posts loaded:', data);
-        this.posts = data;
+        this.posts = data.map(post => ({
+          ...post,
+          formattedContent: this.formatContent(post.content),
+          relativeTime: this.getTimeAgo(post.createdAt)
+        }));
         this.loading = false;
         this.cdr.detectChanges();
       },
@@ -100,7 +104,7 @@ export class Community implements OnInit {
       }
   }
 
-  selectMention(user: { userName: string }) {
+  selectMention(user: { userName: string, fullName: string }) {
       const textarea = document.querySelector('.input-area textarea') as HTMLTextAreaElement;
       if (!textarea) return;
 
@@ -111,13 +115,16 @@ export class Community implements OnInit {
       const lastAtPos = textBeforeCursor.lastIndexOf('@');
       const newTextBefore = textBeforeCursor.substring(0, lastAtPos);
       
-      this.newPostContent = `${newTextBefore}@${user.userName} ${textAfterCursor}`;
+      const mentionName = user.userName === 'everyone' ? 'everyone' : user.fullName;
+      // Remove the '@' symbol by just appending the name directly to newTextBefore
+      this.newPostContent = `${newTextBefore}${mentionName} ${textAfterCursor}`;
       this.showMentions = false;
       
       // Restore focus and cursor
       setTimeout(() => {
           textarea.focus();
-          const newCursorPos = lastAtPos + user.userName.length + 2; // @ + name + space
+          // Position is length of before text + length of name + 1 for space. NO +2 for @ symbol.
+          const newCursorPos = newTextBefore.length + mentionName.length + 1; 
           textarea.setSelectionRange(newCursorPos, newCursorPos);
       });
   }
@@ -126,6 +133,10 @@ export class Community implements OnInit {
     if (!this.newPostContent.trim()) return;
     this.communityService.createPost(this.newPostContent).subscribe({
       next: (post) => {
+        // Pre-calculate display values for the new post
+        post.formattedContent = this.formatContent(post.content);
+        post.relativeTime = this.getTimeAgo(post.createdAt);
+        
         this.posts.unshift(post);
         this.newPostContent = '';
         this.cdr.detectChanges();
@@ -135,6 +146,10 @@ export class Community implements OnInit {
           alert("Failed to create post. " + (err.error?.message || ""));
       }
     });
+  }
+
+  trackByPostId(index: number, post: CommunityPost): number {
+    return post.id;
   }
 
   toggleLike(post: CommunityPost) {
@@ -159,19 +174,81 @@ export class Community implements OnInit {
   formatContent(content: string): SafeHtml {
     let escaped = this.escapeHtml(content);
 
-    // Replace @username with span using regex
-    escaped = escaped.replace(/@(\w+)/g, (match, username) => {
-        if (username.toLowerCase() === 'everyone') {
-             return `<span class="mention-everyone">@everyone</span>`;
+    // Sort users by length descending to match longest valid names first (e.g. "John Doe" before "John")
+    const sortedUsers = [...this.users].sort((a, b) => b.fullName.length - a.fullName.length);
+    
+    // Store replacements to apply later to avoid nested replacement issues
+    const replacements: { placeholder: string, html: string }[] = [];
+
+    // Handle @everyone
+    const everyonePlaceholder = `__MENTION_EVERYONE__`;
+    if (escaped.includes('@everyone')) {
+         replacements.push({
+             placeholder: everyonePlaceholder,
+             html: `<a class="mention-everyone" href="javascript:void(0)">@everyone</a>`
+         });
+         escaped = escaped.replace(/@everyone/gi, everyonePlaceholder);
+    }
+
+    sortedUsers.forEach((u, index) => {
+        const placeholder = `__MENTION_USER_${index}__`;
+        let matched = false;
+
+        // Match FullName (case insensitive, whole word) - Optional '@' prefix to consume it if present
+        const nameRegex = new RegExp(`(@?)\\b${this.escapeRegExp(u.fullName)}\\b`, 'gi');
+        if (nameRegex.test(escaped)) {
+            escaped = escaped.replace(nameRegex, placeholder);
+            matched = true;
         }
-        const fullName = this.userMap.get(username.toLowerCase());
-        if (fullName) {
-             return `<span class="mention" title="@${username}">${fullName}</span>`;
+
+        // Match @UserName (backward compatibility)
+        if (!matched && u.userName) {
+            const userRegex = new RegExp(`@${this.escapeRegExp(u.userName)}\\b`, 'gi'); 
+            if (userRegex.test(escaped)) {
+                 escaped = escaped.replace(userRegex, placeholder);
+                 matched = true;
+            }
         }
-        return `<span class="mention-unknown">${match}</span>`;
+
+        if (matched) {
+            replacements.push({
+                placeholder: placeholder,
+                html: `<span class="mention-link" data-username="${u.userName}" title="@${u.userName}">${u.fullName}</span>`
+            });
+        }
+    });
+
+    // Restore text content (already escaped) to check for matches, but actually we replaced in 'escaped' directly.
+    // Now replace placeholders with HTML
+    replacements.forEach(rep => {
+        // Use split/join for faster global string replacement without regex issues
+        escaped = escaped.split(rep.placeholder).join(rep.html);
     });
 
     return this.sanitizer.bypassSecurityTrustHtml(escaped);
+  }
+
+  handleFeedClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('mention-link')) {
+        const userName = target.getAttribute('data-username');
+        if (userName) {
+            const user = this.users.find(u => u.userName === userName);
+            if (user) {
+                this.selectedUser = user;
+            }
+        }
+    }
+  }
+
+  selectedUser: UserDTO | null = null;
+  
+  closeUserModal() {
+      this.selectedUser = null;
+  }
+
+  private escapeRegExp(string: string): string {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   private escapeHtml(text: string): string {
@@ -180,8 +257,8 @@ export class Community implements OnInit {
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
-        .replace(/'/g, "&#039;"); // Quote not replaced to avoid breaking attributes if any, though plain text shouldn't have them. 
-        // Actually for pure text safety, &quot; is good.
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
   }
 
   getTimeAgo(dateStr: string): string {

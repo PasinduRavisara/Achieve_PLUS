@@ -536,3 +536,339 @@ select.form-control option {
     text-transform: none;
     letter-spacing: 0;
 }
+
+
+/* --- User Detail Modal (Reused Styles from Community) --- */
+.user-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.user-modal-card {
+    position: relative;
+    width: 90%;
+    max-width: 380px;
+    background: rgba(15, 23, 42, 0.85);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                inset 0 0 60px rgba(0,0,0,0.5);
+    overflow: hidden;
+    animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Background Effects */
+.modal-background-fx {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.fx-blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: blobFloat 8s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blob-1 {
+    top: -30%;
+    left: -20%;
+    width: 250px;
+    height: 250px;
+    background: #4f46e5; /* Indigo */
+}
+
+.blob-2 {
+    bottom: -30%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: #c026d3; /* Fuchsia */
+    animation-delay: -4s;
+}
+
+.fx-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+}
+
+.modal-content-layer {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    line-height: 1;
+    padding-bottom: 2px; /* Visual center tweak */
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* User Identity */
+.modal-top-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    width: 100%;
+}
+
+.avatar-halo {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Creating a double-ring animated halo */
+.avatar-halo::before,
+.avatar-halo::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    z-index: -1;
+}
+
+.avatar-halo::before {
+    background: linear-gradient(135deg, #6366f1, #d946ef) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: spinSlow 8s linear infinite;
+}
+
+.avatar-halo::after {
+    inset: -12px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(217, 70, 239, 0.3)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    filter: blur(2px);
+    animation: spinSlow 12s linear infinite reverse;
+}
+
+.modal-avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 4px solid #0f172a;
+    background: #1e293b;
+    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.3);
+    object-fit: cover;
+}
+
+.status-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 22px;
+    height: 22px;
+    background: #10b981;
+    border: 4px solid #0f172a;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #10b981;
+    z-index: 2;
+}
+
+.identity-block {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.user-fullname {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+    letter-spacing: -0.01em;
+    background: linear-gradient(to bottom, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-handle {
+    display: inline-block;
+    color: #a5b4fc;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 2px 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.user-handle:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: #c7d2fe;
+}
+
+
+/* Stats Bento Grid */
+.modal-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+
+.stat-card:hover {
+    background: rgba(30, 41, 59, 0.6);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.stat-icon-bg {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.stat-icon-bg.gold { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+.stat-icon-bg.purple { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-content .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-content .label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+}
+
+.gold-text { color: #fcd34d; text-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
+.purple-text { color: #e9d5ff; text-shadow: 0 0 15px rgba(192, 132, 252, 0.2); }
+
+
+/* Footer */
+.modal-footer {
+    width: 100%;
+}
+
+.contact-pill {
+    width: 100%;
+    text-align: center;
+    padding: 0.9rem;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.5);
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    transition: all 0.2s;
+    cursor: default;
+    user-select: all; /* Make easy to copy */
+}
+
+.contact-pill:hover {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #fff;
+}
+
+.contact-pill .icon {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+@keyframes scaleUp { from { transform: scale(0.9) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+@keyframes blobFloat { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, -20px); } }
+@keyframes spinSlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

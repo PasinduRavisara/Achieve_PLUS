@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { SafeHtml } from '@angular/platform-browser';
+
 export interface CommunityPost {
   id: number;
   content: string;
@@ -11,6 +13,8 @@ export interface CommunityPost {
   createdAt: string;
   likeCount: number;
   isLikedByCurrentUser: boolean;
+  formattedContent?: SafeHtml;
+  relativeTime?: string;
 }
 
 @Injectable({
