@@ -25,8 +25,8 @@ cd Achieve_PLUS
 
 ```sql
 CREATE DATABASE IF NOT EXISTS achieveplus;
-CREATE USER IF NOT EXISTS 'achieveUser'@'localhost' IDENTIFIED BY 'apple123';
-GRANT ALL PRIVILEGES ON achieveplus.* TO 'achieveUser'@'localhost';
+CREATE USER IF NOT EXISTS 'your_username'@'localhost' IDENTIFIED BY 'your_password';
+GRANT ALL PRIVILEGES ON achieveplus.* TO 'your_username'@'localhost';
 FLUSH PRIVILEGES;
 ```
 > **Note:** If you prefer different credentials, remember to update them in the Backend `.env` file later.
@@ -50,9 +50,9 @@ The backend requires environment variables to connect to the database and handle
 3. Open the `.env` file and paste the following configuration:
    ```properties
    DB_URL=jdbc:mysql://localhost:3306/achieveplus
-   DB_USERNAME=achieveUser
-   DB_PASSWORD=apple123
-   JWT_SECRET=YourSuperSecureAlsoVeryLongSecretKeyForJWTAuth123!
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   JWT_SECRET=your_jwt_secret_key_here
    FRONTEND_URL=http://localhost:4200
    ```
    > **Important:** The `JWT_SECRET` must be at least 256 bits (32+ characters).
