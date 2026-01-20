@@ -1,80 +1,37 @@
-# Achieve+ Project
+# Achieve+ 🌟
 
-## Prerequisites
-Before running this project, ensure you have the following installed:
-*   **Java Development Kit (JDK) 17** or higher.
-*   **Node.js** and **npm**.
-*   **MySQL Server** (running on port 3306).
+**Achieve+** is a modern, gamified employee engagement and task management platform designed to boost productivity and positive company culture. It combines robust task tracking with social interaction, a points-based reward system, and comprehensive analytics.
 
-## 🚀 Quick Setup Guide
+![Achieve+ Banner](https://via.placeholder.com/1200x400?text=Achieve%2B+Gamified+Employee+Engagement)
+*(Replace with actual screenshot link)*
 
-### 1. Database Setup
-1.  Open your MySQL Client (Workbench, Terminal, etc.).
-2.  Run the following SQL commands to create the database and user:
+## 🚀 Key Features
 
-```sql
-CREATE DATABASE IF NOT EXISTS achieveplus;
-CREATE USER IF NOT EXISTS 'achieveUser'@'localhost' IDENTIFIED BY 'apple123';
-GRANT ALL PRIVILEGES ON achieveplus.* TO 'achieveUser'@'localhost';
-FLUSH PRIVILEGES;
-```
+*   **🏆 Gamification & Rewards**: Earn points for completing tasks and redeem them for real-world rewards.
+*   **📊 Interactive Dashboard**: Visual analytics for task completion, user progress, and team performance.
+*   **💬 Community Hub**: A social space for employees to share updates, achievements, and engage with likes/comments.
+*   **👥 Admin Management**: Comprehensive tools for managing employees, departments, and system configurations.
+*   **🔐 Secure & Scalable**: built with role-based security and a robust backend architecture.
 
-### 2. Environment Configuration (Backend)
-The backend requires a `.env` file to store sensitive secrets. This file is ignored by Git for security.
+## 🛠️ Technology Stack
 
-1.  Navigate to the `Backend-Achieve+` folder.
-2.  Create a new file named `.env`.
-3.  Paste the following content into it:
+*   **Frontend**: Angular, TypeScript, Modern CSS (Glassmorphism, Responsive Design)
+*   **Backend**: Java Spring Boot, Hibernate/JPA
+*   **Database**: MySQL
+*   **Security**: JWT Authentication
 
-```properties
-DB_USERNAME=your_db_username
-DB_PASSWORD=your_db_password
-JWT_SECRET=your_secure_jwt_secret_key_min_256_bits
-```
-*(Note: You can change these values, but update your Database config to match).*
+## 👩‍💻 For Developers
 
-### 3. Install Dependencies (Frontend)
-1.  Open a terminal in the `Frontend -Achieve+` folder.
-2.  Run:
-    ```bash
-    npm install
-    ```
+Interested in contributing or running the project locally? 
+
+👉 **[Read the Developer Guide (DEV_README.md)](./DEV_README.md)**
+
+The `DEV_README.md` contains step-by-step instructions for:
+1.  Cloning the repository.
+2.  Setting up the database.
+3.  Configuring environment variables (`.env`).
+4.  Running the backend and frontend services.
 
 ---
 
-## ▶️ How to Run
-
-### Option 1: Using VS Code (Recommended)
-1.  Open the project in **VS Code**.
-2.  Go to the **Run and Debug** tab (Ctrl+Shift+D).
-3.  Select **"Run Backend (Spring Boot)"** and press **Play (F5)**.
-    *   *This automatically loads your `.env` file and starts the server.*
-4.  Open a terminal for the frontend:
-    ```bash
-    cd "Frontend -Achieve+"
-    npm run dev
-    ```
-
-### Option 2: Using Terminal
-
-**Backend:**
-```bash
-cd "Backend-Achieve+"
-# You must manually export env vars or use a helper, 
-# OR use the VS Code method above which is easier.
-.\mvnw spring-boot:run
-```
-*(Note: Running `mvnw` directly in PowerShell ignores `.env` files unless you manually load them first).*
-
-**Frontend:**
-```bash
-cd "Frontend -Achieve+"
-npm run dev
-```
-
----
-
-##  Ports
-*   **Frontend**: http://localhost:5173
-*   **Backend**: http://localhost:8080
-*   **Database**: Port 3306
+© 2026 Achieve+ Team
