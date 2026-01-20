@@ -27,8 +27,10 @@ export class AdminEmployeesDetails {
       role: 'Employee'
   };
 
-  /* Search Logic */
+  /* Search & Sort Logic */
   currentSearchQuery = '';
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor() {}
 
@@ -37,13 +39,46 @@ export class AdminEmployeesDetails {
     this.refreshEmployees();
   }
 
+  sort(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+  }
+
   get filteredEmployees() {
-      if (!this.currentSearchQuery) return this.employees;
-      const q = this.currentSearchQuery.toLowerCase();
-      return this.employees.filter(e => 
-          e.name.toLowerCase().includes(q) || 
-          e.email.toLowerCase().includes(q)
-      );
+      let filtered = this.employees;
+      
+      // Filter
+      if (this.currentSearchQuery) {
+          const q = this.currentSearchQuery.toLowerCase();
+          filtered = filtered.filter(e => 
+              e.name.toLowerCase().includes(q) || 
+              e.email.toLowerCase().includes(q)
+          );
+      }
+
+      // Sort
+      if (this.sortColumn) {
+          filtered = [...filtered].sort((a, b) => { // Sort on a copy
+              const valA = a[this.sortColumn];
+              const valB = b[this.sortColumn];
+              let comparison = 0;
+
+              if (typeof valA === 'string' && typeof valB === 'string') {
+                  comparison = valA.localeCompare(valB);
+              } else {
+                  if (valA < valB) comparison = -1;
+                  else if (valA > valB) comparison = 1;
+              }
+
+              return this.sortDirection === 'asc' ? comparison : -comparison;
+          });
+      }
+
+      return filtered;
   }
 
   /* User Detail Modal Logic */

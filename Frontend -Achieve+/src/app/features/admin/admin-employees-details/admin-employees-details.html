@@ -23,12 +23,30 @@
     <table class="employees-table">
       <thead>
         <tr>
-          <th>NAME</th>
-          <th>EMAIL</th>
-          <th>ROLE</th>
-          <th>JOIN DATE</th>
-          <th>POINTS</th>
-          <th>STATUS</th>
+          <th (click)="sort('name')" style="cursor: pointer;">
+            NAME 
+            <i *ngIf="sortColumn === 'name'" class="bi" [class.bi-caret-up-fill]="sortDirection === 'asc'" [class.bi-caret-down-fill]="sortDirection === 'desc'"></i>
+          </th>
+          <th (click)="sort('email')" style="cursor: pointer;">
+            EMAIL
+            <i *ngIf="sortColumn === 'email'" class="bi" [class.bi-caret-up-fill]="sortDirection === 'asc'" [class.bi-caret-down-fill]="sortDirection === 'desc'"></i>
+          </th>
+          <th (click)="sort('role')" style="cursor: pointer;">
+            ROLE
+            <i *ngIf="sortColumn === 'role'" class="bi" [class.bi-caret-up-fill]="sortDirection === 'asc'" [class.bi-caret-down-fill]="sortDirection === 'desc'"></i>
+          </th>
+          <th (click)="sort('joinDate')" style="cursor: pointer;">
+            JOIN DATE
+            <i *ngIf="sortColumn === 'joinDate'" class="bi" [class.bi-caret-up-fill]="sortDirection === 'asc'" [class.bi-caret-down-fill]="sortDirection === 'desc'"></i>
+          </th>
+          <th (click)="sort('points')" style="cursor: pointer;">
+            POINTS
+            <i *ngIf="sortColumn === 'points'" class="bi" [class.bi-caret-up-fill]="sortDirection === 'asc'" [class.bi-caret-down-fill]="sortDirection === 'desc'"></i>
+          </th>
+          <th (click)="sort('status')" style="cursor: pointer;">
+            STATUS
+            <i *ngIf="sortColumn === 'status'" class="bi" [class.bi-caret-up-fill]="sortDirection === 'asc'" [class.bi-caret-down-fill]="sortDirection === 'desc'"></i>
+          </th>
           <th style="min-width: 80px;">ACTIONS</th>
         </tr>
       </thead>
