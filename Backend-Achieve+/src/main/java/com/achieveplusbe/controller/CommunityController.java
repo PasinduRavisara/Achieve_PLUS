@@ -42,6 +42,8 @@ public class CommunityController {
         return ResponseEntity.ok(communityService.toggleLike(postId, currentUser.getId()));
     }
 
+
+
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();

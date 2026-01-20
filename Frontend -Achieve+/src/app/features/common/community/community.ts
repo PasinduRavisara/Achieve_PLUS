@@ -148,28 +148,37 @@ export class Community implements OnInit {
     });
   }
 
+  toggleLike(post: CommunityPost) {
+    // Optimistic update
+    const originalLiked = post.likedByCurrentUser;
+    const originalCount = post.likeCount;
+
+    post.likedByCurrentUser = !post.likedByCurrentUser;
+    post.likeCount += post.likedByCurrentUser ? 1 : -1;
+
+    this.communityService.toggleLike(post.id).subscribe({
+      next: (updatedPost) => {
+        // Sync with server response if needed, but we mostly trust the toggle
+        // To be safe, we can update with server data except for formatted content which we want to keep
+        post.likeCount = updatedPost.likeCount;
+        post.likedByCurrentUser = updatedPost.likedByCurrentUser;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        // Revert on error
+        console.error("Failed to toggle like", err);
+        post.likedByCurrentUser = originalLiked;
+        post.likeCount = originalCount;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
   trackByPostId(index: number, post: CommunityPost): number {
     return post.id;
   }
 
-  toggleLike(post: CommunityPost) {
-    const originalLiked = post.isLikedByCurrentUser;
-    const originalCount = post.likeCount;
-    
-    post.isLikedByCurrentUser = !post.isLikedByCurrentUser;
-    post.likeCount += post.isLikedByCurrentUser ? 1 : -1;
 
-    this.communityService.toggleLike(post.id).subscribe({
-      next: (updatedPost) => {
-        post.likeCount = updatedPost.likeCount;
-        post.isLikedByCurrentUser = updatedPost.isLikedByCurrentUser;
-      },
-      error: () => {
-        post.isLikedByCurrentUser = originalLiked;
-        post.likeCount = originalCount;
-      }
-    });
-  }
 
   formatContent(content: string): SafeHtml {
     let escaped = this.escapeHtml(content);

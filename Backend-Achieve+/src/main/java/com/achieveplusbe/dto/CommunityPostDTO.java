@@ -19,5 +19,5 @@ public class CommunityPostDTO {
     private String authorAvatar; // If we have avatar logic, otherwise maybe use placeholder in frontend
     private LocalDateTime createdAt;
     private int likeCount;
-    private boolean isLikedByCurrentUser;
+    private boolean likedByCurrentUser;
 }

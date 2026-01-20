@@ -37,6 +37,8 @@ public class CommunityPost {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "post_likes",
@@ -44,5 +46,6 @@ public class CommunityPost {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     @Builder.Default
-    private List<User> likedBy = new ArrayList<>();
+    private java.util.Set<User> likedBy = new java.util.HashSet<>();
+
 }

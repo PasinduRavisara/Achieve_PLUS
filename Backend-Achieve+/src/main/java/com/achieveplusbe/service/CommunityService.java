@@ -62,18 +62,21 @@ public class CommunityService {
     }
 
     private CommunityPostDTO mapToDTO(CommunityPost post, Long currentUserId) {
-        boolean isLiked = post.getLikedBy().stream()
-                .anyMatch(u -> u.getId().equals(currentUserId));
-        
+        boolean likedByCurrentUser = false;
+        if (post.getLikedBy() != null) {
+            // Check by ID to be safe if equals/hashcode relies on mutable fields or isn't perfect
+            likedByCurrentUser = post.getLikedBy().stream()
+                    .anyMatch(u -> u.getId().equals(currentUserId));
+        }
+
         return CommunityPostDTO.builder()
                 .id(post.getId())
                 .content(post.getContent())
                 .authorId(post.getAuthor().getId())
-                .authorName(post.getAuthor().getFullName()) // Using Full Name for display
-                // .authorAvatar() // Placeholder logic can be handled in frontend
+                .authorName(post.getAuthor().getFullName())
                 .createdAt(post.getCreatedAt())
-                .likeCount(post.getLikedBy().size())
-                .isLikedByCurrentUser(isLiked)
+                .likeCount(post.getLikedBy() == null ? 0 : post.getLikedBy().size())
+                .likedByCurrentUser(likedByCurrentUser)
                 .build();
     }
 }

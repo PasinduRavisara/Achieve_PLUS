@@ -11,10 +11,10 @@ export interface CommunityPost {
   authorName: string;
   authorAvatar?: string;
   createdAt: string;
-  likeCount: number;
-  isLikedByCurrentUser: boolean;
   formattedContent?: SafeHtml;
   relativeTime?: string;
+  likeCount: number;
+  likedByCurrentUser: boolean;
 }
 
 @Injectable({

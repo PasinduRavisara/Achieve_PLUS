@@ -49,13 +49,21 @@
         
         <div *ngFor="let post of posts; trackBy: trackByPostId" class="post-card">
             <div class="post-header">
-                <div class="avatar">
-                    <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + post.authorName" alt="Avatar">
+                <div class="header-left">
+                    <div class="avatar">
+                        <img [src]="'https://api.dicebear.com/7.x/avataaars/svg?seed=' + post.authorName" alt="Avatar">
+                    </div>
+                    <div class="meta">
+                        <span class="author-name">{{ post.authorName }}</span>
+                        <span class="action-text">shared a thought</span>
+                        <span class="time-ago">{{ post.relativeTime }} ago</span>
+                    </div>
                 </div>
-                <div class="meta">
-                    <span class="author-name">{{ post.authorName }}</span>
-                    <span class="action-text">shared a thought</span>
-                    <span class="time-ago">{{ post.relativeTime }} ago</span>
+                <div class="header-right">
+                    <button class="like-btn" [class.liked]="post.likedByCurrentUser" (click)="toggleLike(post); $event.stopPropagation()">
+                        <span class="heart-icon">{{ post.likedByCurrentUser ? '❤️' : '🤍' }}</span>
+                        <span class="like-count" *ngIf="post.likeCount > 0">{{ post.likeCount }}</span>
+                    </button>
                 </div>
             </div>
 
@@ -63,12 +71,7 @@
                 <p [innerHTML]="post.formattedContent"></p>
             </div>
 
-            <div class="post-footer">
-                <button class="like-btn" [class.liked]="post.isLikedByCurrentUser" (click)="toggleLike(post)">
-                    <span class="heart-icon">❤️</span>
-                    <span class="count">{{ post.likeCount }}</span>
-                </button>
-            </div>
+
         </div>
     </div>
 
