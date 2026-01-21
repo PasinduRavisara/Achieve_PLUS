@@ -2,8 +2,6 @@
 
 **Achieve+** is a modern, gamified employee engagement and task management platform designed to boost productivity and positive company culture. It combines robust task tracking with social interaction, a points-based reward system, and comprehensive analytics.
 
-![Achieve+ Banner](https://via.placeholder.com/1200x400?text=Achieve%2B+Gamified+Employee+Engagement)
-*(Replace with actual screenshot link)*
 
 ## 🚀 Key Features
 
