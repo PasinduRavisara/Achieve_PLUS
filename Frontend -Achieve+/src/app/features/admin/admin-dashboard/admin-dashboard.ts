@@ -35,7 +35,7 @@ export class AdminDashboard {
 
   quickLinks = [
     { title: 'Task Management', desc: 'Create, assign, and track tasks', icon: 'bi-list-ul', route: '/admin/tasks', color: 'var(--primary)' },
-    { title: 'Employee Management', desc: 'Manage profiles and roles', icon: 'bi-people', route: '/admin/employees', color: '#00ff88' },
+    { title: 'User Management', desc: 'Manage profiles and roles', icon: 'bi-people', route: '/admin/employees', color: '#00ff88' },
     { title: 'Progress Analysis', desc: 'View detailed analytics', icon: 'bi-graph-up', route: '/admin/progress-analysis', color: 'var(--secondary)' },
     { title: 'Leaderboard', desc: 'View top performers', icon: 'bi-trophy', route: '/admin/leaderboard', color: '#ffd700' }
   ];

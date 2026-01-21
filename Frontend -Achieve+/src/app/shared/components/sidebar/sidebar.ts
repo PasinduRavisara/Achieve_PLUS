@@ -29,7 +29,7 @@ export class Sidebar {
         { label: 'Task Management', icon: 'bi-kanban', route: '/admin/tasks' },
         { label: 'Progress Analysis', icon: 'bi-graph-up-arrow', route: '/admin/progress-analysis' },
         { label: 'Reward Store', icon: 'bi-shop', route: '/admin/reward-store' },
-        { label: 'Employees', icon: 'bi-people-fill', route: '/admin/employees' },
+        { label: 'Users', icon: 'bi-people-fill', route: '/admin/employees' },
         { label: 'Leaderboard', icon: 'bi-trophy-fill', route: '/admin/leaderboard' },
         { label: 'Community', icon: 'bi-chat-heart-fill', route: '/admin/community' },
       ];

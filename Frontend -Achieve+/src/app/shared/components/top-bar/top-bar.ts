@@ -60,7 +60,7 @@ export class TopBar {
     // Update Title
     if (url.includes('tasks')) this.currentRouteName = 'Task Management';
     else if (url.includes('progress')) this.currentRouteName = 'Progress Analysis';
-    else if (url.includes('employees')) this.currentRouteName = 'Employee Management';
+    else if (url.includes('employees')) this.currentRouteName = 'User Management';
     else if (url.includes('store')) this.currentRouteName = 'Reward Store';
     else if (url.includes('wellness')) this.currentRouteName = 'Wellness Hub';
     else if (url.includes('leaderboard')) this.currentRouteName = 'Leaderboard';
