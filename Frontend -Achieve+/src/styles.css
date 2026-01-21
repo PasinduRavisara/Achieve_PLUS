@@ -5,8 +5,8 @@
   --bg-glass: rgba(255, 255, 255, 0.03);
   --primary: #00f2ff;
   --primary-glow: rgba(0, 242, 255, 0.5);
-  --secondary: #bd00ff;
-  --secondary-glow: rgba(189, 0, 255, 0.5);
+  --secondary: #3b82f6;
+  --secondary-glow: rgba(59, 130, 246, 0.5);
   --accent: #ff0055;
   --text-main: #ffffff;
   --text-muted: #a0a0b0;
@@ -29,7 +29,7 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(189, 0, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
     radial-gradient(circle at 90% 80%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
 }
 

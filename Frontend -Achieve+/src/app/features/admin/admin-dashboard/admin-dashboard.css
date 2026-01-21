@@ -165,7 +165,7 @@
 /* Color Variants */
 .stat-card.primary:hover { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 255, 255, 0.2); }
 .stat-card.green:hover { border-color: #00ff88; box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); }
-.stat-card.secondary:hover { border-color: var(--secondary); box-shadow: 0 0 20px rgba(255, 0, 255, 0.2); }
+.stat-card.secondary:hover { border-color: var(--secondary); box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
 .stat-card.yellow:hover { border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
 
 .stat-card.primary .stat-icon-bg { color: var(--primary); }

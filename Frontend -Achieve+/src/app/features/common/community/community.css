@@ -45,11 +45,11 @@
     font-weight: 800;
     margin: 0;
     letter-spacing: -0.03em;
-    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c084fc 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #60a5fa 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 2em rgba(192, 132, 252, 0.3));
+    filter: drop-shadow(0 0 2em rgba(96, 165, 250, 0.3));
 }
 
 .subtitle {
@@ -265,7 +265,7 @@
 
 .post-card:hover .avatar img {
     transform: rotate(3deg) scale(1.1);
-    border-color: #c084fc;
+    border-color: #60a5fa;
 }
 
 .meta {
@@ -297,7 +297,7 @@
 }
 
 .post-card:hover .post-content {
-    border-left-color: #c084fc;
+    border-left-color: #60a5fa;
 }
 
 /* --- Mentions --- */
@@ -434,7 +434,7 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    color: #d8b4fe; /* Purple accent */
+    color: #93c5fd; /* Light blue accent */
 }
 
 .sparkle-icon {
@@ -521,7 +521,7 @@
     top: 0;
     bottom: 0;
     width: 4px;
-    background: linear-gradient(to bottom, #818cf8, #c084fc);
+    background: linear-gradient(to bottom, #818cf8, #60a5fa);
     border-radius: 4px 0 0 4px;
 }
 
@@ -995,7 +995,7 @@
 }
 
 .stat-icon-bg.gold { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-.stat-icon-bg.purple { background: rgba(192, 132, 252, 0.15); color: #c084fc; }
+.stat-icon-bg.purple { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
 
 .stat-content {
     display: flex;
@@ -1018,7 +1018,7 @@
 }
 
 .gold-text { color: #fcd34d; text-shadow: 0 0 15px rgba(251, 191, 36, 0.2); }
-.purple-text { color: #e9d5ff; text-shadow: 0 0 15px rgba(192, 132, 252, 0.2); }
+.purple-text { color: #bfdbfe; text-shadow: 0 0 15px rgba(96, 165, 250, 0.2); }
 
 
 /* Footer */

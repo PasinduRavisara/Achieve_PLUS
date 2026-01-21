@@ -65,9 +65,9 @@ h2 {
 }
 
 .role-badge.admin {
-  background: rgba(189, 0, 255, 0.2);
+  background: rgba(59, 130, 246, 0.2);
   color: var(--secondary);
-  border: 1px solid rgba(189, 0, 255, 0.4);
+  border: 1px solid rgba(59, 130, 246, 0.4);
 }
 
 .role-badge.employee {

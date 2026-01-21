@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at top right, rgba(0, 242, 255, 0.1), transparent 40%),
-              radial-gradient(circle at bottom left, rgba(189, 0, 255, 0.1), transparent 40%);
+              radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.1), transparent 40%);
 }
 
 .auth-card {
