@@ -149,6 +149,7 @@ public class UserService {
                 .userName(user.getUserName())
                 .role(user.getRole().name())
                 .points(totalPoints)
+                .createdAt(user.getCreatedAt() != null ? user.getCreatedAt().toLocalDate().toString() : null)
                 .build();
     }
 

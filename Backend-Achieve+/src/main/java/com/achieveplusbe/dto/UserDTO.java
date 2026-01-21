@@ -31,6 +31,8 @@ public class UserDTO {
 
     private Integer points;
 
+    private String createdAt;
+
     //for unit testing
     public UserDTO(String mail, String password123, String user, String user1) {
     }
@@ -89,5 +91,13 @@ public class UserDTO {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }
