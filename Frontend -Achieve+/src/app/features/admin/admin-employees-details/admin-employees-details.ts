@@ -29,7 +29,7 @@ export class AdminEmployeesDetails {
 
   /* Search & Sort Logic */
   currentSearchQuery = '';
-  sortColumn: string = '';
+  sortColumn: string = 'role';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor() {}
