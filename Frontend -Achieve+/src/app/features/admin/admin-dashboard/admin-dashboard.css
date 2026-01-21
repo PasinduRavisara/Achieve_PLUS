@@ -162,16 +162,16 @@
   opacity: 0.15;
 }
 
-/* Color Variants */
-.stat-card.primary:hover { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 255, 255, 0.2); }
-.stat-card.green:hover { border-color: #00ff88; box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); }
-.stat-card.secondary:hover { border-color: var(--secondary); box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
-.stat-card.yellow:hover { border-color: #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.2); }
+/* Color Variants - Classic Rainbow */
+.stat-card.red:hover { border-color: #ef4444; box-shadow: 0 0 25px rgba(239, 68, 68, 0.35); }
+.stat-card.yellow:hover { border-color: #eab308; box-shadow: 0 0 25px rgba(234, 179, 8, 0.35); }
+.stat-card.green:hover { border-color: #22c55e; box-shadow: 0 0 25px rgba(34, 197, 94, 0.35); }
+.stat-card.blue:hover { border-color: #3b82f6; box-shadow: 0 0 25px rgba(59, 130, 246, 0.35); }
 
-.stat-card.primary .stat-icon-bg { color: var(--primary); }
-.stat-card.green .stat-icon-bg { color: #00ff88; }
-.stat-card.secondary .stat-icon-bg { color: var(--secondary); }
-.stat-card.yellow .stat-icon-bg { color: #ffd700; }
+.stat-card.red .stat-icon-bg { color: #ef4444; }
+.stat-card.yellow .stat-icon-bg { color: #eab308; }
+.stat-card.green .stat-icon-bg { color: #22c55e; }
+.stat-card.blue .stat-icon-bg { color: #3b82f6; }
 
 /* Quick Links Grid */
 .quick-links-grid {

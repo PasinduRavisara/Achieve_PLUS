@@ -20,10 +20,10 @@ export class AdminDashboard {
   today = new Date();
   
   stats = [
-    { label: 'Total Tasks', value: 0, trend: '+10%', icon: 'bi-list-task', color: 'primary' },
-    { label: 'Team Members', value: 0, trend: '+2 New', icon: 'bi-people-fill', color: 'green' },
-    { label: 'In Progress', value: 0, trend: '+5%', icon: 'bi-arrow-repeat', color: 'secondary' },
-    { label: 'Points Earned', value: 0, trend: '+15%', icon: 'bi-check-circle-fill', color: 'yellow' }
+    { label: 'Total Tasks', value: 0, trend: '+10%', icon: 'bi-list-task', color: 'red' },
+    { label: 'Team Members', value: 0, trend: '+2 New', icon: 'bi-people-fill', color: 'yellow' },
+    { label: 'In Progress', value: 0, trend: '+5%', icon: 'bi-arrow-repeat', color: 'green' },
+    { label: 'Points Earned', value: 0, trend: '+15%', icon: 'bi-check-circle-fill', color: 'blue' }
   ];
 
   taskOverview = {
@@ -34,10 +34,10 @@ export class AdminDashboard {
   };
 
   quickLinks = [
-    { title: 'Task Management', desc: 'Create, assign, and track tasks', icon: 'bi-list-ul', route: '/admin/tasks', color: 'var(--primary)' },
-    { title: 'User Management', desc: 'Manage profiles and roles', icon: 'bi-people', route: '/admin/employees', color: '#00ff88' },
-    { title: 'Progress Analysis', desc: 'View detailed analytics', icon: 'bi-graph-up', route: '/admin/progress-analysis', color: 'var(--secondary)' },
-    { title: 'Leaderboard', desc: 'View top performers', icon: 'bi-trophy', route: '/admin/leaderboard', color: '#ffd700' }
+    { title: 'Task Management', desc: 'Create, assign, and track tasks', icon: 'bi-list-ul', route: '/admin/tasks', color: '#ef4444' },
+    { title: 'User Management', desc: 'Manage profiles and roles', icon: 'bi-people', route: '/admin/employees', color: '#eab308' },
+    { title: 'Progress Analysis', desc: 'View detailed analytics', icon: 'bi-graph-up', route: '/admin/progress-analysis', color: '#22c55e' },
+    { title: 'Leaderboard', desc: 'View top performers', icon: 'bi-trophy', route: '/admin/leaderboard', color: '#3b82f6' }
   ];
 
   reminders: any[] = []; 
