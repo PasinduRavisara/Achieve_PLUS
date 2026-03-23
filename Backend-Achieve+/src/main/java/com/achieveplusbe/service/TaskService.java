@@ -24,7 +24,6 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-@SuppressWarnings("null")
 public class TaskService {
 
     private final com.achieveplusbe.repository.SystemLogRepository systemLogRepository;

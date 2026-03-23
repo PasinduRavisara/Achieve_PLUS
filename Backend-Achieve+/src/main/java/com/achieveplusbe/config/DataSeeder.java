@@ -29,7 +29,6 @@ public class DataSeeder {
     private final com.achieveplusbe.repository.CommunityPostRepository communityPostRepository;
 
     @Bean
-    @SuppressWarnings("null")
     public CommandLineRunner initData() {
         return args -> {
             // Always ensure Admins have 0 points (Fix for existing data)
@@ -67,7 +66,6 @@ public class DataSeeder {
         };
     }
 
-    @SuppressWarnings("null")
     private void seedTasks(List<User> users) {
         User admin = users.stream().filter(u -> u.getRole() == Role.Admin).findFirst().orElse(users.get(0));
         User employee = users.stream().filter(u -> u.getRole() == Role.Employee).findFirst().orElse(users.get(1));
@@ -125,7 +123,6 @@ public class DataSeeder {
                 .build();
     }
 
-    @SuppressWarnings("null")
     private void seedRewards() {
         if (rewardRepository.count() == 0) {
             List<Reward> rewards = Arrays.asList(
@@ -152,7 +149,6 @@ public class DataSeeder {
                 .build();
     }
     
-    @SuppressWarnings("null")
     private void seedCommunityPosts(List<User> users) {
         if (communityPostRepository.count() == 0 && !users.isEmpty()) {
             User pasindu = users.get(0);
