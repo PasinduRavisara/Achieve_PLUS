@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: achieveplus-mysql
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: achieveplus
+    volumes:
+      - mysql-data:/var/lib/mysql
+    # Use standard UTF-8 charset
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  backend:
+    build:
+      context: ./Backend-Achieve+
+      dockerfile: Dockerfile
+    container_name: achieveplus-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_URL=jdbc:mysql://database:3306/achieveplus
+      - FRONTEND_URL=http://localhost:4200
+      - JWT_SECRET=${JWT_SECRET}
+    volumes:
+      - ./Backend-Achieve+:/app
+      - maven-data:/root/.m2
+
+  frontend:
+    build:
+      context: ./Frontend -Achieve+
+      dockerfile: Dockerfile
+    container_name: achieveplus-frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      - ./Frontend -Achieve+:/app
+      - /app/node_modules
+
+volumes:
+  mysql-data:
+  maven-data:
