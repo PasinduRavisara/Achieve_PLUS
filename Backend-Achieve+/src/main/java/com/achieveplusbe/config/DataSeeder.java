@@ -20,6 +20,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
+@SuppressWarnings("null")
 public class DataSeeder {
 
     private final UserRepository userRepository;

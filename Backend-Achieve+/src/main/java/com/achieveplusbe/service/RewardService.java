@@ -22,6 +22,7 @@ import java.nio.file.StandardCopyOption;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@SuppressWarnings("null")
 public class RewardService {
 
     @Autowired
